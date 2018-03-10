@@ -17,15 +17,15 @@ message Entity
 {
 	string type_id = 1;
 
-	singular Entities.Components.CoordinateComponent coordinate = 2;
-	singular Entities.Components.ScaleComponent scale = 3;
-	singular Entities.Components.FacingComponent Facing = 4;
-	singular Entities.Components.DirectionComponent direction = 5;
-	singular Entities.Components.TintComponent tint = 6;
-	singular Entities.Components.TeamAlignmentComponent teamAlignment = 7;
-	singular Entities.Components.HealthComponent health = 8;
-	singular Entities.Components.ManaComponent mana = 9;
-	singular Entities.Components.StatsComponent stats = 10;
+	Entities.Components.CoordinateComponent coordinate = 2;
+	Entities.Components.ScaleComponent scale = 3;
+	Entities.Components.FacingComponent Facing = 4;
+	Entities.Components.DirectionComponent direction = 5;
+	Entities.Components.TintComponent tint = 6;
+	Entities.Components.TeamAlignmentComponent teamAlignment = 7;
+	Entities.Components.HealthComponent health = 8;
+	Entities.Components.ManaComponent mana = 9;
+	Entities.Components.StatsComponent stats = 10;
 
 	reserved 11 to 16;
 }
