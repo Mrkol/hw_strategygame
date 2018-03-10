@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package Entities;
+
+import "components.proto";
+
+
+
+message EntityType
+{
+	string id = 1;
+
+	repeated string components = 2;
+}
+
+message Entity
+{
+	string type_id = 1;
+
+	singular Entities.Components.CoordinateComponent coordinate = 2;
+	singular Entities.Components.ScaleComponent scale = 3;
+	singular Entities.Components.FacingComponent Facing = 4;
+	singular Entities.Components.DirectionComponent direction = 5;
+	singular Entities.Components.TintComponent tint = 6;
+	singular Entities.Components.TeamAlignmentComponent teamAlignment = 7;
+	singular Entities.Components.HealthComponent health = 8;
+	singular Entities.Components.ManaComponent mana = 9;
+	singular Entities.Components.StatsComponent stats = 10;
+
+	reserved 11 to 16;
+}
