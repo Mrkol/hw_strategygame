@@ -18,9 +18,9 @@ public:
 	std::shared_ptr<EntityType> GetEntityTypeInstanceByKey(const std::string&);
 private:
 	static EntityTypeRegistry* self;
-	std::unordered_map<std::string, int> string_to_id;
-	std::vector<std::string> id_to_string;
-	std::vector<EntityType> Registry;
+	static std::unordered_map<std::string, int> string_to_id;
+	static std::vector<std::string> id_to_string;
+	static std::vector<EntityType> Registry;
 	EntityTypeRegistry();
 	~EntityTypeRegistry();
 	EntityTypeRegistry(const EntityTypeRegistry & object) = delete;

@@ -12,7 +12,7 @@ EntityTypeRegistry::EntityTypeRegistry()
 
 EntityTypeRegistry* EntityTypeRegistry::GetInstance()
 {
-	if (!self)
+	if (self == nullptr)
 	{
 		self = new EntityTypeRegistry();
 	}
@@ -21,7 +21,7 @@ EntityTypeRegistry* EntityTypeRegistry::GetInstance()
 
 bool EntityTypeRegistry::DeleteInstance()
 {
-	if (self == nullptr)
+	if (self != nullptr)
 	{
 		delete self;
 		self = nullptr;
@@ -49,3 +49,8 @@ std::shared_ptr<EntityType> EntityTypeRegistry::GetEntityTypeInstanceByKey(const
 {
 	return std::shared_ptr<EntityType>(&Registry[GetId(key)]);
 }
+
+EntityTypeRegistry* EntityTypeRegistry::self = nullptr;
+std::unordered_map<std::string, int> EntityTypeRegistry::string_to_id;
+std::vector<std::string>  EntityTypeRegistry::id_to_string;
+std::vector<EntityType>  EntityTypeRegistry::Registry;
