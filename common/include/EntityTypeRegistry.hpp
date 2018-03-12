@@ -20,7 +20,7 @@ private:
 	static EntityTypeRegistry* self;
 	static std::unordered_map<std::string, int> string_to_id;
 	static std::vector<std::string> id_to_string;
-	static std::vector<EntityType> Registry;
+	static std::vector<std::shared_ptr<EntityType>> Registry;
 	EntityTypeRegistry();
 	~EntityTypeRegistry();
 	EntityTypeRegistry(const EntityTypeRegistry & object) = delete;
