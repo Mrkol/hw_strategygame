@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef STRATEGY_GAME_COMPONENT_TYPE_HPP_
-#define STRATEGY_GAME_COMPONENT_TYPE_HPP_
+#ifndef COMMON_COMPONENT_TYPE_HPP_
+#define COMMON_COMPONENT_TYPE_HPP_
 
 #include <memory>
 #include "ComponentInstance.hpp"
@@ -15,4 +15,4 @@ private:
 	
 };
 
-#endif // STRATEGYGAME_COMPONENTTYPE_HPP_
+#endif // COMMON_COMPONENTTYPE_HPP_

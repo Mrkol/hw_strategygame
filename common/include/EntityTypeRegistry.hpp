@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef STRATEGY_GAME_ENTITY_TYPE_REGISTRY_HPP_
-#define STRATEGY_GAME_ENTITY_TYPE_REGISTRY_HPP_
+#ifndef COMMON_ENTITY_TYPE_REGISTRY_HPP_
+#define COMMON_ENTITY_TYPE_REGISTRY_HPP_
 
 #include <unordered_map>
 #include <string>
@@ -21,11 +21,11 @@ public:
 	std::shared_ptr<EntityType> GetEntityTypeInstanceById(const std::string&);
 private:
 	static EntityTypeRegistry* self_;
-	std::unordered_map<std::string, int> id_to_key_;
-	std::vector<std::string> key_to_id_;
+	std::unordered_map<std::string, int> idToKey_;
+	std::vector<std::string> keyToId_;
 	std::vector<std::shared_ptr<EntityType>> registry_;
 	EntityTypeRegistry(const EntityTypeRegistry&) = delete;
 	EntityTypeRegistry& operator=(const EntityTypeRegistry&) = delete;
 };
 
-#endif //STRATEGY_GAME_ENTITY_TYPE_REGISTRY_HPP_
+#endif //COMMON_ENTITY_TYPE_REGISTRY_HPP_

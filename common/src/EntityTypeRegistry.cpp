@@ -11,12 +11,12 @@ const EntityTypeRegistry& EntityTypeRegistry::GetInstance()
 
 int EntityTypeRegistry::GetKey(const std::string& id)
 {
-	return id_to_key_[id];
+	return idToKey_[id];
 }
 
 std::string EntityTypeRegistry::GetId(const int key)
 {
-	return key_to_id_[key];
+	return keyToId_[key];
 }
 
 std::shared_ptr<EntityType> EntityTypeRegistry::GetEntityTypeInstanceByKey(int key)

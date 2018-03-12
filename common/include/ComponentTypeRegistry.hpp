@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef STRATEGY_GAME_COMPONENT_TYPE_REGISTRY_HPP_
-#define STRATEGY_GAME_COMPONENT_TYPE_REGISTRY_HPP_
+#ifndef COMMON_COMPONENT_TYPE_REGISTRY_HPP_
+#define COMMON_COMPONENT_TYPE_REGISTRY_HPP_
 
 #include <unordered_map>
 #include <string>
@@ -21,11 +21,11 @@ public:
 	std::shared_ptr<IComponentType> GetComponentTypeById(const std::string&);
 private:
 	static ComponentTypeRegistry* self_;
-	std::unordered_map<std::string, int> id_to_key_;
-	std::vector<std::string> key_to_id_;
+	std::unordered_map<std::string, int> idToKey_;
+	std::vector<std::string> keyToId_;
 	std::vector<std::shared_ptr<IComponentType>> registry_;
 	ComponentTypeRegistry(const ComponentTypeRegistry&) = delete;
 	ComponentTypeRegistry& operator=(const ComponentTypeRegistry&) = delete;
 };
 
-#endif //STRATEGY_GAME_COMPONENT_TYPE_REGISTRY_HPP_
+#endif //COMMON_COMPONENT_TYPE_REGISTRY_HPP_

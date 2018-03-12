@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef STRATEGY_GAME_ENTITY_TYPE_HPP_
-#define STRATEGY_GAME_ENTITY_TYPE_HPP_
+#ifndef COMMON_ENTITY_TYPE_HPP_
+#define COMMON_ENTITY_TYPE_HPP_
 
 #include <vector>
 #include <memory>
@@ -15,7 +15,7 @@ public:
 	~EntityType();
 	std::shared_ptr<EntityInstance> Create() const;
 private:
-	std::vector<std::shared_ptr<IComponentType>> component_types_;
+	std::vector<std::shared_ptr<IComponentType>> componentTypes_;
 	EntityType(const EntityType&) = delete;
 	EntityType& operator=(const EntityType&) = delete;
 };

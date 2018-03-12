@@ -2,12 +2,12 @@
 
 int ComponentTypeRegistry::GetKey(const std::string& id)
 {
-	return id_to_key_[id];
+	return idToKey_[id];
 }
 
 std::string ComponentTypeRegistry::GetId(int key)
 {
-	return key_to_id_[key];
+	return keyToId_[key];
 }
 
 const ComponentTypeRegistry& ComponentTypeRegistry::GetInstance()
