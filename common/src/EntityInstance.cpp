@@ -3,7 +3,3 @@ EntityInstance::EntityInstance()
 {
 
 }
-EntityInstance::~EntityInstance()
-{
-
-}

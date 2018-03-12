@@ -11,7 +11,7 @@ class EntityInstance
 {
 	friend class EntityType;
 public:
-	~EntityInstance();
+	~EntityInstance() = default;
 private:
 	EntityInstance();
 	std::vector<std::shared_ptr<IComponentInstance>> component_instances;

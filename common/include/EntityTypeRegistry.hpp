@@ -23,8 +23,8 @@ private:
 	static std::vector<std::shared_ptr<EntityType>> Registry;
 	EntityTypeRegistry();
 	~EntityTypeRegistry();
-	EntityTypeRegistry(const EntityTypeRegistry & object) = delete;
-	EntityTypeRegistry & operator=(const EntityTypeRegistry & object) = delete;
+	EntityTypeRegistry(const EntityTypeRegistry&) = delete;
+	EntityTypeRegistry & operator=(const EntityTypeRegistry&) = delete;
 };
 
 #endif //STRATEGY_GAME_ENTITY_TYPE_REGISTRY_HPP_

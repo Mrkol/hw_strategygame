@@ -23,8 +23,8 @@ private:
 	static std::vector<std::shared_ptr<IComponentType>> Registry;
 	ComponentTypeRegistry();
 	~ComponentTypeRegistry();
-	ComponentTypeRegistry(const ComponentTypeRegistry & object) = delete;
-	ComponentTypeRegistry & operator=(const ComponentTypeRegistry & object) = delete;
+	ComponentTypeRegistry(const ComponentTypeRegistry&) = delete;
+	ComponentTypeRegistry & operator=(const ComponentTypeRegistry&) = delete;
 };
 
 #endif //STRATEGY_GAME_COMPONENT_TYPE_REGISTRY_HPP_
