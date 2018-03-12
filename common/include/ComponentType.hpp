@@ -10,7 +10,7 @@ class IComponentType
 {
 public:
 	virtual ~IComponentType() = 0;
-	virtual std::shared_ptr<IComponentInstance> Create() const = 0;
+	virtual std::shared_ptr<IComponentInstance> CreateInstance() const = 0;
 private:
 	
 };

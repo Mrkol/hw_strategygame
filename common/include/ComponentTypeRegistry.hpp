@@ -10,21 +10,22 @@
 class ComponentTypeRegistry
 {
 public:
-	static ComponentTypeRegistry* GetInstance();
-	static bool DeleteInstance();
-	int GetId(const std::string&);
-	std::string GetString(int);
-	std::shared_ptr<IComponentType> GetComponentTypeInstanceById(int);
-	std::shared_ptr<IComponentType> GetComponentTypeInstanceByKey(const std::string&);
+	ComponentTypeRegistry() = default;
+	~ComponentTypeRegistry() = default;
+	static void Initialize();
+	static void Finalize();
+	static const ComponentTypeRegistry& GetInstance();
+	int GetKey(const std::string&);
+	std::string GetId(int);
+	std::shared_ptr<IComponentType> GetComponentTypeByKey(int);
+	std::shared_ptr<IComponentType> GetComponentTypeById(const std::string&);
 private:
-	static ComponentTypeRegistry* self;
-	static std::unordered_map<std::string, int> string_to_id;
-	static std::vector<std::string> id_to_string;
-	static std::vector<std::shared_ptr<IComponentType>> Registry;
-	ComponentTypeRegistry();
-	~ComponentTypeRegistry();
+	static ComponentTypeRegistry* self_;
+	std::unordered_map<std::string, int> id_to_key_;
+	std::vector<std::string> key_to_id_;
+	std::vector<std::shared_ptr<IComponentType>> registry_;
 	ComponentTypeRegistry(const ComponentTypeRegistry&) = delete;
-	ComponentTypeRegistry & operator=(const ComponentTypeRegistry&) = delete;
+	ComponentTypeRegistry& operator=(const ComponentTypeRegistry&) = delete;
 };
 
 #endif //STRATEGY_GAME_COMPONENT_TYPE_REGISTRY_HPP_

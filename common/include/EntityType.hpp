@@ -15,9 +15,9 @@ public:
 	~EntityType();
 	std::shared_ptr<EntityInstance> Create() const;
 private:
-	std::vector<std::shared_ptr<IComponentType>> component_types;
+	std::vector<std::shared_ptr<IComponentType>> component_types_;
 	EntityType(const EntityType&) = delete;
-	EntityType & operator=(const EntityType&) = delete;
+	EntityType& operator=(const EntityType&) = delete;
 };
 
 #endif // STRATEGYGAME_ENTITYTYPE_HPP_

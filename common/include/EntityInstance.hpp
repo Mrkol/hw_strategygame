@@ -14,8 +14,8 @@ public:
 	~EntityInstance() = default;
 private:
 	EntityInstance();
-	std::vector<std::shared_ptr<IComponentInstance>> component_instances;
-	int type_id;
+	std::vector<std::shared_ptr<IComponentInstance>> component_instances_;
+	int type_id_;
 };
 
 #endif // STRATEGYGAME_ENTITY_INSTANCE_HPP_

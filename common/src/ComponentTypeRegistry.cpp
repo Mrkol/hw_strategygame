@@ -1,55 +1,49 @@
 #include "ComponentTypeRegistry.hpp"
-ComponentTypeRegistry::ComponentTypeRegistry()
+
+int ComponentTypeRegistry::GetKey(const std::string& id)
 {
-	self = nullptr;
+	return id_to_key_[id];
 }
 
-ComponentTypeRegistry::~ComponentTypeRegistry()
+std::string ComponentTypeRegistry::GetId(int key)
 {
-	DeleteInstance();
+	return key_to_id_[key];
 }
 
-bool ComponentTypeRegistry::DeleteInstance()
+const ComponentTypeRegistry& ComponentTypeRegistry::GetInstance()
 {
-	if (self != nullptr)
+	if (self_ == nullptr)
 	{
-		delete self;
-		self = nullptr;
-		return true;
+		self_ = new ComponentTypeRegistry();
 	}
-	return false;
+	return *self_;
 }
 
-int ComponentTypeRegistry::GetId(const std::string& key)
+std::shared_ptr<IComponentType> ComponentTypeRegistry::GetComponentTypeByKey(int key)
 {
-	return string_to_id[key];
+	return registry_[key];
 }
 
-std::string ComponentTypeRegistry::GetString(int id)
+std::shared_ptr<IComponentType> ComponentTypeRegistry::GetComponentTypeById(const std::string& id)
 {
-	return id_to_string[id];
+	return registry_[GetKey(id)];
 }
 
-ComponentTypeRegistry* ComponentTypeRegistry::GetInstance()
+void ComponentTypeRegistry::Initialize()
 {
-	if (self == nullptr)
+	if (self_ == nullptr)
 	{
-		self = new ComponentTypeRegistry();
+		self_ = new ComponentTypeRegistry();
 	}
-	return self;
 }
 
-std::shared_ptr<IComponentType> ComponentTypeRegistry::GetComponentTypeInstanceById(int id)
+void ComponentTypeRegistry::Finalize()
 {
-	return Registry[id];
+	if (self_ != nullptr)
+	{
+		delete self_;
+		self_ = nullptr;
+	}
 }
 
-std::shared_ptr<IComponentType> ComponentTypeRegistry::GetComponentTypeInstanceByKey(const std::string& key)
-{
-	return Registry[GetId(key)];
-}
-
-ComponentTypeRegistry* ComponentTypeRegistry::self;
-std::unordered_map<std::string, int> ComponentTypeRegistry::string_to_id;
-std::vector<std::string>  ComponentTypeRegistry::id_to_string;
-std::vector<std::shared_ptr<IComponentType>>  ComponentTypeRegistry::Registry;
+ComponentTypeRegistry* ComponentTypeRegistry::self_;

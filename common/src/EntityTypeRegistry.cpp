@@ -1,56 +1,49 @@
 #include "EntityTypeRegistry.hpp"
 
-EntityTypeRegistry::~EntityTypeRegistry()
+const EntityTypeRegistry& EntityTypeRegistry::GetInstance()
 {
-	DeleteInstance();
-}
-
-EntityTypeRegistry::EntityTypeRegistry()
-{
-	self = nullptr;
-}
-
-EntityTypeRegistry* EntityTypeRegistry::GetInstance()
-{
-	if (self == nullptr)
+	if (self_ == nullptr)
 	{
-		self = new EntityTypeRegistry();
+		self_ = new EntityTypeRegistry();
 	}
-	return self;
+	return *self_;
 }
 
-bool EntityTypeRegistry::DeleteInstance()
+int EntityTypeRegistry::GetKey(const std::string& id)
 {
-	if (self != nullptr)
+	return id_to_key_[id];
+}
+
+std::string EntityTypeRegistry::GetId(const int key)
+{
+	return key_to_id_[key];
+}
+
+std::shared_ptr<EntityType> EntityTypeRegistry::GetEntityTypeInstanceByKey(int key)
+{
+	return registry_[key];
+}
+
+std::shared_ptr<EntityType> EntityTypeRegistry::GetEntityTypeInstanceById(const std::string& id)
+{
+	return registry_[GetKey(id)];
+}
+
+void EntityTypeRegistry::Initialize()
+{
+	if (self_ == nullptr)
 	{
-		delete self;
-		self = nullptr;
-		return true;
+		self_ = new EntityTypeRegistry();
 	}
-	return false;
 }
 
-int EntityTypeRegistry::GetId(const std::string& key)
+void EntityTypeRegistry::Finalize()
 {
-	return string_to_id[key];
+	if (self_ != nullptr)
+	{
+		delete self_;
+		self_ = nullptr;
+	}
 }
 
-std::string EntityTypeRegistry::GetString(const int id)
-{
-	return id_to_string[id];
-}
-
-std::shared_ptr<EntityType> EntityTypeRegistry::GetEntityTypeInstanceById(int id)
-{
-	return Registry[id];
-}
-
-std::shared_ptr<EntityType> EntityTypeRegistry::GetEntityTypeInstanceByKey(const std::string& key)
-{
-	return Registry[GetId(key)];
-}
-
-EntityTypeRegistry* EntityTypeRegistry::self;
-std::unordered_map<std::string, int> EntityTypeRegistry::string_to_id;
-std::vector<std::string>  EntityTypeRegistry::id_to_string;
-std::vector<std::shared_ptr<EntityType>>  EntityTypeRegistry::Registry;
+EntityTypeRegistry* EntityTypeRegistry::self_;
