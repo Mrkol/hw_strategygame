@@ -42,15 +42,15 @@ std::string EntityTypeRegistry::GetString(const int id)
 
 std::shared_ptr<EntityType> EntityTypeRegistry::GetEntityTypeInstanceById(int id)
 {
-	return std::shared_ptr<EntityType> (&Registry[id]);
+	return Registry[id];
 }
 
 std::shared_ptr<EntityType> EntityTypeRegistry::GetEntityTypeInstanceByKey(const std::string& key)
 {
-	return std::shared_ptr<EntityType>(&Registry[GetId(key)]);
+	return Registry[GetId(key)];
 }
 
-EntityTypeRegistry* EntityTypeRegistry::self = nullptr;
+EntityTypeRegistry* EntityTypeRegistry::self;
 std::unordered_map<std::string, int> EntityTypeRegistry::string_to_id;
 std::vector<std::string>  EntityTypeRegistry::id_to_string;
-std::vector<EntityType>  EntityTypeRegistry::Registry;
+std::vector<std::shared_ptr<EntityType>>  EntityTypeRegistry::Registry;
