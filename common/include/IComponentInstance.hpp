@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef COMMON_COMPONENT_INSTANCE_HPP_
-#define COMMON_COMPONENT_INSTANCE_HPP_
+#ifndef COMMON_I_COMPONENT_INSTANCE_HPP_
+#define COMMON_I_COMPONENT_INSTANCE_HPP_
 
 class IComponentInstance
 {
@@ -12,4 +12,4 @@ private:
 
 };
 
-#endif // COMMON_COMPONENT_INSTANCE_HPP_
+#endif // COMMON_I_COMPONENT_INSTANCE_HPP_
