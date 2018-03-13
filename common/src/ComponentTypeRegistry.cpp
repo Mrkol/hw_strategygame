@@ -1,30 +1,35 @@
 #include "ComponentTypeRegistry.hpp"
 
-int ComponentTypeRegistry::GetKey(const std::string& id)
+
+ComponentTypeRegistry::ComponentTypeRegistry()
+	: nextKey_(0)
+{
+
+}
+
+ComponentTypeRegistry::KeyType ComponentTypeRegistry::GetKey(const std::string& id)
 {
 	return idToKey_[id];
 }
 
-std::string ComponentTypeRegistry::GetId(int key)
+std::string ComponentTypeRegistry::GetId(KeyType key)
 {
 	return keyToId_[key];
 }
 
-const ComponentTypeRegistry& ComponentTypeRegistry::GetInstance()
+ComponentTypeRegistry& ComponentTypeRegistry::GetInstance()
 {
-	if (self_ == nullptr)
-	{
-		self_ = new ComponentTypeRegistry();
-	}
 	return *self_;
 }
 
-std::shared_ptr<IComponentType> ComponentTypeRegistry::GetComponentTypeByKey(int key)
+std::shared_ptr<IComponentType> 
+	ComponentTypeRegistry::GetComponentType(KeyType key)
 {
 	return registry_[key];
 }
 
-std::shared_ptr<IComponentType> ComponentTypeRegistry::GetComponentTypeById(const std::string& id)
+std::shared_ptr<IComponentType> 
+	ComponentTypeRegistry::GetComponentType(const std::string& id)
 {
 	return registry_[GetKey(id)];
 }
@@ -46,4 +51,4 @@ void ComponentTypeRegistry::Finalize()
 	}
 }
 
-ComponentTypeRegistry* ComponentTypeRegistry::self_;
+ComponentTypeRegistry* ComponentTypeRegistry::self_(nullptr);

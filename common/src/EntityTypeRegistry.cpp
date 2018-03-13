@@ -1,30 +1,28 @@
 #include "EntityTypeRegistry.hpp"
 
-const EntityTypeRegistry& EntityTypeRegistry::GetInstance()
+EntityTypeRegistry& EntityTypeRegistry::GetInstance()
 {
-	if (self_ == nullptr)
-	{
-		self_ = new EntityTypeRegistry();
-	}
 	return *self_;
 }
 
-int EntityTypeRegistry::GetKey(const std::string& id)
+EntityTypeRegistry::KeyType EntityTypeRegistry::GetKey(const std::string& id)
 {
 	return idToKey_[id];
 }
 
-std::string EntityTypeRegistry::GetId(const int key)
+std::string EntityTypeRegistry::GetId(KeyType key)
 {
 	return keyToId_[key];
 }
 
-std::shared_ptr<EntityType> EntityTypeRegistry::GetEntityTypeInstanceByKey(int key)
+std::shared_ptr<EntityType> 
+	EntityTypeRegistry::GetEntityType(KeyType key)
 {
 	return registry_[key];
 }
 
-std::shared_ptr<EntityType> EntityTypeRegistry::GetEntityTypeInstanceById(const std::string& id)
+std::shared_ptr<EntityType> 
+	EntityTypeRegistry::GetEntityType(const std::string& id)
 {
 	return registry_[GetKey(id)];
 }
@@ -46,4 +44,4 @@ void EntityTypeRegistry::Finalize()
 	}
 }
 
-EntityTypeRegistry* EntityTypeRegistry::self_;
+EntityTypeRegistry* EntityTypeRegistry::self_(nullptr);
