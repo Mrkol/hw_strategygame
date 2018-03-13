@@ -6,7 +6,6 @@
 #include <memory>
 #include <iostream>
 #include "EntityType.hpp"
-#include "EntityTypeBuilder.hpp"
 
 namespace Serialization
 {
