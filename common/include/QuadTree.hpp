@@ -10,9 +10,14 @@ template<typename ValueType>
 class QuadTree
 {
 public:
-	ValueType& operator()(std::size_t y, std::size_t x);
+	QuadTree(std::size_t height, std::size_t width, 
+		ValueType defaultValue = ValueType());
 
-	const ValueType& operator()(std::size_t y, std::size_t x) const;		
+	void Set(std::size_t y, 
+		std::size_t x, ValueType value);
+	
+	ValueType Get(std::size_t y, 
+		std::size_t x) const;
 
 	void SetArea(std::size_t left, std::size_t top, 
 		std::size_t right, std::size_t bottom, ValueType value);
@@ -26,15 +31,20 @@ private:
 		std::size_t top_;
 		std::size_t bottom_;
 
-		bool solid_;
+		virtual bool needsFracturing_(std::size_t left, std::size_t top, 
+			std::size_t right, std::size_t bottom) const = 0;
+
+		virtual bool needsSolidifying_(std::size_t left, std::size_t top, 
+			std::size_t right, std::size_t bottom) const = 0;
+
 	public:
 		Quadrant(std::size_t left, std::size_t top, 
 			std::size_t right, std::size_t bottom);
 
-		virtual ValueType& operator()(std::size_t y, 
-			std::size_t x) = 0;
+		virtual void Set(std::size_t y, 
+			std::size_t x, ValueType value) = 0;
 		
-		virtual const ValueType& operator()(std::size_t y, 
+		virtual ValueType Get(std::size_t y, 
 			std::size_t x) const = 0;
 		
 		virtual void SetArea(std::size_t left, std::size_t top, 
@@ -46,14 +56,19 @@ private:
 	private:
 		ValueType value_;
 
+		virtual bool needsFracturing_(std::size_t left, std::size_t top, 
+			std::size_t right, std::size_t bottom) const override;
+
+		virtual bool needsSolidifying_(std::size_t left, std::size_t top, 
+			std::size_t right, std::size_t bottom) const override;
 	public:
 		SolidQuadrant(std::size_t left, std::size_t top, 
 			std::size_t right, std::size_t bottom, ValueType value);
 
-		virtual ValueType& operator()(std::size_t y, 
-			std::size_t x) override;
+		virtual void Set(std::size_t y, 
+			std::size_t x, ValueType value) override;
 
-		virtual const ValueType& operator()(std::size_t y, 
+		virtual ValueType Get(std::size_t y, 
 			std::size_t x) const override;
 		
 		virtual void SetArea(std::size_t left, std::size_t top, 
@@ -65,20 +80,31 @@ private:
 	private:
 		std::unique_ptr<Quadrant> parts_[2][2];
 
+		virtual bool needsFracturing_(std::size_t left, std::size_t top, 
+			std::size_t right, std::size_t bottom) const override;
+
+		virtual bool needsSolidifying_(std::size_t left, std::size_t top, 
+			std::size_t right, std::size_t bottom) const override;
+
+		void fracture_(std::size_t j, std::size_t i);
+		void solidify_(std::size_t j, std::size_t i);
+
 	public:
 		FracturedQuadrant(std::size_t left, std::size_t top, 
 			std::size_t right, std::size_t bottom, ValueType value);
 
-		virtual ValueType& operator()(std::size_t y, 
-			std::size_t x) override;
+		virtual void Set(std::size_t y, 
+			std::size_t x, ValueType value) override;
 
-		virtual const ValueType& operator()(std::size_t y, 
+		virtual ValueType Get(std::size_t y, 
 			std::size_t x) const override;
 		
 		virtual void SetArea(std::size_t left, std::size_t top, 
 			std::size_t right, std::size_t bottom, ValueType value) override;
 	};
+
+	std::unique_ptr<Quadrant> root_;
 };
 
-
+#include "QuadTree.tpp"
 #endif // COMMON_QUAD_TREE_HPP_
