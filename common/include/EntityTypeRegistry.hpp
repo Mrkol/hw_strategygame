@@ -28,4 +28,4 @@ private:
 	EntityTypeRegistry& operator=(const EntityTypeRegistry&) = delete;
 };
 
-#endif //COMMON_ENTITY_TYPE_REGISTRY_HPP_
+#endif // COMMON_ENTITY_TYPE_REGISTRY_HPP_

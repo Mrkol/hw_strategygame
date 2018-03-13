@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <memory>
-#include "ComponentInstance.hpp"
+#include "IComponentInstance.hpp"
 
 class EntityInstance
 {

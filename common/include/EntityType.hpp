@@ -20,4 +20,4 @@ private:
 	EntityType& operator=(const EntityType&) = delete;
 };
 
-#endif // STRATEGYGAME_ENTITYTYPE_HPP_
+#endif // COMMON_ENTITY_TYPE_HPP_
