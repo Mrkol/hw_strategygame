@@ -5,19 +5,22 @@
 
 #include <vector>
 #include <memory>
-#include "ComponentType.hpp"
+#include "IComponentType.hpp"
 #include "EntityInstance.hpp"
 
 class EntityType
 {
 public:
-	EntityType();
-	~EntityType();
-	std::shared_ptr<EntityInstance> Create() const;
-private:
-	std::vector<std::shared_ptr<IComponentType>> componentTypes_;
+	EntityType(std::string id);
 	EntityType(const EntityType&) = delete;
 	EntityType& operator=(const EntityType&) = delete;
+	~EntityType();
+
+	std::shared_ptr<EntityInstance> Create() const;
+
+private:
+	std::vector<std::shared_ptr<IComponentType>> componentTypes_;
+	std::string id_;
 };
 
 #endif // COMMON_ENTITY_TYPE_HPP_

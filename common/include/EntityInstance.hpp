@@ -10,12 +10,15 @@
 class EntityInstance
 {
 	friend class EntityType;
+
 public:
-	~EntityInstance() = default;
-private:
 	EntityInstance();
+	~EntityInstance() = default;
+
+private:
+	
 	std::vector<std::shared_ptr<IComponentInstance>> componentInstances_;
-	int typeId_;
+	std::size_t typeId_;
 };
 
 #endif // COMMON_ENTITY_INSTANCE_HPP_
