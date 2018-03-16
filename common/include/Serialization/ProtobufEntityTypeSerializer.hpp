@@ -11,7 +11,7 @@
 
 namespace Common { namespace Serialization
 {
-	class ProtobufEntityTypeSerializer : IEntityTypeSerializer
+	class ProtobufEntityTypeSerializer : public IEntityTypeSerializer
 	{
 	public:
 		virtual std::shared_ptr<EntityType> Deserialize(

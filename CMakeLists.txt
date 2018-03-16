@@ -6,5 +6,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(strategygame CXX)
 
+add_subdirectory("./common")
 add_subdirectory("./common_tests")
 

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(common_tests CXX)
 
-add_subdirectory("${CMAKE_SOURCE_DIR}/common" "${CMAKE_CURRENT_BINARY_DIR}/common")
+#add_subdirectory("${CMAKE_SOURCE_DIR}/common" "${CMAKE_CURRENT_BINARY_DIR}/common")
 
 file(GLOB_RECURSE SOURCES . src/*.cpp)
 

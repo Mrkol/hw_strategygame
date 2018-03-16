@@ -15,7 +15,7 @@ namespace Common { namespace Serialization
 	public:
 		virtual std::shared_ptr<EntityInstance> Deserialize(
 			const EntityTypeRegistry& registry, std::istream& in) = 0;
-
+		
 		virtual void Serialize(
 			std::shared_ptr<EntityInstance> object, std::ostream& out) = 0;
 	};
