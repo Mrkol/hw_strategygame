@@ -4,14 +4,18 @@
 #define COMMON_ENTITY_SYSTEM_REGISTRIES_HPP_
 
 #include <memory>
+#include <unordered_map>
 #include <string>
-#include "EntityType.hpp"
-#include "IComponentType.hpp"
 
 namespace Common
 {
+	class EntityType;
+
 	using EntityTypeRegistry = 
 		std::unordered_map<std::string, std::shared_ptr<EntityType>>;
+
+	using HealthType = unsigned int;
+	using TimeType = unsigned int;
 }
 
 #endif // COMMON_ENTITY_SYSTEM_REGISTRIES_HPP_

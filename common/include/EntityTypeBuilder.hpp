@@ -7,7 +7,7 @@
 #include <memory>
 #include "EntityType.hpp"
 #include "IComponentType.hpp"
-#include "entity_system_registries.hpp"
+#include "CommonHelper.hpp"
 
 namespace Common
 {

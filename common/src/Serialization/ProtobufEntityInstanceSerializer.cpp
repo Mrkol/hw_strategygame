@@ -1,40 +1,50 @@
-#include "ProtobufEntityInstanceSerializer.hpp"
+#include "Serialization/ProtobufEntityInstanceSerializer.hpp"
 #include "entity.pb.h"
 
 
-std::shared_ptr<EntityInstance> 
-	ProtobufEntityInstanceSerializer::Deserialize(
-		std::istream& in) override
+namespace Common { namespace Serialization
 {
-	Entities::Entity instance;
-
-	if (!in)
+	std::shared_ptr<EntityInstance> 
+		ProtobufEntityInstanceSerializer::Deserialize(
+			const EntityTypeRegistry& registry, std::istream& in)
 	{
-		//TODO: proper error handling
-		std::cerr << "Invalid stream." << std::endl;
-		return nullptr;
+		Entities::Entity instance;
+
+		if (!in)
+		{
+			//TODO: proper error handling
+			std::cerr << "Invalid stream." << std::endl;
+			return std::shared_ptr<EntityInstance>(nullptr);
+		}
+
+		if (!instance.ParseFromIstream(&in))
+		{
+			std::cerr << "Invalid entity file." << std::endl;
+			return std::shared_ptr<EntityInstance>(nullptr);
+		}
+
+		auto typeIter = registry.find(instance.type_id());
+		if (typeIter == registry.end())
+		{
+			std::cerr << "Entity type with id \"";
+			std::cerr << instance.type_id() << "\" not found.";
+			return std::shared_ptr<EntityInstance>(nullptr);
+		}
+
+		std::shared_ptr<EntityType> type = typeIter->second;
+
+		std::shared_ptr<EntityInstance> result(type->Instantiate());
+
+
+		//TODO: implement component reading
+
+		return result;
 	}
 
-	if (!instane.ParseFromIstream(&in))
+	void ProtobufEntityInstanceSerializer::Serialize(
+		std::shared_ptr<EntityInstance> object, std::ostream& out)
 	{
-		std::cerr << "Invalid entity file." << std::endl;
-		return nullptr;
+		Entities::Entity instance;
+		
 	}
-
-	EntityType& type = 
-		EntityTypeRegistry::GetInstance().GetEntityType(instance.id);
-
-	std::shared_ptr<EntityInstance> result(type.Create());
-
-
-	//TODO: implement component reading
-
-	return result;
-}
-
-void ProtobufEntityInstanceSerializer::Serialize(
-	const EntityInstance& object, std::ostream& out) override
-{
-	Entities::Entity instance;
-	
-}
+} }

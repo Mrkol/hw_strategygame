@@ -3,7 +3,7 @@
 #ifndef COMMON_I_COMPONENT_INSTANCE_HPP_
 #define COMMON_I_COMPONENT_INSTANCE_HPP_
 
-#include <memory>
+#include <string>
 
 namespace Common
 {
@@ -15,7 +15,7 @@ namespace Common
 	class IComponentInstance
 	{
 	public:
-		virtual std::shared_ptr<IComponentType> GetType() const = 0;
+		virtual std::string GetTypeId() const = 0;
 	};
 }
 

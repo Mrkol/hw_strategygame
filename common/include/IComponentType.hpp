@@ -13,7 +13,7 @@ namespace Common
 	class IComponentType
 	{
 	public:
-		virtual std::shared_ptr<IComponentInstance> Instantiate() const = 0;
+		virtual std::shared_ptr<IComponentInstance> Instantiate() = 0;
 		virtual std::string GetId() const = 0;
 	};
 }

@@ -1,5 +1,5 @@
 #include "EntityTypeBuilder.hpp"
-#include "entity_system_registries.hpp"
+#include "CommonHelper.hpp"
 
 namespace Common
 {

@@ -1,2 +1,2 @@
-#include "ProtobufEntityTypeSerializer.hpp"
+#include "Serialization/ProtobufEntityTypeSerializer.hpp"
 

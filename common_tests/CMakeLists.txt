@@ -4,7 +4,7 @@ project(common_tests CXX)
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/common" "${CMAKE_CURRENT_BINARY_DIR}/common")
 
-file(GLOB SOURCES . src/*.cpp)
+file(GLOB_RECURSE SOURCES . src/*.cpp)
 
 add_executable(common_tests ${SOURCES}) 
 

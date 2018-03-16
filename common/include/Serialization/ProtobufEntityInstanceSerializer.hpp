@@ -5,19 +5,20 @@
 
 #include <memory>
 #include <iostream>
-#include "IEntityInstanceSerializer.hpp"
+#include "Serialization/IEntityInstanceSerializer.hpp"
 #include "EntityType.hpp"
 
-namespace Serialization
+namespace Common { namespace Serialization
 {
 	class ProtobufEntityInstanceSerializer : IEntityInstanceSerializer
 	{
 	public:
 		virtual std::shared_ptr<EntityInstance> Deserialize(
-			std::istream& in) override;
+			const EntityTypeRegistry& registry, std::istream& in) override;
+		
 		virtual void Serialize(
-			const EntityInstance& object, std::ostream& out) override;
+			std::shared_ptr<EntityInstance> object, std::ostream& out) override;
 	};
-}
+} }
 
 #endif // COMMON_SERIALIZATION_PROTOBUF_ENTITY_INSTANCE_SERIALIZER_HPP_

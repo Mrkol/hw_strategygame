@@ -6,7 +6,7 @@
 #include <memory>
 #include <iostream>
 #include "EntityType.hpp"
-#include "entity_system_registries.hpp"
+#include "CommonHelper.hpp"
 
 namespace Common { namespace Serialization
 {
