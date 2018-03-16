@@ -76,6 +76,7 @@ namespace Common { namespace Components
 	std::shared_ptr<IComponentInstance> Health::Instantiate()
 	{
 		std::shared_ptr<HealthInstance> instance(new HealthInstance);
+		return instance;
 	}
 
 	std::string HealthInstance::GetTypeId() const
