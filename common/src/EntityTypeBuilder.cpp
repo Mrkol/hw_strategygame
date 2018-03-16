@@ -12,19 +12,19 @@ namespace Common
 
 	void EntityTypeBuilder::StartBuilding(std::string id)
 	{
-		current_ = std::make_shared<EntityType>(id);
+		current_ = std::shared_ptr<EntityType>(new EntityType(id));
 	}
 
 	void EntityTypeBuilder::AddComponent(
 		std::shared_ptr<IComponentType> component)
 	{
-		current_.componentTypes_.insert(component);
+		current_->componentTypes_[component->GetId()] = component;
 	}
 
 	std::shared_ptr<EntityType> EntityTypeBuilder::FinishBuilding()
 	{
 		std::shared_ptr<EntityType> tmp = current_;
-		entityTypeRegistry_.insert(current_);
+		entityTypeRegistry_[current_->GetId()] = current_;
 		current_.reset();
 		return tmp;
 	}

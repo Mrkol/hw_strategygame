@@ -10,13 +10,13 @@ namespace Common
 
 	std::shared_ptr<EntityInstance> EntityType::Instantiate()
 	{
-		std::shared_ptr<EntityInstance> instance
-			= std::make_shared<EntityInstance>();
+		std::shared_ptr<EntityInstance> instance(
+			new EntityInstance(shared_from_this()));
 		
 		for (auto componentType : componentTypes_)
 		{
-			instance->componentInstances_.insert(
-				componentType->GetId(), componentType.Instantiate());
+			instance->componentInstances_[componentType.second->GetId()] 
+				= componentType.second->Instantiate();
 		}
 
 		return instance;

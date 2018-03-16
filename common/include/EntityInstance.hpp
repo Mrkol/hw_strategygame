@@ -9,6 +9,9 @@
 
 namespace Common
 {
+	//Forward declaration to avoid circular dependencies.
+	class EntityType;
+
 	class EntityInstance
 	{
 		friend class EntityType;
