@@ -14,7 +14,7 @@ namespace Serialization
 	{
 	public:
 		virtual std::shared_ptr<EntityInstance> Deserialize(
-			EntityType& type, std::istream& in) override;
+			std::istream& in) override;
 		virtual void Serialize(
 			const EntityInstance& object, std::ostream& out) override;
 	};

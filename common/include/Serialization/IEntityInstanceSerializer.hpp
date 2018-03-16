@@ -13,7 +13,7 @@ namespace Serialization
 	{
 	public:
 		virtual std::shared_ptr<EntityInstance> Deserialize(
-			EntityType& type, std::istream& in) = 0;
+			std::istream& in) = 0;
 		virtual void Serialize(
 			const EntityInstance& object, std::ostream& out) = 0;
 	};
