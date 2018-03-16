@@ -3,11 +3,18 @@
 #ifndef COMMON_I_COMPONENT_INSTANCE_HPP_
 #define COMMON_I_COMPONENT_INSTANCE_HPP_
 
-class IComponentInstance
+#include <memory>
+#include "IComponentType.hpp"
+
+namespace Common
 {
-public:
-	virtual ~IComponentInstance() = 0;
-	virtual int GetTypeId() = 0;
-};
+	//We want to minimalize the memory footprint of this interface
+	//therefore minimalizing the vf table (probably)
+	class IComponentInstance
+	{
+	public:
+		virtual std::shared_ptr<IComponentType> GetType() const = 0;
+	};
+}
 
 #endif // COMMON_I_COMPONENT_INSTANCE_HPP_

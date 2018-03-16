@@ -8,19 +8,25 @@
 #include "IComponentType.hpp"
 #include "EntityInstance.hpp"
 
-class EntityType
+namespace Common
 {
-public:
-	EntityType(std::string id);
-	EntityType(const EntityType&) = delete;
-	EntityType& operator=(const EntityType&) = delete;
-	~EntityType();
+	class EntityType
+	{
+		friend class EntityTypeBuilder;
+	public:
 
-	std::shared_ptr<EntityInstance> Create() const;
+		std::shared_ptr<EntityInstance> Instantiate();
+		std::string GetId() const;
+		std::shared_ptr<IComponentType> GetComponent(std::string id);
 
-private:
-	std::vector<std::shared_ptr<IComponentType>> componentTypes_;
-	std::string id_;
-};
+	private:
+		explicit EntityType(std::string id);
+
+		std::unordered_map<std::string, std::shared_ptr<IComponentType>>
+			componentTypes_;
+
+		std::string id_;
+	};
+}
 
 #endif // COMMON_ENTITY_TYPE_HPP_

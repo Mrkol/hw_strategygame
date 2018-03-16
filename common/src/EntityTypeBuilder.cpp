@@ -1,28 +1,31 @@
 #include "EntityTypeBuilder.hpp"
-#include "ComponentTypeRegistry.hpp"
+#include "entity_system_registries.hpp"
 
-void EntityTypeBuilder::StartBuilding(std::string id)
+namespace Common
 {
-	current_ = std::make_shared<EntityType>(id);
-}
+	EntityTypeBuilder::EntityTypeBuilder(
+		EntityTypeRegistry& entityRegistry)
+		: entityTypeRegistry_(entityRegistry)
+	{
 
-void EntityTypeBuilder::AddComponent(
-	std::shared_ptr<IComponentType> component)
-{
-	//TODO: component dependency graphs (maybe)
-	std::size_t compKey = 
-		ComponentTypeRegistry::GetInstance().
-			GetKey(component->GetId());
+	}
 
-	if (current_->componentTypes_.size() <= compKey)
-		current_->componentTypes_.resize(compKey + 1);
+	void EntityTypeBuilder::StartBuilding(std::string id)
+	{
+		current_ = std::make_shared<EntityType>(id);
+	}
 
-	current_->componentTypes_[compKey] = component;
-}
+	void EntityTypeBuilder::AddComponent(
+		std::shared_ptr<IComponentType> component)
+	{
+		current_.componentTypes_.insert(component);
+	}
 
-std::shared_ptr<EntityType> EntityTypeBuilder::FinishBuilding()
-{
-	std::shared_ptr<EntityType> tmp = current_;
-	current_.reset();
-	return tmp;
+	std::shared_ptr<EntityType> EntityTypeBuilder::FinishBuilding()
+	{
+		std::shared_ptr<EntityType> tmp = current_;
+		entityTypeRegistry_.insert(current_);
+		current_.reset();
+		return tmp;
+	}
 }

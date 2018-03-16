@@ -7,12 +7,15 @@
 #include <string>
 #include "IComponentInstance.hpp"
 
-class IComponentType
+
+namespace Common
 {
-public:
-	virtual ~IComponentType() = 0;
-	virtual std::shared_ptr<IComponentInstance> Create() const = 0;
-	virtual std::string GetId() = 0;
-};
+	class IComponentType
+	{
+	public:
+		virtual std::shared_ptr<IComponentInstance> Instantiate() const = 0;
+		virtual std::string GetId() const = 0;
+	};
+}
 
 #endif // COMMON_COMPONENTTYPE_HPP_

@@ -3,22 +3,29 @@
 #ifndef COMMON_ENTITY_INSTANCE_HPP_
 #define COMMON_ENTITY_INSTANCE_HPP_
 
-#include <vector>
 #include <memory>
+#include <unordered_map>
 #include "IComponentInstance.hpp"
 
-class EntityInstance
+namespace Common
 {
-	friend class EntityType;
+	class EntityInstance
+	{
+		friend class EntityType;
+	public:
+		std::shared_ptr<EntityType> GetType() const;
+		bool IsEmitting();
+		std::shared_ptr<IComponentInstance> GetComponent(std::string);
 
-public:
-	EntityInstance();
-	~EntityInstance() = default;
+	private:
+		EntityInstance(std::shared_ptr<EntityType> type);
 
-private:
-	
-	std::vector<std::shared_ptr<IComponentInstance>> componentInstances_;
-	std::size_t typeId_;
-};
+		std::unordered_map<std::string, std::shared_ptr<IComponentInstance>> 
+			componentInstances_;
+		std::shared_ptr<EntityType> type_;
+
+		bool emitEvents_; 
+	};
+}
 
 #endif // COMMON_ENTITY_INSTANCE_HPP_

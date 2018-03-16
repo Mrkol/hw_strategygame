@@ -1,24 +1,37 @@
 #include "EntityType.hpp"
 
-EntityType::EntityType(std::string id)
-	: id_(id)
+namespace Common
 {
-	
-}
-
-EntityType::~EntityType()
-{
-
-}
-
-std::shared_ptr<EntityInstance> EntityType::Create() const
-{
-	//TODO: implement this properly
-	std::shared_ptr<EntityInstance> instance(new EntityInstance());
-	instance->componentInstances_.resize(componentTypes_.size());
-	for (unsigned int i = 0; i < componentTypes_.size(); ++i)
+	EntityType::EntityType(std::string id)
+		: id_(id)
 	{
-		instance->componentInstances_[i] = componentTypes_[i]->Create();
+		
 	}
-	return instance;
+
+	std::shared_ptr<EntityInstance> EntityType::Instantiate()
+	{
+		std::shared_ptr<EntityInstance> instance
+			= std::make_shared<EntityInstance>();
+		
+		for (auto componentType : componentTypes_)
+		{
+			instance->componentInstances_.insert(
+				componentType->GetId(), componentType.Instantiate());
+		}
+
+		return instance;
+	}
+
+	std::string EntityType::GetId() const
+	{
+		return id_;
+	}
+
+	std::shared_ptr<IComponentType> EntityType::GetComponent(std::string id)
+	{
+		if (!componentTypes_.count(id)) //return null basically
+			return std::shared_ptr<IComponentType>();
+
+		return componentTypes_[id];
+	}
 }

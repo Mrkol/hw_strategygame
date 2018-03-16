@@ -7,24 +7,26 @@
 #include <memory>
 #include "EntityType.hpp"
 #include "IComponentType.hpp"
+#include "entity_system_registries.hpp"
 
-class EntityTypeBuilder
+namespace Common
 {
-public:
-	EntityTypeBuilder();
+	class EntityTypeBuilder
+	{
+	public:
+		EntityTypeBuilder(
+			EntityTypeRegistry& entityRegistry);
 
-	EntityTypeBuilder(const EntityTypeBuilder& other) = delete;
+		void StartBuilding(std::string id);
 
-	EntityTypeBuilder& operator=(const EntityTypeBuilder&) = delete;
+		void AddComponent(std::shared_ptr<IComponentType> component);
 
-	void StartBuilding(std::string id);
+		std::shared_ptr<EntityType> FinishBuilding();
 
-	void AddComponent(std::shared_ptr<IComponentType> component);
-
-	std::shared_ptr<EntityType> FinishBuilding();
-
-private:
-	std::shared_ptr<EntityType> current_;
-};
+	private:
+		EntityTypeRegistry& entityTypeRegistry_;
+		std::shared_ptr<EntityType> current_;
+	};
+}
 
 #endif // COMMON_ENTITY_TYPE_BUILDER_HPP_
