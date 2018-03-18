@@ -16,8 +16,17 @@ namespace Common
 
 	using HealthType = unsigned int;
 	using ManaType = unsigned int;
-	using TeamType = unsigned int;
-	using TimeType = unsigned int;
+	using TimeIntervalType = unsigned int;
+
+	using TeamIdType = unsigned int;
+	
+	using CoordinateType = float;
+
+	struct Position
+	{
+		CoordinateType x;
+		CoordinateType y;
+	};
 }
 
 #endif // COMMON_ENTITY_SYSTEM_REGISTRIES_HPP_

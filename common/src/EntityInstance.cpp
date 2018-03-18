@@ -20,9 +20,10 @@ namespace Common
 	std::shared_ptr<IComponentInstance> 
 		EntityInstance::GetComponent(std::string id)
 	{
-		if (!componentInstances_.count(id)) //return null basically
-			return std::shared_ptr<IComponentInstance>();
+		auto iterator = componentInstances_.find(id);
+		if (iterator == componentInstances_.end())
+			return std::shared_ptr<IComponentInstance>(nullptr);
 
-		return componentInstances_[id];
+		return iterator->second;
 	}
 }

@@ -4,14 +4,14 @@ project(common CXX)
 
 include(FindProtobuf)
 find_package(Protobuf REQUIRED)
-include_directories(${PROTOBUF_INCLUDE_DIRS})
 file(GLOB_RECURSE PROTO_FILES . proto/*.proto)
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_FILES})
 
 file(GLOB_RECURSE SOURCES . src/*.cpp)
 
-add_library(common STATIC ${SOURCES} ${PROTO_HDRS} ${PROTO_SRCS})
+add_library(common STATIC ${SOURCES} ${PROTO_SRCS})
 
 target_include_directories(common PUBLIC "./include")
-target_include_directories(common PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(common PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(common PRIVATE ${Protobuf_INCLUDE_DIRS})
 

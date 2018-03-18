@@ -3,64 +3,42 @@ syntax = "proto3";
 package Entities.Components;
 
 
-/* Theese messages will be used later on to communicate
- * entity instances' states over the network and/or make
- * game saves.
- */
-message CoordinateComponent
+message PositionComponent
 {
 	float x = 1;
 	float y = 2;
-}
-
-message ScaleComponent
-{
-	float x = 1;
-	float y = 2;
-	float z = 3;
-}
-
-//will usffice for most use-cases
-message FacingComponent
-{
-	float angle = 1;
-}
-
-//quaternion direction for cheeky 
-message DirectionComponent
-{
-	float i = 1;
-	float j = 2;
-	float k = 3;
-	float l = 4;
-}
-
-message TintComponent
-{
-	fixed32 color = 1; //rgba packed into 32 bytes
-}
-
-message TeamAlignmentComponent
-{
-	uint32 team_id = 1;
 }
 
 message HealthComponent
 {
-	uint32 amount = 1;
-	uint32 maxAmount = 2;
-	uint32 regenDelay = 3;
+	uint32 maximum = 1;
+	uint32 current = 2;
+	uint32 regen_delay = 3;
+	uint32 current_regen_delay = 4;
+}
+
+message HealthComponentType
+{
+	uint32 maximum = 1;
+	uint32 regen_delay = 2;
 }
 
 message ManaComponent
 {
-	uint32 amount = 1;
+	uint32 maximum = 1;
+	uint32 current = 2;
+	uint32 regen_delay = 3;
+	uint32 current_regen_delay = 4;
 }
 
-message StatsComponent
+message ManaComponentType
 {
-	uint32 agility = 1;
-	uint32 intelegence = 2;
-	uint32 strength = 3;
+	uint32 maximum = 1;
+	uint32 regen_delay = 2;
+}
+
+message TeamComponent
+{
+	uint32 team_id = 1;
 }
 

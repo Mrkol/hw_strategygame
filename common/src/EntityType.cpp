@@ -29,9 +29,11 @@ namespace Common
 
 	std::shared_ptr<IComponentType> EntityType::GetComponent(std::string id)
 	{
-		if (!componentTypes_.count(id)) //return null basically
-			return std::shared_ptr<IComponentType>();
+		auto iterator = componentTypes_.find(id);
 
-		return componentTypes_[id];
+		if (iterator == componentTypes_.end())
+			return std::shared_ptr<IComponentType>(nullptr);
+
+		return iterator->second;
 	}
 }

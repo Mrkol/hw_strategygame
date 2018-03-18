@@ -1,50 +1,18 @@
 #include "Serialization/ProtobufEntityInstanceSerializer.hpp"
 #include "entity.pb.h"
 #include "IComponentType.hpp"
-#include "Components/AllComponents.hpp"
+#include "Components/health.hpp"
+#include "Components/mana.hpp"
+#include "Components/position.hpp"
+#include "Components/team.hpp"
 
 namespace Common { namespace Serialization
 {
-	void InitComponentWith(std::shared_ptr<IComponentType> component, 
-		const Entities::Entity &entity, std::shared_ptr<EntityInstance> instance)
-	{
-		std::string componentId = component->GetId();
-		if (componentId == "health")
-		{
-		
-			Common::Components::Health* castedComponent = static_cast<Common::Components::Health*>(&(*component));
-			castedComponent->SetCurrentHealth(instance, entity.health.amount);
-			castedComponent->SetMaximumHealth(instance, entity.health.maxAmount);
-			castedComponent->SetRegenDelay(instance, entity.health.regenDelay);
-		}
-		else if (componentId == "mana")
-		{
-			Common::Components::Mana* castedComponent = static_cast<Common::Components::Mana*>(&(*component));
-			castedComponent->SetCurrentMana(instance, entity.mana.amount);
-			castedComponent->SetMaximumMana(instance, entity.mana.maxAmount);
-			castedComponent->SetRegenDelay(instance, entity.mana.regenDelay);
-		}
-		else if (componentId == "team")
-		{
-			Common::Components::Team* castedComponent = static_cast<Common::Components::Team*>(&(*component));
-			castedComponent->SetTeam(instance, entity.teamalignment.team_id);
-		}
-		else if (componentId == "coordinate")
-		{
-			Common::Components::Coords* castedComponent = static_cast<Common::Components::Coords*>(&(*component));
-			castedComponent->SetX(instance, entity.coordinate.x);
-			castedComponent->SetY(instance, entity.coordinate.y);
-		}
-		else
-		{
-			std::cerr << "Invalid componentType." << std::endl;
-		}
-	}
 	std::shared_ptr<EntityInstance> 
 		ProtobufEntityInstanceSerializer::Deserialize(
 			const EntityTypeRegistry& registry, std::istream& in)
 	{
-		Entities::Entity instance;
+		Entities::EntityInstance instance;
 		if (!in)
 		{
 			//TODO: proper error handling
@@ -67,13 +35,40 @@ namespace Common { namespace Serialization
 		}
 
 		std::shared_ptr<EntityType> type = typeIter->second;
-		std::vector<std::string> componentId = type->GetComponentIdList();
-		for (int i = 0; i < componentId.size(); ++i)
-		{
-			std::shared_ptr<IComponentType> componentType = type->GetComponent(componentId[i]);
-		}
+
 		std::shared_ptr<EntityInstance> result(type->Instantiate());
-		//TODO: implement component reading
+
+		using namespace Common::Components;
+
+		if (instance.has_position())
+		{
+			auto positionType = PositionComponent::Access(type);
+			positionType->Set(result, { instance.position().x(), instance.position().y() });
+		}
+
+		if (instance.has_health())
+		{
+			auto healthType = HealthComponent::Access(type);
+			healthType->SetCurrent(result, instance.health().current());
+			healthType->SetMaximum(result, instance.health().maximum());
+			healthType->SetRegenDelay(result, instance.health().regen_delay());
+			healthType->SetCurrentRegenDelay(result, instance.health().current_regen_delay());
+		}
+
+		if (instance.has_mana())
+		{
+			auto manaType = ManaComponent::Access(type);
+			manaType->SetCurrent(result, instance.mana().current());
+			manaType->SetMaximum(result, instance.mana().maximum());
+			manaType->SetRegenDelay(result, instance.mana().regen_delay());
+			manaType->SetCurrentRegenDelay(result, instance.mana().current_regen_delay());
+		}
+
+		if (instance.has_team())
+		{
+			auto teamType = TeamComponent::Access(type);
+			teamType->SetTeamId(result, instance.team().team_id());
+		}
 
 		return result;
 	}
@@ -81,7 +76,50 @@ namespace Common { namespace Serialization
 	void ProtobufEntityInstanceSerializer::Serialize(
 		std::shared_ptr<EntityInstance> object, std::ostream& out)
 	{
-		Entities::Entity instance;
-		
+		if (!out)
+		{
+			std::cerr << "Invalid stream." << std::endl;
+			return;
+		}
+
+		Entities::EntityInstance instance;
+
+		auto type = object->GetType();
+
+		using namespace Common::Components;
+
+		if (auto positionType = PositionComponent::Access(type))
+		{
+			Entities::Components::PositionComponent* position = instance.mutable_position();
+			Position pos = positionType->Get(object);
+			position->set_x(pos.x);
+			position->set_y(pos.y);
+		}
+
+		if (auto healthType = HealthComponent::Access(type))
+		{
+			Entities::Components::HealthComponent* health = instance.mutable_health();
+			health->set_maximum(healthType->GetMaximum(object));
+			health->set_current(healthType->GetCurrent(object));
+			health->set_regen_delay(healthType->GetRegenDelay(object));
+			health->set_current_regen_delay(healthType->GetCurrentRegenDelay(object));
+		}
+
+		if (auto manaType = ManaComponent::Access(type))
+		{
+			Entities::Components::ManaComponent* mana = instance.mutable_mana();
+			mana->set_maximum(manaType->GetMaximum(object));
+			mana->set_current(manaType->GetCurrent(object));
+			mana->set_regen_delay(manaType->GetRegenDelay(object));
+			mana->set_current_regen_delay(manaType->GetCurrentRegenDelay(object));
+		}
+
+		if (auto teamType = TeamComponent::Access(type))
+		{
+			Entities::Components::TeamComponent* team = instance.mutable_team();
+			team->set_team_id(teamType->GetTeamId(object));
+		}
+
+		instance.SerializeToOstream(&out);
 	}
 } }

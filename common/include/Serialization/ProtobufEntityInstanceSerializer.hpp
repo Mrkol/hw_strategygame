@@ -10,8 +10,6 @@
 
 namespace Common { namespace Serialization
 {
-	void InitComponentWith(std::shared_ptr<IComponentType>, Entities::Entity,
-		std::shared_ptr<EntityInstance> instance);
 	class ProtobufEntityInstanceSerializer : public IEntityInstanceSerializer
 	{
 	public:

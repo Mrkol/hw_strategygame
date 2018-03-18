@@ -8,24 +8,20 @@ import "components.proto";
 
 message EntityType
 {
-	string id = 1;
+	string type_id = 1;
 
-	repeated string components = 2;
+	reserved 2 to 4;
+	Entities.Components.HealthComponentType health = 5;
+	Entities.Components.ManaComponentType mana = 6;
+	reserved 7;
 }
 
-message Entity
+message EntityInstance
 {
 	string type_id = 1;
 
-	Entities.Components.CoordinateComponent coordinate = 2;
-	Entities.Components.ScaleComponent scale = 3;
-	Entities.Components.FacingComponent Facing = 4;
-	Entities.Components.DirectionComponent direction = 5;
-	Entities.Components.TintComponent tint = 6;
-	Entities.Components.TeamAlignmentComponent teamAlignment = 7;
-	Entities.Components.HealthComponent health = 8;
-	Entities.Components.ManaComponent mana = 9;
-	Entities.Components.StatsComponent stats = 10;
-
-	reserved 11 to 16;
+	Entities.Components.PositionComponent position = 4;
+	Entities.Components.HealthComponent health = 5;
+	Entities.Components.ManaComponent mana = 6;
+	Entities.Components.TeamComponent team = 7;
 }

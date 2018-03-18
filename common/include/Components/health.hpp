@@ -6,47 +6,50 @@
 #include <memory>
 #include <string>
 #include "EntityInstance.hpp"
+#include "EntityType.hpp"
 #include "IComponentType.hpp"
 #include "IComponentInstance.hpp"
 #include "CommonHelper.hpp"
 
 namespace Common { namespace Components
 {
-	class HealthInstance;
+	class HealthComponentInstance;
 
-	class Health : public IComponentType
+	class HealthComponent : public IComponentType
 	{
-		friend class HealthInstance;
+		friend class HealthComponentInstance;
 	public:
 		//TODO: subscribe to the game tick event to regenerate health
+		HealthComponent(HealthType maximum, TimeIntervalType regenDelay);
 
 		virtual std::shared_ptr<IComponentInstance> Instantiate() override;
 		virtual std::string GetId() const override;
 
-		HealthType GetMaximumHealth(
+		HealthType GetMaximum(
 			std::shared_ptr<EntityInstance> instance) const;
-		HealthType GetCurrentHealth(
+		HealthType GetCurrent(
 			std::shared_ptr<EntityInstance> instance) const;
-		TimeType GetRegenDelay(
+		TimeIntervalType GetRegenDelay(
 			std::shared_ptr<EntityInstance> instance) const;
-		TimeType GetCurrentRegenDelay(
+		TimeIntervalType GetCurrentRegenDelay(
 			std::shared_ptr<EntityInstance> instance) const;
 
-		void  SetMaximumHealth(
+		void  SetMaximum(
 			std::shared_ptr<EntityInstance> instance, HealthType value);
-		void  SetCurrentHealth(
+		void  SetCurrent(
 			std::shared_ptr<EntityInstance> instance, HealthType value);
 		void  SetRegenDelay(
-			std::shared_ptr<EntityInstance> instance, TimeType value);
+			std::shared_ptr<EntityInstance> instance, TimeIntervalType value);
 		void  SetCurrentRegenDelay(
-			std::shared_ptr<EntityInstance> instance, TimeType value);
+			std::shared_ptr<EntityInstance> instance, TimeIntervalType value);
 
-		HealthType GetDefaultMaximumHealth() const;
-		HealthType GetDefaultRegenDelay() const;
+		HealthType GetDefaultMaximum() const;
+		TimeIntervalType GetDefaultRegenDelay() const;
 
+		static std::shared_ptr<HealthComponent> Access(std::shared_ptr<EntityType> entityType);
 
 	private:
-		std::shared_ptr<HealthInstance> access_(
+		std::shared_ptr<HealthComponentInstance> access_(
 			std::shared_ptr<EntityInstance> instance) const;
 
 		HealthType maximum_;
@@ -55,20 +58,20 @@ namespace Common { namespace Components
 		static const std::string ID;
 	};
 
-	class HealthInstance : public IComponentInstance
+	class HealthComponentInstance : public IComponentInstance
 	{
-		friend class Health;
+		friend class HealthComponent;
 	public:
 		virtual std::string GetTypeId() const override;
 
 
 	private:
-		HealthInstance();
+		HealthComponentInstance(HealthType maximum, TimeIntervalType regenDelay);
 
 		HealthType maximum_;
 		HealthType current_;
-		TimeType regenDelay_;
-		TimeType currentRegenDelay_;
+		TimeIntervalType regenDelay_;
+		TimeIntervalType currentRegenDelay_;
 	};
 } }
 

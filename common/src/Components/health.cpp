@@ -2,85 +2,102 @@
 
 namespace Common { namespace Components 
 {
-	std::string Health::GetId() const
+	HealthComponent::HealthComponent(HealthType maximum, TimeIntervalType regenDelay)
+		: maximum_(maximum), regenDelay_(regenDelay)
 	{
-		return Health::ID;
+
 	}
 
-	HealthType Health::GetMaximumHealth(
+	std::string HealthComponent::GetId() const
+	{
+		return HealthComponent::ID;
+	}
+
+	HealthType HealthComponent::GetMaximum(
 		std::shared_ptr<EntityInstance> instance) const
 	{
 		return access_(instance)->maximum_;
 	}
 
-	HealthType Health::GetCurrentHealth(
+	HealthType HealthComponent::GetCurrent(
 		std::shared_ptr<EntityInstance> instance) const
 	{
 		return access_(instance)->current_;
 	}
 
-	TimeType Health::GetRegenDelay(
+	TimeIntervalType HealthComponent::GetRegenDelay(
 		std::shared_ptr<EntityInstance> instance) const
 	{
 		return access_(instance)->regenDelay_;
 	}
 
-	TimeType Health::GetCurrentRegenDelay(
+	TimeIntervalType HealthComponent::GetCurrentRegenDelay(
 		std::shared_ptr<EntityInstance> instance) const
 	{
 		return access_(instance)->currentRegenDelay_;
 	}
 
-	void  Health::SetMaximumHealth(
+	void  HealthComponent::SetMaximum(
 		std::shared_ptr<EntityInstance> instance, HealthType value)
 	{
 		access_(instance)->maximum_ = value;
 	}
 
-	void  Health::SetCurrentHealth(
+	void  HealthComponent::SetCurrent(
 		std::shared_ptr<EntityInstance> instance, HealthType value)
 	{
 		access_(instance)->current_ = value;
 	}
 
-	void  Health::SetRegenDelay(
-		std::shared_ptr<EntityInstance> instance, TimeType value)
+	void  HealthComponent::SetRegenDelay(
+		std::shared_ptr<EntityInstance> instance, TimeIntervalType value)
 	{
 		access_(instance)->regenDelay_ = value;
 	}
 
-	void  Health::SetCurrentRegenDelay(
-		std::shared_ptr<EntityInstance> instance, TimeType value)
+	void  HealthComponent::SetCurrentRegenDelay(
+		std::shared_ptr<EntityInstance> instance, TimeIntervalType value)
 	{
 		access_(instance)->currentRegenDelay_ = value;
 	}
 
-	HealthType Health::GetDefaultMaximumHealth() const
+	HealthType HealthComponent::GetDefaultMaximum() const
 	{
 		return maximum_;
 	}
 
-	HealthType Health::GetDefaultRegenDelay() const
+	HealthType HealthComponent::GetDefaultRegenDelay() const
 	{
 		return regenDelay_;
 	}
 
-	std::shared_ptr<HealthInstance> Health::access_(
+	std::shared_ptr<HealthComponentInstance> HealthComponent::access_(
 		std::shared_ptr<EntityInstance> instance) const
 	{
-		return std::static_pointer_cast<HealthInstance>(instance->GetComponent(ID));
+		return std::static_pointer_cast<HealthComponentInstance>(instance->GetComponent(ID));
 	}
 
-	const std::string Health::ID = "health";	
+	const std::string HealthComponent::ID = "health";	
 
-	std::shared_ptr<IComponentInstance> Health::Instantiate()
+	std::shared_ptr<IComponentInstance> HealthComponent::Instantiate()
 	{
-		std::shared_ptr<HealthInstance> instance(new HealthInstance);
+		std::shared_ptr<HealthComponentInstance> instance(new HealthComponentInstance(maximum_, regenDelay_));
 		return instance;
 	}
 
-	std::string HealthInstance::GetTypeId() const
+	std::shared_ptr<HealthComponent> HealthComponent::Access(std::shared_ptr<EntityType> entityType)
 	{
-		return Health::ID;
+		return std::static_pointer_cast<HealthComponent>(entityType->GetComponent(ID));
+	}
+
+	std::string HealthComponentInstance::GetTypeId() const
+	{
+		return HealthComponent::ID;
+	}
+
+	HealthComponentInstance::HealthComponentInstance(HealthType maximum, TimeIntervalType regenDelay)
+		: maximum_(maximum), current_(maximum), regenDelay_(regenDelay), currentRegenDelay_(regenDelay)
+	{
+		
 	}
 } }
