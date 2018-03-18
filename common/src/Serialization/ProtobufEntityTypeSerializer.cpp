@@ -61,7 +61,7 @@ namespace Common { namespace Serialization
 		if (auto healthType = HealthComponent::Access(object))
 		{
 			Entities::Components::HealthComponentType* health = type.mutable_health();
-			health->set_maximum(healthType->GetDefaultMaximum()));
+			health->set_maximum(healthType->GetDefaultMaximum());
 			health->set_regen_delay(healthType->GetDefaultRegenDelay());
 		}
 
