@@ -15,6 +15,8 @@ namespace Common
 		std::unordered_map<std::string, std::shared_ptr<EntityType>>;
 
 	using HealthType = unsigned int;
+	using ManaType = unsigned int;
+	using TeamType = unsigned int;
 	using TimeType = unsigned int;
 }
 

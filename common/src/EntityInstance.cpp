@@ -7,7 +7,6 @@ namespace Common
 	{
 
 	}
-
 	std::shared_ptr<EntityType> EntityInstance::GetType() const
 	{
 		return type_;

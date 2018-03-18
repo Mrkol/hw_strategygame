@@ -7,12 +7,14 @@ namespace Common { namespace Serialization
 		EntityTypeBuilder& builder, std::istream& in)
 	{
 		Entities::EntityType instance;
-
+		
+		//TODO: implement
+		return std::shared_ptr<EntityType>(nullptr);
 	}
 	
 	void ProtobufEntityTypeSerializer::Serialize(
 		std::shared_ptr<EntityType> object, std::ostream& out)
 	{
-
+		
 	}
 } }

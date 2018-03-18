@@ -11,7 +11,6 @@ message CoordinateComponent
 {
 	float x = 1;
 	float y = 2;
-	float z = 3;
 }
 
 message ScaleComponent
@@ -49,6 +48,8 @@ message TeamAlignmentComponent
 message HealthComponent
 {
 	uint32 amount = 1;
+	uint32 maxAmount = 2;
+	uint32 regenDelay = 3;
 }
 
 message ManaComponent

@@ -19,7 +19,7 @@ namespace Common
 		std::shared_ptr<EntityInstance> Instantiate();
 		std::string GetId() const;
 		std::shared_ptr<IComponentType> GetComponent(std::string id);
-
+		std::vector<std::string> GetComponentIdList();
 	private:
 		explicit EntityType(std::string id);
 
@@ -28,6 +28,7 @@ namespace Common
 
 		std::string id_;
 	};
+	
 }
 
 #endif // COMMON_ENTITY_TYPE_HPP_
