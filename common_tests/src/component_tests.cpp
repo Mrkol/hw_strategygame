@@ -80,3 +80,23 @@ TEST(ComponentTests, PositionTest)
 	ASSERT_EQ(5, position->Get(instance).x);
 	ASSERT_EQ(10, position->Get(instance).y);
 }
+
+TEST(ComponentTests, TeamTest)
+{
+	Common::EntityTypeRegistry registry;
+	Common::EntityTypeBuilder builder(registry);
+
+	auto team = std::make_shared<TeamComponent>();
+
+	builder.StartBuilding("test");
+	builder.AddComponent(team);
+	auto instance = builder.FinishBuilding()->Instantiate();
+
+	ASSERT_TRUE(!!instance->GetComponent("team"));
+
+	ASSERT_EQ(0, team->GetTeamId(instance));
+
+	team->SetTeamId(instance, 12);
+
+	ASSERT_EQ(12, team->GetTeamId(instance));
+}

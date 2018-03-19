@@ -13,5 +13,7 @@ add_library(common STATIC ${SOURCES} ${PROTO_SRCS})
 
 target_include_directories(common PUBLIC "./include")
 target_include_directories(common PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
-target_include_directories(common PRIVATE ${Protobuf_INCLUDE_DIRS})
+target_include_directories(common PRIVATE ${PROTOBUF_INCLUDE_DIRS})
+
+target_link_libraries(common INTERFACE ${PROTOBUF_LIBRARIES})
 

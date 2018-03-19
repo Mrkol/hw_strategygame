@@ -28,17 +28,33 @@ namespace Common { namespace Serialization
 
 		using namespace Common::Components;
 
+		if (type.has_position())
+		{
+			std::shared_ptr<PositionComponent> component =
+				std::make_shared<PositionComponent>();
+			builder.AddComponent(component);
+		}
+
 		if (type.has_health())
 		{
 			std::shared_ptr<HealthComponent> component =
-				std::make_shared<HealthComponent>(type.health().maximum(), type.health().regen_delay());
+				std::make_shared<HealthComponent>(
+					type.health().maximum(), type.health().regen_delay());
 			builder.AddComponent(component);
 		}
 
 		if (type.has_mana())
 		{
 			std::shared_ptr<ManaComponent> component =
-				std::make_shared<ManaComponent>(type.mana().maximum(), type.mana().regen_delay());
+				std::make_shared<ManaComponent>(
+					type.mana().maximum(), type.mana().regen_delay());
+			builder.AddComponent(component);
+		}
+
+		if (type.has_team())
+		{
+			std::shared_ptr<TeamComponent> component =
+				std::make_shared<TeamComponent>();
 			builder.AddComponent(component);
 		}
 
@@ -56,20 +72,33 @@ namespace Common { namespace Serialization
 
 		Entities::EntityType type;
 
+		type.set_type_id(object->GetId());
 		using namespace Common::Components;
+
+		if (auto positionType = PositionComponent::Access(object))
+		{
+			type.mutable_position();
+		}
 
 		if (auto healthType = HealthComponent::Access(object))
 		{
-			Entities::Components::HealthComponentType* health = type.mutable_health();
+			Entities::Components::HealthComponentType* health 
+				= type.mutable_health();
 			health->set_maximum(healthType->GetDefaultMaximum());
 			health->set_regen_delay(healthType->GetDefaultRegenDelay());
 		}
 
 		if (auto manaType = ManaComponent::Access(object))
 		{
-			Entities::Components::ManaComponentType* mana = type.mutable_mana();
+			Entities::Components::ManaComponentType* mana 
+				= type.mutable_mana();
 			mana->set_maximum(manaType->GetDefaultMaximum());
 			mana->set_regen_delay(manaType->GetDefaultRegenDelay());
+		}
+
+		if (auto teamType = TeamComponent::Access(object))
+		{
+			type.mutable_team();
 		}
 
 		type.SerializeToOstream(&out);

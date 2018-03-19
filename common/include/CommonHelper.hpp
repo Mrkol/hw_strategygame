@@ -19,14 +19,6 @@ namespace Common
 	using TimeIntervalType = unsigned int;
 
 	using TeamIdType = unsigned int;
-	
-	using CoordinateType = float;
-
-	struct Position
-	{
-		CoordinateType x;
-		CoordinateType y;
-	};
 }
 
 #endif // COMMON_ENTITY_SYSTEM_REGISTRIES_HPP_

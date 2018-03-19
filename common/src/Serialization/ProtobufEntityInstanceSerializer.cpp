@@ -86,6 +86,7 @@ namespace Common { namespace Serialization
 
 		auto type = object->GetType();
 
+		instance.set_type_id(type->GetId());
 		using namespace Common::Components;
 
 		if (auto positionType = PositionComponent::Access(type))

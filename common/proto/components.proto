@@ -9,6 +9,8 @@ message PositionComponent
 	float y = 2;
 }
 
+message PositionComponentType { }
+
 message HealthComponent
 {
 	uint32 maximum = 1;
@@ -41,4 +43,6 @@ message TeamComponent
 {
 	uint32 team_id = 1;
 }
+
+message TeamComponentType { }
 

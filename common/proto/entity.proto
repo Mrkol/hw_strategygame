@@ -10,10 +10,10 @@ message EntityType
 {
 	string type_id = 1;
 
-	reserved 2 to 4;
+	Entities.Components.PositionComponentType position = 4;
 	Entities.Components.HealthComponentType health = 5;
 	Entities.Components.ManaComponentType mana = 6;
-	reserved 7;
+	Entities.Components.TeamComponentType team = 7;
 }
 
 message EntityInstance
