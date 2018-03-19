@@ -8,7 +8,7 @@ fi
 
 cd build
 
-cmake ../
+cmake ../ $@
 
 make
 

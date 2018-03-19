@@ -1,4 +1,4 @@
-#include "Components/Position.hpp"
+#include "Components/position.hpp"
 
 namespace Common { namespace Components
 {
@@ -25,7 +25,7 @@ namespace Common { namespace Components
 		return std::static_pointer_cast<PositionComponentInstance>(instance->GetComponent(ID));
 	}
 
-	const std::string PositionComponent::ID = "coordinate";
+	const std::string PositionComponent::ID = "position";
 
 	std::shared_ptr<IComponentInstance> PositionComponent::Instantiate()
 	{
