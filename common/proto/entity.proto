@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package Entities;
+
+import "components.proto";
+
+
+
+message EntityType
+{
+	string type_id = 1;
+
+	Entities.Components.PositionComponentType position = 4;
+	Entities.Components.HealthComponentType health = 5;
+	Entities.Components.ManaComponentType mana = 6;
+	Entities.Components.TeamComponentType team = 7;
+}
+
+message EntityInstance
+{
+	string type_id = 1;
+
+	Entities.Components.PositionComponent position = 4;
+	Entities.Components.HealthComponent health = 5;
+	Entities.Components.ManaComponent mana = 6;
+	Entities.Components.TeamComponent team = 7;
+}

@@ -1,0 +1,4 @@
+build/**
+.vs/**
+.clang_complete
+CMakeSettings.json

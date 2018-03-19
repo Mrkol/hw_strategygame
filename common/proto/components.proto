@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package Entities.Components;
+
+
+message PositionComponent
+{
+	float x = 1;
+	float y = 2;
+}
+
+message PositionComponentType { }
+
+message HealthComponent
+{
+	uint32 maximum = 1;
+	uint32 current = 2;
+	uint32 regen_delay = 3;
+	uint32 current_regen_delay = 4;
+}
+
+message HealthComponentType
+{
+	uint32 maximum = 1;
+	uint32 regen_delay = 2;
+}
+
+message ManaComponent
+{
+	uint32 maximum = 1;
+	uint32 current = 2;
+	uint32 regen_delay = 3;
+	uint32 current_regen_delay = 4;
+}
+
+message ManaComponentType
+{
+	uint32 maximum = 1;
+	uint32 regen_delay = 2;
+}
+
+message TeamComponent
+{
+	uint32 team_id = 1;
+}
+
+message TeamComponentType { }
+
