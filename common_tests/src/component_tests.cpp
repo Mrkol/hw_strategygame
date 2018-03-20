@@ -100,3 +100,17 @@ TEST(ComponentTests, TeamTest)
 
 	ASSERT_EQ(12, team->GetTeamId(instance));
 }
+
+TEST(ComponentTests, IncorrectComponentTypeAccessTest)
+{
+	Common::EntityTypeRegistry registry;
+	Common::EntityTypeBuilder builder(registry);
+
+	builder.StartBuilding("empty");
+	auto emptyType = builder.FinishBuilding();
+
+	ASSERT_FALSE(!!HealthComponent::Access(emptyType));
+	ASSERT_FALSE(!!ManaComponent::Access(emptyType));
+	ASSERT_FALSE(!!PositionComponent::Access(emptyType));
+	ASSERT_FALSE(!!TeamComponent::Access(emptyType));
+}
