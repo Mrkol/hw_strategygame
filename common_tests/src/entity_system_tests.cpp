@@ -13,8 +13,9 @@ TEST(EntitySystemTests, TestBuilder)
 	EntityTypeBuilder builder(registry);
 
 	builder.StartBuilding("test");
-	builder.FinishBuilding();
+	auto type = builder.FinishBuilding();
 
+	ASSERT_EQ("test", type->GetId());
 	ASSERT_EQ("test", registry["test"]->GetId());
 }
 
