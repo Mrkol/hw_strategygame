@@ -5,6 +5,7 @@
 
 #include "Tasks/Task.hpp"
 #include <queue.h>
+#include <memory>
 
 namespace Common {
 	namespace Components
@@ -23,7 +24,9 @@ namespace Common {
 				std::shared_ptr<EntityInstance> instance) const;
 
 			void AddTask(
-				std::shared_ptr<EntityInstance> instance, Task newTask);// Ещё подумаю, как лучше добавлять
+				std::shared_ptr<EntityInstance> instance, 
+				std::shared_ptr<Tasks::ITask> newTask);// Ещё подумаю, как лучше добавлять
+
 			void RemoveTask(
 				std::shared_ptr<EntityInstance> instance); // Нужно решить, давать ли возможность удалять произвольный таск или только верхний
 
@@ -39,14 +42,13 @@ namespace Common {
 		class TaskListComponentInstance : public IComponentInstance
 		{
 			friend class TaskListComponent;
+
 		public:
 			virtual std::string GetTypeId() const override;
-
-
+			
 		private:
 			TaskListComponentInstance();
-
-			std::queue<Task> tasks_;
+			std::queue<std::shared_ptr<Tasks::ITask>> tasks_;
 		};
 	}
 }

@@ -17,6 +17,8 @@ namespace Common
 	{
 		return first.x == second.x && first.y == second.y;
 	}
+
+	Position FindWay(Position from, Position to, float movePoints);
 }
 
 #endif // COMMON_POSITION_
