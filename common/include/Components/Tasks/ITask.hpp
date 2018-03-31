@@ -20,4 +20,4 @@ namespace Common {
 	}
 }
 
-#endif COMMON_COMPONENTS_TASKS_TASK_HPP_
+#endif //COMMON_COMPONENTS_TASKS_TASK_HPP_
