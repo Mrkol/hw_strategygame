@@ -21,7 +21,7 @@ namespace Common
 		std::shared_ptr<IComponentType> GetComponent(std::string id);
 		std::vector<std::string> GetComponentIdList();
 	private:
-		explicit EntityType(std::string id);
+		explicit EntityType(std::string& id);
 
 		std::unordered_map<std::string, std::shared_ptr<IComponentType>>
 			componentTypes_;
