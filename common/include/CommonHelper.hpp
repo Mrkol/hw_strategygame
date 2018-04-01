@@ -17,6 +17,11 @@ namespace Common
 	using HealthType = unsigned int;
 	using ManaType = unsigned int;
 	using TimeIntervalType = unsigned int;
+	using MovementType = double;
+	enum MovementStyleType
+	{
+		none = 0, ground, air
+	};
 
 	using TeamIdType = unsigned int;
 }

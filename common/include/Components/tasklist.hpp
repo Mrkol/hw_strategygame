@@ -12,7 +12,7 @@ namespace Common {
 	{
 		class TaskListComponentInstance;
 
-		class TaskComponent : public IComponentType
+		class TaskListComponent : public IComponentType
 		{
 			friend class TaskListComponentInstance;
 		public:
@@ -25,12 +25,15 @@ namespace Common {
 
 			void AddTask(
 				std::shared_ptr<EntityInstance> instance, 
-				std::shared_ptr<Tasks::ITask> newTask);// Ещё подумаю, как лучше добавлять
+				std::shared_ptr<Tasks::ITask> newTask);
+				// Meditation in progress...
 
 			void RemoveTask(
-				std::shared_ptr<EntityInstance> instance); // Нужно решить, давать ли возможность удалять произвольный таск или только верхний
+				std::shared_ptr<EntityInstance> instance); 
+				// We have to choose, if we want to remove only top task, or any
 
-			static std::shared_ptr<TaskListComponent> Access(std::shared_ptr<EntityType> entityType);
+			static std::shared_ptr<TaskListComponent> Access(
+				std::shared_ptr<EntityType> entityType);
 
 		private:
 			std::shared_ptr<TaskListComponentInstance> access_(

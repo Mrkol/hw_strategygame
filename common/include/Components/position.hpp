@@ -43,7 +43,9 @@ namespace Common { namespace Components
 	class PositionComponentInstance : public IComponentInstance
 	{
 		friend class PositionComponent;
+		friend class move;
 	public:
+
 		virtual const std::string& GetTypeId() const override;
 
 		virtual ~PositionComponentInstance() = default;

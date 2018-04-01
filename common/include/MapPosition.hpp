@@ -19,6 +19,7 @@ namespace Common
 	}
 
 	Position FindWay(Position from, Position to, float movePoints);
+	bool IsClose(Position from, Position to);
 }
 
 #endif // COMMON_POSITION_
