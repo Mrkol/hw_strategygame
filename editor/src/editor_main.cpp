@@ -1,9 +1,11 @@
 #include "editor_main.hpp"
-#include <iostream>
+#include "NsApp/EntryPoint.h"
+#include "EditorLauncher.hpp"
 
-int main(int argc, char* argv[])
+int NsMain(int argc, char** argv)
 {
-	std::cout << "Hello, world! - editor" << std::endl;
-	std::cin.get();
-	return 0;
+	Editor::EditorLauncher launcher;
+	launcher.SetArguments(argc, argv);
+	launcher.SetApplicationFile("EditorApplication.xaml");
+	return launcher.Run();
 }

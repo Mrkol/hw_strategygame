@@ -1,8 +1,8 @@
 #pragma once
 
-#ifndef EDITOR_MAIN_HPP_
-#define EDITOR_MAIN_HPP_
+#ifndef EDITOR_EDITOR_MAIN_HPP_
+#define EDITOR_EDITOR_MAIN_HPP_
 
-int main(int argc, char* argv[]);
+int NsMain(int argc, char** argv);
 
-#endif //EDITOR_MAIN_HPP_
+#endif // EDITOR_EDITOR_MAIN_HPP_

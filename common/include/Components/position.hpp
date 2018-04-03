@@ -9,7 +9,7 @@
 #include "EntityInstance.hpp"
 #include "IComponentType.hpp"
 #include "IComponentInstance.hpp"
-#include "Position.hpp"
+#include "MapPosition.hpp"
 
 namespace Common { namespace Components
 {
