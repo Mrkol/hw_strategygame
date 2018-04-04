@@ -17,11 +17,11 @@ namespace Common
 	public:
 
 		std::shared_ptr<EntityInstance> Instantiate();
-		std::string GetId() const;
-		std::shared_ptr<IComponentType> GetComponent(std::string id);
+		const std::string& GetId() const;
+		std::shared_ptr<IComponentType> GetComponent(const std::string& id);
 		std::vector<std::string> GetComponentIdList();
 	private:
-		explicit EntityType(std::string& id);
+		explicit EntityType(const std::string& id);
 
 		std::unordered_map<std::string, std::shared_ptr<IComponentType>>
 			componentTypes_;

@@ -8,7 +8,7 @@ namespace Common { namespace Components
 
 	}
 
-	std::string HealthComponent::GetId() const
+	const std::string& HealthComponent::GetId() const
 	{
 		return HealthComponent::ID;
 	}
@@ -90,7 +90,7 @@ namespace Common { namespace Components
 		return std::static_pointer_cast<HealthComponent>(entityType->GetComponent(ID));
 	}
 
-	std::string HealthComponentInstance::GetTypeId() const
+	const std::string& HealthComponentInstance::GetTypeId() const
 	{
 		return HealthComponent::ID;
 	}

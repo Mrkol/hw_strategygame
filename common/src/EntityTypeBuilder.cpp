@@ -10,7 +10,7 @@ namespace Common
 
 	}
 
-	void EntityTypeBuilder::StartBuilding(std::string id)
+	void EntityTypeBuilder::StartBuilding(const std::string& id)
 	{
 		current_ = std::shared_ptr<EntityType>(new EntityType(id));
 	}

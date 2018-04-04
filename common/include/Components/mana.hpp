@@ -23,7 +23,7 @@ namespace Common { namespace Components
 		ManaComponent(HealthType maximum, TimeIntervalType regenDelay);
 
 		virtual std::shared_ptr<IComponentInstance> Instantiate() override;
-		virtual std::string GetId() const override;
+		virtual const std::string& GetId() const override;
 
 		ManaType GetMaximum(
 			std::shared_ptr<EntityInstance> instance) const;
@@ -62,7 +62,7 @@ namespace Common { namespace Components
 	{
 		friend class ManaComponent;
 	public:
-		virtual std::string GetTypeId() const override;
+		virtual const std::string& GetTypeId() const override;
 
 
 	private:

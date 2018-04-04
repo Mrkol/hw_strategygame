@@ -18,7 +18,7 @@ namespace Common
 	public:
 		std::shared_ptr<EntityType> GetType() const;
 		bool IsEmitting();
-		std::shared_ptr<IComponentInstance> GetComponent(std::string);
+		std::shared_ptr<IComponentInstance> GetComponent(const std::string&);
 	private:
 		EntityInstance(std::shared_ptr<EntityType> type);
 

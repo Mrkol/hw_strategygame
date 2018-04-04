@@ -15,7 +15,7 @@ namespace Common
 	class IComponentInstance
 	{
 	public:
-		virtual std::string GetTypeId() const = 0;
+		virtual const std::string& GetTypeId() const = 0;
 	};
 }
 

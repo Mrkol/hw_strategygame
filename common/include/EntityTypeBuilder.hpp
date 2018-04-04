@@ -17,7 +17,7 @@ namespace Common
 		EntityTypeBuilder(
 			EntityTypeRegistry& entityRegistry);
 
-		void StartBuilding(std::string& id);
+		void StartBuilding(const std::string& id);
 
 		void AddComponent(std::shared_ptr<IComponentType> component);
 

@@ -18,7 +18,7 @@ namespace Common
 	}
 
 	std::shared_ptr<IComponentInstance> 
-		EntityInstance::GetComponent(std::string id)
+		EntityInstance::GetComponent(const std::string& id)
 	{
 		auto iterator = componentInstances_.find(id);
 		if (iterator == componentInstances_.end())

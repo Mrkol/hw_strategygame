@@ -14,7 +14,7 @@ namespace Common
 	{
 	public:
 		virtual std::shared_ptr<IComponentInstance> Instantiate() = 0;
-		virtual std::string GetId() const = 0;
+		virtual const std::string& GetId() const = 0;
 	};
 }
 

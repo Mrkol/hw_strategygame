@@ -2,7 +2,7 @@
 
 namespace Common
 {
-	EntityType::EntityType(std::string id)
+	EntityType::EntityType(const std::string& id)
 		: id_(id)
 	{
 		
@@ -22,12 +22,12 @@ namespace Common
 		return instance;
 	}
 
-	std::string EntityType::GetId() const
+	const std::string& EntityType::GetId() const
 	{
 		return id_;
 	}
 
-	std::shared_ptr<IComponentType> EntityType::GetComponent(std::string id)
+	std::shared_ptr<IComponentType> EntityType::GetComponent(const std::string& id)
 	{
 		auto iterator = componentTypes_.find(id);
 

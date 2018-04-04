@@ -21,7 +21,7 @@ namespace Common { namespace Components
 	public:
 
 		virtual std::shared_ptr<IComponentInstance> Instantiate() override;
-		virtual std::string GetId() const override;
+		virtual const std::string& GetId() const override;
 
 		Position Get(
 			std::shared_ptr<EntityInstance> instance) const;
@@ -42,7 +42,7 @@ namespace Common { namespace Components
 	{
 		friend class PositionComponent;
 	public:
-		virtual std::string GetTypeId() const override;
+		virtual const std::string& GetTypeId() const override;
 
 
 	private:

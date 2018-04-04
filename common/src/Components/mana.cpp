@@ -8,7 +8,7 @@ namespace Common { namespace Components
 
 	}
 
-	std::string ManaComponent::GetId() const
+	const std::string& ManaComponent::GetId() const
 	{
 		return ManaComponent::ID;
 	}
@@ -90,7 +90,7 @@ namespace Common { namespace Components
 		return std::static_pointer_cast<ManaComponent>(entityType->GetComponent(ID));
 	}
 
-	std::string ManaComponentInstance::GetTypeId() const
+	const std::string& ManaComponentInstance::GetTypeId() const
 	{
 		return ManaComponent::ID;
 	}

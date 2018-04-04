@@ -2,7 +2,7 @@
 
 namespace Common { namespace Components
 {
-	std::string PositionComponent::GetId() const
+	const std::string& PositionComponent::GetId() const
 	{
 		return PositionComponent::ID;
 	}
@@ -38,7 +38,7 @@ namespace Common { namespace Components
 		return std::static_pointer_cast<PositionComponent>(entityType->GetComponent(ID));
 	}
 
-	std::string PositionComponentInstance::GetTypeId() const
+	const std::string& PositionComponentInstance::GetTypeId() const
 	{
 		return PositionComponent::ID;
 	}
