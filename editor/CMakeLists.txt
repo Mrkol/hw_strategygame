@@ -23,15 +23,17 @@ file(GLOB_RECURSE SOURCES . src/*.cpp)
 
 file(GLOB_RECURSE RESOURCES_XAML . resources/*.xaml)
 
-add_embedded_resource(
-	editor_embedded
-	RESOURCES 
+add_executable(editor
+	${SOURCES}
+	${CMAKE_CURRENT_BINARY_DIR}/editor_resources.cpp
+	)
+
+target_embed_resources(
+	TARGET_SOURCE editor_resources.cpp
+	RESOURCES
 	${RESOURCES_XAML}
-	${CMAKE_CURRENT_LIST_DIR}/resources/DejaVuSans-ExtraLight.ttf)
-
-add_executable(editor ${SOURCES})
-
-add_dependencies(editor editor_embedded)
+	${CMAKE_CURRENT_LIST_DIR}/resources/DejaVuSans-ExtraLight.ttf
+	)
 
 if(WIN32)
 	target_add_dll(

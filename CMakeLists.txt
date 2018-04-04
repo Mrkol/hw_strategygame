@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
 if(WIN32)
-	function(target_add_dll) # target_add_dll(TARGET trt DLLS [dll1 [dll2 ...]])
+	# target_add_dll(TARGET trt DLLS [dll1 [dll2 ...]])
+	function(target_add_dll)
 		cmake_parse_arguments(
 			PA # prefix of output variables
 			"" # list of names of the boolean arguments
@@ -21,21 +22,23 @@ if(WIN32)
 	endfunction(target_add_dll)
 endif(WIN32)
 
-function(add_embedded_resource NAME) # add_embedded_resource(NAME RESOURCES [res1 [res2 ...]])
+# target_embed_resources(TARGET_SOURCE source RESOURCES [res1 [res2 ...]])
+function(target_embed_resources)
 	cmake_parse_arguments(
 		PA
 		""
-		""
+		"TARGET_SOURCE"
 		"RESOURCES"
 		${ARGN}
 		)
 
-	add_custom_target(
-		${NAME}
-		COMMAND 
-		python3 ${CMAKE_SOURCE_DIR}/embedder.py ${PA_RESOURCES} -o ${CMAKE_CURRENT_BINARY_DIR}
+	add_custom_command(
+		OUTPUT ${PA_TARGET_SOURCE}
+		DEPENDS ${PA_RESOURCES}
+		COMMAND
+		python3 ${CMAKE_SOURCE_DIR}/embedder.py ${PA_RESOURCES} -o ${CMAKE_CURRENT_BINARY_DIR} -f ${PA_TARGET_SOURCE}
 		)
-endfunction(add_embedded_resource)
+endfunction(target_embed_resources)
 
 
 project(strategygame CXX)

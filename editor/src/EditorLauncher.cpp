@@ -1,11 +1,11 @@
 #include "EditorLauncher.hpp"
-#include "NsCore/Registercomponent.h"
+#include "NsCore/RegisterComponent.h"
 #include "NsCore/Noesis.h"
 #include "EditorApplication.hpp"
 #include "EditorMainWindow.hpp"
-#include "EditorApplication_xaml.h"
-#include "EditorMainWindow_xaml.h"
-#include "DejaVuSans_ExtraLight_ttf.h"
+#include "EditorApplication_xaml.hpp"
+#include "EditorMainWindow_xaml.hpp"
+#include "DejaVuSans_ExtraLight_ttf.hpp"
 
 namespace Editor
 {
@@ -20,9 +20,9 @@ namespace Editor
 		NoesisApp::EmbeddedXaml xamls[] =
 		{
 			{ "EditorApplication.xaml",
-				EditorApplication_xaml, sizeof(EditorApplication_xaml) },
+				EditorApplication_xaml, EditorApplication_xaml_size },
 			{ "EditorMainWindow.xaml",
-				EditorMainWindow_xaml, sizeof(EditorMainWindow_xaml) }
+				EditorMainWindow_xaml, EditorMainWindow_xaml_size }
 		};
 
 		return *new NoesisApp::EmbeddedXamlProvider(xamls, NS_COUNTOF(xamls));
@@ -32,7 +32,8 @@ namespace Editor
 	{
 		NoesisApp::EmbeddedFont fonts[] =
 		{
-			{ "", DejaVuSans_ExtraLight_ttf, sizeof(DejaVuSans_ExtraLight_ttf) }
+			{ "DejaVuSans-ExtraLight",
+				DejaVuSans_ExtraLight_ttf, DejaVuSans_ExtraLight_ttf_size }
 		};
 
 		return *new NoesisApp::EmbeddedFontProvider(fonts, NS_COUNTOF(fonts));
