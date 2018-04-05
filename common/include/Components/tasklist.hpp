@@ -3,8 +3,10 @@
 #ifndef COMMON_COMPONENTS_TASK_LIST_HPP_
 #define COMMON_COMPONENTS_TASK_LIST_HPP_
 
-#include "Tasks/Task.hpp"
-#include <queue.h>
+#include "Tasks/ITask.hpp"
+#include "EntityInstance.hpp"
+#include "IComponentType.hpp"
+#include <queue>
 #include <memory>
 
 namespace Common {
@@ -18,9 +20,9 @@ namespace Common {
 		public:
 
 			virtual std::shared_ptr<IComponentInstance> Instantiate() override;
-			virtual std::string GetId() const override;
+			virtual std::string GetId() const;
 
-			TaskList AttemptCurrentTask(
+			void AttemptCurrentTask(
 				std::shared_ptr<EntityInstance> instance) const;
 
 			void AddTask(
@@ -47,7 +49,7 @@ namespace Common {
 			friend class TaskListComponent;
 
 		public:
-			virtual std::string GetTypeId() const override;
+			virtual std::string GetTypeId() const;
 			
 		private:
 			TaskListComponentInstance();

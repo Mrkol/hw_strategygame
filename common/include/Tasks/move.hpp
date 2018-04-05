@@ -5,8 +5,9 @@
 
 #include "MapPosition.hpp"
 #include "Components/tasklist.hpp"
-#include "Components/posiion.hpp"
+#include "Components/position.hpp"
 #include "Components/movement.hpp"
+#include "Tasks/ITask.hpp"
 
 namespace Common {
 	namespace Components
@@ -15,16 +16,12 @@ namespace Common {
 			class move:public ITask
 			{
 			public:
-				move() = delete override;//maybe just delete this. Or see cpp file
-				move(weak_ptr<MovementComponentInstance>, weak_ptr<MovementComponentInstance>);
-				~move() = default override;
+				move(std::weak_ptr<EntityInstance>);
 				void SetDestination(Position);
 				bool Attempt() override;
 			private:
 				Position destination_;
-				std::weak_ptr<PositionComponentInstance> selfPosition_;
-				std::weak_ptr<MovementComponentInstance> selfMovement_;
-				std::shared_ptr<TaskListComponentInstance> selfList_;
+				std::weak_ptr<EntityInstance> selfEntityInstanse_;
 			};
 		}
 	}

@@ -29,7 +29,9 @@ namespace Common { namespace Components
 		void Set(
 			std::shared_ptr<EntityInstance> instance, Position position);
 
-		static std::shared_ptr<PositionComponent> Access(std::shared_ptr<EntityType> entityType);
+		static std::shared_ptr<PositionComponent> Access(
+			
+			std::shared_ptr<EntityType> entityType);
 
 		virtual ~PositionComponent() = default;
 		

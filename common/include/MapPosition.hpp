@@ -3,6 +3,8 @@
 #ifndef COMMON_POSITION_
 #define COMMON_POSITION_
 
+#include "CommonHelper.hpp"
+
 namespace Common
 {
 	using CoordinateType = float;
@@ -18,7 +20,7 @@ namespace Common
 		return first.x == second.x && first.y == second.y;
 	}
 
-	Position FindWay(Position from, Position to, float movePoints);
+	Position FindWay(Position from, Position to, MovementType movePoints, MovementStyleType moveStyle);
 	bool IsClose(Position from, Position to);
 }
 

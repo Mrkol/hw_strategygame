@@ -10,8 +10,6 @@ namespace Common {
 			class ITask
 			{
 			public:
-				virtual Task() = 0;
-				virtual ~Task() = 0;
 				virtual bool Attempt() = 0;
 			private:
 
