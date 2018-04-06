@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef COMMON_POSITION_
-#define COMMON_POSITION_
+#ifndef COMMON_MAP_POSITION_HPP_
+#define COMMON_MAP_POSITION_HPP_
 
 #include "CommonHelper.hpp"
 
@@ -24,4 +24,4 @@ namespace Common
 	bool IsClose(Position from, Position to);
 }
 
-#endif // COMMON_POSITION_
+#endif // COMMON_MAP_POSITION_HPP_
