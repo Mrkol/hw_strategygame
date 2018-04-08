@@ -32,8 +32,7 @@ namespace Editor
 	{
 		NoesisApp::EmbeddedFont fonts[] =
 		{
-			{ "DejaVuSans-ExtraLight",
-				DejaVuSans_ExtraLight_ttf, DejaVuSans_ExtraLight_ttf_size }
+			{ "", DejaVuSans_ExtraLight_ttf, DejaVuSans_ExtraLight_ttf_size }
 		};
 
 		return *new NoesisApp::EmbeddedFontProvider(fonts, NS_COUNTOF(fonts));

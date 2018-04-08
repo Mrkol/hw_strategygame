@@ -5,6 +5,6 @@
 	<Application.Resources>
 		<SolidColorBrush x:Key="Background0" Color="SlateGray" />
 		<SolidColorBrush x:Key="Foreground0" Color="White" />
-		<FontFamily x:Key="DefaultFont">./#DejaVuSans-ExtraLight</FontFamily>
+		<FontFamily x:Key="DefaultFont">./#DejaVu Sans</FontFamily>
 	</Application.Resources>
 </Application>
