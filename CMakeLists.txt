@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
+find_package(PythonInterp)
+
 if(WIN32)
 	# target_add_dll(TARGET trt DLLS [dll1 [dll2 ...]])
 	function(target_add_dll)
@@ -22,6 +24,7 @@ if(WIN32)
 	endfunction(target_add_dll)
 endif(WIN32)
 
+
 # target_embed_resources(TARGET_SOURCE source RESOURCES [res1 [res2 ...]])
 function(target_embed_resources)
 	cmake_parse_arguments(
@@ -36,7 +39,7 @@ function(target_embed_resources)
 		OUTPUT ${PA_TARGET_SOURCE}
 		DEPENDS ${PA_RESOURCES}
 		COMMAND
-		python3 ${CMAKE_SOURCE_DIR}/embedder.py ${PA_RESOURCES} -o ${CMAKE_CURRENT_BINARY_DIR} -f ${PA_TARGET_SOURCE}
+		${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/embedder.py ${PA_RESOURCES} -o ${CMAKE_CURRENT_BINARY_DIR} -f ${PA_TARGET_SOURCE}
 		)
 endfunction(target_embed_resources)
 

@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(common_tests CXX)
 
-#add_subdirectory("${CMAKE_SOURCE_DIR}/common" "${CMAKE_CURRENT_BINARY_DIR}/common")
-
 enable_testing()
 find_package(GTest REQUIRED)
 
@@ -16,4 +14,4 @@ target_include_directories(common_tests PUBLIC "./include")
 target_link_libraries(common_tests PUBLIC common GTest::GTest GTest::Main)
 
 
-add_test(CommonTestsAll common_tests)
+add_test(CommonTestsAll ${CMAKE_CURRENT_BINARY_DIR}/common_tests)
