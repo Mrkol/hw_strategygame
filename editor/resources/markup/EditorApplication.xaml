@@ -1,10 +1,12 @@
 <Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 StartupUri="EditorMainWindow.xaml"
+			 StartupUri="EntityTypeEditorWindow.xaml"
 			 x:Class="Editor.Application">
 	<Application.Resources>
-		<SolidColorBrush x:Key="Background0" Color="SlateGray" />
-		<SolidColorBrush x:Key="Foreground0" Color="White" />
-		<FontFamily x:Key="DefaultFont">./#DejaVu Sans</FontFamily>
+		<Style TargetType="{x:Type Control}" x:Key="DefaultFont">
+			<Setter Property="FontSize" Value="18" />
+			<Setter Property="FontFamily" Value="./#DejaVu Sans" />
+			<Setter Property="Foreground" Value="White" />
+        </Style>
 	</Application.Resources>
 </Application>

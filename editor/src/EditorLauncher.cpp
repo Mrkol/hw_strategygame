@@ -3,8 +3,11 @@
 #include "NsCore/Noesis.h"
 #include "EditorApplication.hpp"
 #include "EditorMainWindow.hpp"
+#include "EntityTypeEditorWindow.hpp"
+
 #include "EditorApplication_xaml.hpp"
 #include "EditorMainWindow_xaml.hpp"
+#include "EntityTypeEditorWindow_xaml.hpp"
 #include "DejaVuSans_ExtraLight_ttf.hpp"
 
 namespace Editor
@@ -12,7 +15,8 @@ namespace Editor
     void EditorLauncher::RegisterComponents() const
     {
         NsRegisterComponent<EditorApplication>();
-        NsRegisterComponent<EditorMainWindow>();
+        //NsRegisterComponent<EditorMainWindow>();
+        NsRegisterComponent<EntityTypeEditorWindow>();
     }
 
 	Ptr<Noesis::XamlProvider> EditorLauncher::GetXamlProvider() const
@@ -22,7 +26,9 @@ namespace Editor
 			{ "EditorApplication.xaml",
 				EditorApplication_xaml, EditorApplication_xaml_size },
 			{ "EditorMainWindow.xaml",
-				EditorMainWindow_xaml, EditorMainWindow_xaml_size }
+				EditorMainWindow_xaml, EditorMainWindow_xaml_size },
+			{ "EntityTypeEditorWindow.xaml",
+				EntityTypeEditorWindow_xaml, EntityTypeEditorWindow_xaml_size }
 		};
 
 		return *new NoesisApp::EmbeddedXamlProvider(xamls, NS_COUNTOF(xamls));
