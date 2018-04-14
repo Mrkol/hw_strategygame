@@ -13,10 +13,7 @@ namespace Editor
 	public:
 		EditorMainWindow();
 
-		NS_IMPLEMENT_INLINE_REFLECTION(EditorMainWindow, NoesisApp::Window)
-		{
-			NsMeta<Noesis::TypeId>("Editor.MainWindow");
-		}
+		NS_DECLARE_REFLECTION(EditorMainWindow, NoesisApp::Window)
 	};
 }
 

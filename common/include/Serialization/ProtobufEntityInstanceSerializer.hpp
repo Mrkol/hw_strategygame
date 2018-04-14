@@ -18,6 +18,8 @@ namespace Common { namespace Serialization
 		
 		virtual void Serialize(
 			std::shared_ptr<EntityInstance> object, std::ostream& out) override;
+
+		virtual ~ProtobufEntityInstanceSerializer() = default;
 	};
 } }
 

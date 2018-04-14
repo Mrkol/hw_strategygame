@@ -48,6 +48,8 @@ namespace Common { namespace Components
 
 		static std::shared_ptr<HealthComponent> Access(std::shared_ptr<EntityType> entityType);
 
+		virtual ~HealthComponent() = default;
+
 	private:
 		std::shared_ptr<HealthComponentInstance> access_(
 			std::shared_ptr<EntityInstance> instance) const;
@@ -64,6 +66,7 @@ namespace Common { namespace Components
 	public:
 		virtual std::string GetTypeId() const override;
 
+		virtual ~HealthComponentInstance() = default;
 
 	private:
 		HealthComponentInstance(HealthType maximum, TimeIntervalType regenDelay);

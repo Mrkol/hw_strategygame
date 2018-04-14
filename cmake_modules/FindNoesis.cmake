@@ -3,7 +3,6 @@
 #  NOESIS_FOUND - System has Noesis
 #  NOESIS_INCLUDE_DIRS - The Noesis include directories
 #  NOESIS_LIBRARIES - The libraries needed to use Noesis
-#  NOESIS_DEFINITIONS - Compiler switches required for using Noesis
 #  WIN_NOESIS_DLLS - Windows specific dll files
 
 file(TO_CMAKE_PATH $ENV{NOESIS_DIR} NOESIS_DIRECTORY_HINT)

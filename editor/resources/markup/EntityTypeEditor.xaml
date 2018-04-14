@@ -1,8 +1,9 @@
-<Window
+<UserControl
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	Title="Entity type editor" Width="1080" Height="720" ResizeMode="CanResize"
-	x:Class="Editor.EntityTypeEditorWindow">
+	Width="*" Height="*"
+	x:Class="Editor.EntityTypeEditor"
+    Style="{StaticResource DefaultFont}">
 
 	<Grid Width="*" Height="*">
 		<Grid.ColumnDefinitions>
@@ -184,4 +185,4 @@
 			</ListView>
 		</Border>
 	</Grid>
-</Window>
+</UserControl>

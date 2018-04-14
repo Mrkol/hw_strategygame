@@ -31,6 +31,8 @@ namespace Common { namespace Components
 
 		static std::shared_ptr<PositionComponent> Access(std::shared_ptr<EntityType> entityType);
 
+		virtual ~PositionComponent() = default;
+		
 	private:
 		std::shared_ptr<PositionComponentInstance> access_(
 			std::shared_ptr<EntityInstance> instance) const;
@@ -44,6 +46,7 @@ namespace Common { namespace Components
 	public:
 		virtual std::string GetTypeId() const override;
 
+		virtual ~PositionComponentInstance() = default;
 
 	private:
 		PositionComponentInstance();

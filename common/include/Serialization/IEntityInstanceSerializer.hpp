@@ -18,6 +18,8 @@ namespace Common { namespace Serialization
 		
 		virtual void Serialize(
 			std::shared_ptr<EntityInstance> object, std::ostream& out) = 0;
+
+		virtual ~IEntityInstanceSerializer() = default;
 	};
 } }
 

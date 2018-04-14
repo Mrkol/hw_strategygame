@@ -2,9 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(editor CXX)
 
-find_package(Noesis REQUIRED)
-find_package(NoesisApp REQUIRED)
-
 if(NOT NOESIS_FOUND)
 	message(
 		FATAL_ERROR
@@ -36,9 +33,13 @@ target_embed_resources(
 	)
 
 if(WIN32)
+	get_filename_component(Protobuf_DIR ${Protobuf_INCLUDE_DIRS} DIRECTORY)
+	
 	target_add_dll(
 		TARGET editor
-		DLLS ${WIN_NOESIS_DLLS} ${WIN_NOESISAPP_DLLS}
+		DLLS
+		${WIN_NOESIS_DLLS} ${WIN_NOESISAPP_DLLS}
+		${Protobuf_DIR}/bin/libprotobuf.dll
 		)
 endif(WIN32)
 

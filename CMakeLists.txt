@@ -1,9 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
-find_package(PythonInterp)
-
 if(WIN32)
-	# target_add_dll(TARGET trt DLLS [dll1 [dll2 ...]])
+	# target_add_dll(TARGET target DLLS [dll1 [dll2 ...]])
 	function(target_add_dll)
 		cmake_parse_arguments(
 			PA # prefix of output variables
@@ -43,11 +41,7 @@ function(target_embed_resources)
 		)
 endfunction(target_embed_resources)
 
-
 project(strategygame CXX)
-
-option(DEBUG "Build with debug flags" OFF)
-option(WITH_TESTS "Build with tests and run them" OFF)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -55,6 +49,20 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_MODULE_PATH 
 	${CMAKE_MODULE_PATH}
 	${CMAKE_SOURCE_DIR}/cmake_modules)
+
+find_package(PythonInterp)
+find_package(Noesis)
+find_package(NoesisApp)
+
+find_package(Protobuf REQUIRED)
+
+if (NOT PROTOBUF_FOUND)
+	message(FATAL_ERROR
+		"Could not load protobuf!")
+endif (NOT PROTOBUF_FOUND)
+
+option(DEBUG "Build with debug flags" OFF)
+option(WITH_TESTS "Build with tests and run them" OFF)
 
 if(DEBUG)
 	# The option will propogate to dependent targets due
@@ -72,6 +80,3 @@ add_subdirectory(./editor)
 if(WITH_TESTS)
 	add_subdirectory("./common_tests")
 endif(WITH_TESTS)
-
-
-
