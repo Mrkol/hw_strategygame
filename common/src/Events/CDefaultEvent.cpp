@@ -1,16 +1,39 @@
 #include "Events/CDefaultEvent.hpp"
 
-void CDefaultEvent::Happen(...)
+void CDefaultEvent::Happen(EventArg& args)
 {
-
+	for (auto i = subscribers_.begin(); i != subscribers_.end(); ++i)
+	{
+		(*i)(args);
+	}
 }
 
-void CDefaultEvent::Subscribe()
+bool CDefaultEvent::TryHappen(EventArg& args)
 {
-
+	for (auto i = subscribers_.begin(); i != subscribers_.end(); ++i)
+	{
+		if (!(*i)(args))
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
-void CDefaultEvent::Unsubscribe()
+void CDefaultEvent::Subscribe(bool(&func)(EventArg&))
 {
+	subscribers_.push_back(func);
+}
 
+bool CDefaultEvent::Unsubscribe(bool(&f)(EventArg&))
+{
+	for (auto i = subscribers_.begin(); i != subscribers_.end(); ++i)
+	{
+		if (*i == f)
+		{
+			subscribers_.erase(i);
+			return true;
+		}
+	}
+	return false;
 }

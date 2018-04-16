@@ -5,13 +5,18 @@
 
 #include <vector>
 
+class EventArg
+{
+
+};
 
 class IEvent
 {
 public:
-	virtual void Subscribe() = 0;
-	virtual void Unsubscribe() = 0;
-	virtual void Happen(...) = 0;
+	virtual void Subscribe(bool(&func)(EventArg&)) = 0;
+	virtual bool Unsubscribe(bool(&func)(EventArg&)) = 0;
+	virtual void Happen(EventArg&) = 0; // Call all subscribers no matter what
+	virtual bool TryHappen(EventArg&) = 0; // Stop and reeturn false if one of subscribers returned false
 private:
 	
 };
