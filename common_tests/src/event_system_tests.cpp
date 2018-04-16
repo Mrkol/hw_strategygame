@@ -20,3 +20,40 @@ bool SampleFuncTrue(EventArg& args)
 {
 	return true;
 }
+
+TEST(EventSystemTests, EventTryHappen)
+{
+	IEvent* event_ = new CDefaultEvent;
+	event_->Subscribe(SampleFuncTrue);
+	event_->Subscribe(SampleFuncFalse);
+	EXPECT_EQ(event_->TryHappen(EventArg()), false);
+	delete event_;
+
+	event_ = new CDefaultEvent;
+	event_->Subscribe(SampleFuncTrue);
+	event_->Subscribe(SampleFuncTrue);
+	EXPECT_EQ(event_->TryHappen(EventArg()), true);
+	delete event_;
+}
+
+TEST(EventSystemTests, EventTrySubscribe_Unsubscribe)
+{
+	IEvent* event_ = new CDefaultEvent;
+	event_->Subscribe(SampleFuncTrue);
+	event_->Subscribe(SampleFuncFalse);
+	EXPECT_EQ(event_->TryHappen(EventArg()), false);
+
+	EXPECT_EQ(event_->Unsubscribe(SampleFuncFalse), true);
+	
+	EXPECT_EQ(event_->TryHappen(EventArg()), true);
+
+	event_->Subscribe(SampleFuncFalse);
+	event_->Subscribe(SampleFuncFalse);
+	EXPECT_EQ(event_->Unsubscribe(SampleFuncFalse), true);
+
+	EXPECT_EQ(event_->TryHappen(EventArg()), false);
+	EXPECT_EQ(event_->Unsubscribe(SampleFuncFalse), true);
+	EXPECT_EQ(event_->Unsubscribe(SampleFuncFalse), false);
+
+	delete event_;
+}
