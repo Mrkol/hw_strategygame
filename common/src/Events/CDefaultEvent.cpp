@@ -1,4 +1,5 @@
 #include "Events/CDefaultEvent.hpp"
+#include <memory>
 
 void CDefaultEvent::Happen(EventArg& args)
 {
@@ -22,7 +23,7 @@ bool CDefaultEvent::TryHappen(EventArg& args)
 
 void CDefaultEvent::Subscribe(bool (*func)(EventArg&))
 {
-	subscribers_.push_back(*func);
+	subscribers_.push_back(func);
 }
 
 bool CDefaultEvent::Unsubscribe(bool (*func)(EventArg&))

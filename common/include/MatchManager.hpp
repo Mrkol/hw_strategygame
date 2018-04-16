@@ -11,16 +11,26 @@
 
 namespace Common
 {
+	enum EMatchMode
+	{
+		pause, normal, end, init
+	};
+
 	class MatchManager
 	{
 	public:
 		MatchManager();
 		void Start(); // Begin generating gametick events
+		void Pause(); // Stop generating gametick events
+		void Stop(); // End match
+		void GenerateTick();
+		EMatchMode GetMode();
+		void SubscribeTick();
 	private:
+		EMatchMode matchMode_;
 		TimeIntervalType tickRate_;
 		time_t lastTick_;
 		std::shared_ptr<IEvent> tick_;
-		void GenerateTick();
 	};
 }
 
