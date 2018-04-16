@@ -12,11 +12,11 @@
 class CDefaultEvent : public IEvent
 {
 public:
-	virtual void Subscribe(bool(&func)(EventArg&)) override;
-	virtual bool Unsubscribe(bool(&func)(EventArg&)) override;
+	virtual void Subscribe(bool (*)(EventArg&)) override;
+	virtual bool Unsubscribe(bool (*)(EventArg&)) override;
 	virtual void Happen(EventArg&) override;
 	virtual bool TryHappen(EventArg&) override;
 private:
-	std::list<bool(&)(EventArg&)> subscribers_;
+	std::list<bool (*)(EventArg&)> subscribers_;
 };
 #endif //COMMON_EVENTS_CDEFAULT_EVENT_HPP_

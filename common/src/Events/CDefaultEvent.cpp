@@ -20,16 +20,16 @@ bool CDefaultEvent::TryHappen(EventArg& args)
 	return true;
 }
 
-void CDefaultEvent::Subscribe(bool(&func)(EventArg&))
+void CDefaultEvent::Subscribe(bool (*func)(EventArg&))
 {
-	subscribers_.push_back(func);
+	subscribers_.push_back(*func);
 }
 
-bool CDefaultEvent::Unsubscribe(bool(&f)(EventArg&))
+bool CDefaultEvent::Unsubscribe(bool (*func)(EventArg&))
 {
 	for (auto i = subscribers_.begin(); i != subscribers_.end(); ++i)
 	{
-		if (*i == f)
+		if (*i == func)
 		{
 			subscribers_.erase(i);
 			return true;
