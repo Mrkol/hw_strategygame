@@ -31,5 +31,4 @@ if(WIN32)
 		)
 endif(WIN32)
 
-
 add_test(CommonTestsAll ${CMAKE_CURRENT_BINARY_DIR}/common_tests)

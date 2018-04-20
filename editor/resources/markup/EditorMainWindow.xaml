@@ -4,6 +4,17 @@
 	Title="Editor" Width="1080" Height="720" ResizeMode="CanResize"
 	x:Class="Editor.MainWindow">
 
-    <local:EntityTypeEditor 
-    	Width="*" Height="*"/>
+	<Window.Resources>
+		<DataModel1 x:Name="dataModel">
+			<DataModel1.Property>
+				<Property Property="Health" Value="100500" />
+				<Property Property="Mana" Value="9000" />
+				<Property Property="Anger" Value="69lol" />
+			</DataModel1.Property>
+		</DataModel1>
+	</Window.Resources>
+	
+
+	<local:EntityTypeEditor
+		Width="*" Height="*"/>
 </Window>

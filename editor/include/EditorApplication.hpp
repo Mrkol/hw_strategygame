@@ -10,10 +10,7 @@ namespace Editor
 {
     class EditorApplication final : public NoesisApp::Application
     {
-        NS_IMPLEMENT_INLINE_REFLECTION(EditorApplication, NoesisApp::Application)
-        {
-            NsMeta<Noesis::TypeId>("Editor.Application");
-        }
+        NS_DECLARE_REFLECTION(EditorApplication, NoesisApp::Application);
     };
 }
 

@@ -12,7 +12,7 @@
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 
-		<!-- ENTITY TYPE CHOICE -->
+		<!-- ENTITY TYPE LIST -->
 		<Border Grid.Column="0" Padding="5,5,0,5">
 			<Grid>
 				<Grid.RowDefinitions>
@@ -92,7 +92,7 @@
 		</Border>
 
 
-		<!-- CONCREETE ENTITY TYPE -->
+		<!-- ENTITY TYPE -->
 		<Border Grid.Column="1" Padding="5,5,0,5">
 			<Grid>
 				<Grid.RowDefinitions>
@@ -149,8 +149,9 @@
 			</Grid>
 		</Border>
 
+		<!-- COMPONENT -->
 		<Border Grid.Column="2" Padding="5,5,5,5">
-			<ListView>
+			<ListView DataContext="{StaticResource dataModel}">
 				<ListView.Resources>
 					<DataTemplate x:Key="Property">
 						<Border>
@@ -176,12 +177,9 @@
 						<GridViewColumn
 							Header="Value" Width="200"
 							HeaderContainerStyle="{StaticResource DefaultFont}"
-            				CellTemplate="{StaticResource Property}"/>
+            				CellTemplate="{StaticResource Value}"/>
 					</GridView>
 				</ListView.View>
-
-				<TextBlock Property="First prop" Value="lol" />
-				<TextBlock Property="Second prop" Value="kek" />
 			</ListView>
 		</Border>
 	</Grid>
