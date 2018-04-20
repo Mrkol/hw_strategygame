@@ -1,6 +1,6 @@
 #include "MatchManager.hpp"
-#include <ctime>
 #include <iostream>
+#include <chrono>
 
 namespace Common
 {
@@ -8,17 +8,25 @@ namespace Common
 	{
 		tick_.reset(new CDefaultEvent);
 		matchMode_ = init;
-		tickRate_ = 1;
-		lastTick_ = 0;
+		tickRate_ = TimeIntervalType(5);
+		lastTick_ = std::chrono::system_clock::now();
 	}
 
 	void MatchManager::Start()
 	{
+		if (matchMode_ == end)
+		{
+			return;
+		}
 		matchMode_ = normal;
 	}
 
 	void MatchManager::Pause()
 	{
+		if (matchMode_ == end)
+		{
+			return;
+		}
 		matchMode_ = pause;
 	}
 
@@ -27,23 +35,30 @@ namespace Common
 		matchMode_ = end;
 	}
 
-	void MatchManager::GenerateTick()
+	bool MatchManager::GenerateTick()
 	{
 		if (matchMode_ != normal)
 		{
-			return;
+			return false;
 		}
-		time_t rawtime_;
-		time(&rawtime_);
-		if (lastTick_ + tickRate_ < rawtime_)
+		
+		if (lastTick_ + tickRate_ < std::chrono::system_clock::now())
 		{
+			lastTick_ = std::chrono::system_clock::now();
 			tick_->Happen(EventArg());
-			lastTick_ = rawtime_;
+			return true;
 		}
+
+		return false;
 	}
 
 	EMatchMode MatchManager::GetMode()
 	{
 		return matchMode_;
+	}
+
+	void MatchManager::SubscribeTick(bool(*func)(EventArg&))
+	{
+		tick_->Subscribe(func);
 	}
 }

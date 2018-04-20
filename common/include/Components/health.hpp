@@ -21,6 +21,7 @@ namespace Common { namespace Components
 	public:
 		//TODO: subscribe to the game tick event to regenerate health
 		HealthComponent(HealthType maximum, TimeIntervalType regenDelay);
+		HealthComponent(HealthType maximum, TimeUnitType regenDelay);
 
 		virtual std::shared_ptr<IComponentInstance> Instantiate() override;
 		virtual const std::string& GetId() const override;
@@ -55,7 +56,7 @@ namespace Common { namespace Components
 			std::shared_ptr<EntityInstance> instance) const;
 
 		HealthType maximum_;
-		HealthType regenDelay_;
+		TimeIntervalType regenDelay_;
 
 		static const std::string ID;
 	};

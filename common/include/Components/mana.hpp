@@ -21,6 +21,7 @@ namespace Common { namespace Components
 	public:
 		//TODO: subscribe to the game tick event to regenerate mana
 		ManaComponent(HealthType maximum, TimeIntervalType regenDelay);
+		ManaComponent(HealthType maximum, TimeUnitType regenDelay);
 
 		virtual std::shared_ptr<IComponentInstance> Instantiate() override;
 		virtual const std::string& GetId() const override;
@@ -44,7 +45,7 @@ namespace Common { namespace Components
 			std::shared_ptr<EntityInstance> instance, TimeIntervalType value);
 
 		ManaType GetDefaultMaximum() const;
-		ManaType GetDefaultRegenDelay() const;
+		TimeIntervalType GetDefaultRegenDelay() const;
 
 		static std::shared_ptr<ManaComponent> Access(std::shared_ptr<EntityType> entityType);
 
@@ -55,7 +56,7 @@ namespace Common { namespace Components
 			std::shared_ptr<EntityInstance> instance) const;
 
 		ManaType maximum_;
-		ManaType regenDelay_;
+		TimeIntervalType regenDelay_;
 
 		static const std::string ID;
 	};

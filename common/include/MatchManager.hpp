@@ -7,7 +7,7 @@
 #include "Events\IEvent.hpp"
 #include "Events\CDefaultEvent.hpp"
 #include <memory>
-#include <ctime>
+#include <chrono>
 
 namespace Common
 {
@@ -20,18 +20,18 @@ namespace Common
 	{
 	public:
 		MatchManager();
-		void Start(); // Begin generating gametick events
-		void Pause(); // Stop generating gametick events
-		void Stop(); // End match
-		void GenerateTick();
-		EMatchMode GetMode();
-		void SubscribeTick();
-	private:
+		virtual void Start(); // Begin generating gametick events
+		virtual void Pause(); // Stop generating gametick events
+		virtual void Stop(); // End match
+		virtual bool GenerateTick();
+		virtual EMatchMode GetMode();
+		virtual void SubscribeTick(bool(*)(EventArg&));
+	protected:
 		EMatchMode matchMode_;
 		TimeIntervalType tickRate_;
-		time_t lastTick_;
+		TimePointType lastTick_;
 		std::shared_ptr<IEvent> tick_;
 	};
 }
 
-#endif COMMON_MATCH_MANAGER_HPP_
+#endif //COMMON_MATCH_MANAGER_HPP_

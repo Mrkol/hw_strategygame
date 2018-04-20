@@ -85,7 +85,7 @@ namespace Common { namespace Serialization
 			Entities::Components::HealthComponentType* health 
 				= type.mutable_health();
 			health->set_maximum(healthType->GetDefaultMaximum());
-			health->set_regen_delay(healthType->GetDefaultRegenDelay());
+			health->set_regen_delay(healthType->GetDefaultRegenDelay().count());
 		}
 
 		if (auto manaType = ManaComponent::Access(object))
@@ -93,7 +93,7 @@ namespace Common { namespace Serialization
 			Entities::Components::ManaComponentType* mana 
 				= type.mutable_mana();
 			mana->set_maximum(manaType->GetDefaultMaximum());
-			mana->set_regen_delay(manaType->GetDefaultRegenDelay());
+			mana->set_regen_delay(manaType->GetDefaultRegenDelay().count());
 		}
 
 		if (auto teamType = TeamComponent::Access(object))

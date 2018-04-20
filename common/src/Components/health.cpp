@@ -8,6 +8,12 @@ namespace Common { namespace Components
 
 	}
 
+	HealthComponent::HealthComponent(HealthType maximum, TimeUnitType regenDelay)
+		: maximum_(maximum), regenDelay_(regenDelay)
+	{
+
+	}
+
 	const std::string& HealthComponent::GetId() const
 	{
 		return HealthComponent::ID;
@@ -66,7 +72,7 @@ namespace Common { namespace Components
 		return maximum_;
 	}
 
-	HealthType HealthComponent::GetDefaultRegenDelay() const
+	TimeIntervalType HealthComponent::GetDefaultRegenDelay() const
 	{
 		return regenDelay_;
 	}
