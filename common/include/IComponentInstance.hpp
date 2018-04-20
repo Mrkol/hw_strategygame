@@ -16,6 +16,7 @@ namespace Common
 	{
 	public:
 		virtual const std::string& GetTypeId() const = 0;
+		virtual ~IComponentInstance() = default;
 	};
 }
 

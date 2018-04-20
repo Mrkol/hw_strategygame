@@ -31,6 +31,8 @@ namespace Common { namespace Components
 
 		static std::shared_ptr<TeamComponent> Access(std::shared_ptr<EntityType> entityType);
 
+		virtual ~TeamComponent() = default;
+
 	private:
 		std::shared_ptr<TeamComponentInstance> access_(
 			std::shared_ptr<EntityInstance> instance) const;
@@ -44,7 +46,8 @@ namespace Common { namespace Components
 	public:
 		virtual const std::string& GetTypeId() const override;
 
-
+		virtual ~TeamComponentInstance() = default;
+		
 	private:
 		TeamComponentInstance();
 

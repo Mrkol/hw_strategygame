@@ -10,8 +10,8 @@ mkdir build
 
 cd build
 
-cmake ../ $@
+cmake $@ ../
 
-make
+cmake --build
 
 cd ..

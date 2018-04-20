@@ -48,6 +48,8 @@ namespace Common { namespace Components
 
 		static std::shared_ptr<ManaComponent> Access(std::shared_ptr<EntityType> entityType);
 
+		virtual ~ManaComponent() = default;
+
 	private:
 		std::shared_ptr<ManaComponentInstance> access_(
 			std::shared_ptr<EntityInstance> instance) const;
@@ -64,6 +66,7 @@ namespace Common { namespace Components
 	public:
 		virtual const std::string& GetTypeId() const override;
 
+		virtual ~ManaComponentInstance() = default;
 
 	private:
 		ManaComponentInstance(ManaType maximum, TimeIntervalType regenDelay);

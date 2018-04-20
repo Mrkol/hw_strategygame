@@ -1,4 +1,5 @@
 build/**
 .vs/**
+TestResults/**
 .clang_complete
 CMakeSettings.json
