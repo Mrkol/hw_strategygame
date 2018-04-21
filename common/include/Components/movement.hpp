@@ -22,33 +22,31 @@ namespace Common { namespace Components
 		MovementComponent(MovementType maximum, TimeIntervalType regenDelay);
 
 		virtual std::shared_ptr<IComponentInstance> Instantiate() override;
-		virtual std::string GetId() const override;
+		virtual const std::string& GetId() const override;
 
-		MovementType GetBase(
+		MoveSpeedType GetCurrentSpeed(
 			std::shared_ptr<EntityInstance> instance) const;
-		MovementType GetCurrent(
-			std::shared_ptr<EntityInstance> instance) const;
-		MovementStyleType GetMoveStyle(
+		MovementType GetMovementType(
 			std::shared_ptr<EntityInstance> instance) const;
 
-		void  SetBase(//have to decide if we ideologically need it
+		void  SetCurrentSpeed(
+			std::shared_ptr<EntityInstance> instance, MoveSpeedType value);
+		void  SetMovementType(
 			std::shared_ptr<EntityInstance> instance, MovementType value);
-		void  SetCurrent(
-			std::shared_ptr<EntityInstance> instance, MovementType value);
-		void  SetGetMoveStyle(
-			std::shared_ptr<EntityInstance> instance, MovementStyleType value);
 
-		MovementType GetDefaultBase() const;
-		MovementStyleType GetDefaultMoveStyle() const;
+		MoveSpeedType GetDefaultSpeed() const;
+		MovementType GetDefaultMovementType() const;
 
 		static std::shared_ptr<MovementComponent> Access(std::shared_ptr<EntityType> entityType);
+
+		virtual ~MovementComponent() = default;
 
 	private:
 		std::shared_ptr<MovementComponentInstance> access_(
 			std::shared_ptr<EntityInstance> instance) const;
 
-		MovementType base_;
-		MovementStyleType moveStyle_;
+		MoveSpeedType baseMovementSpeed_;
+		MovementType movementType_;
 
 		static const std::string ID;
 	};
@@ -56,17 +54,17 @@ namespace Common { namespace Components
 	class MovementComponentInstance : public IComponentInstance
 	{
 		friend class MovementComponent;
-		friend class move;
-	public:
-		virtual std::string GetTypeId() const override;
 
+	public:
+		virtual const std::string& GetTypeId() const override;
+
+		virtual ~MovementComponentInstance() = default;
 
 	private:
-		MovementComponentInstance(MovementType maximum, TimeIntervalType regenDelay);
+		MovementComponentInstance(MoveSpeedType current, MovementType type);
 
-		MovementType base_;
-		MovementType current_;
-		MovementStyleType moveStyle_;
+		MoveSpeedType current_;
+		MovementType moveStyle_;
 	};
 } }
 

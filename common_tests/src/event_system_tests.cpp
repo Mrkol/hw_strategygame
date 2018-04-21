@@ -1,79 +1,56 @@
 #include "gtest/gtest.h"
-#include "Events\CDefaultEvent.hpp"
-#include "Events\IEvent.hpp"
+#include "Events/event.hpp"
 #include "MatchManager.hpp"
 
 using namespace Common;
 
-TEST(EventSystemTests, TestManagerInitialize)
+TEST(EventSystemTests, TestManagerInitialization)
 {
 	MatchManager manager;
-	ASSERT_EQ(manager.GetMode(), Common::EMatchMode::init);
-}
-
-bool SampleFuncFalse(EventArg& args)
-{
-	return false;
-}
-
-bool SampleFuncTrue(EventArg& args)
-{
-	return true;
-}
-
-TEST(EventSystemTests, EventTryHappen)
-{
-	IEvent* event_ = new CDefaultEvent;
-	event_->Subscribe(SampleFuncTrue);
-	event_->Subscribe(SampleFuncFalse);
-	EXPECT_EQ(event_->TryHappen(EventArg()), false);
-	delete event_;
-
-	event_ = new CDefaultEvent;
-	event_->Subscribe(SampleFuncTrue);
-	event_->Subscribe(SampleFuncTrue);
-	EXPECT_EQ(event_->TryHappen(EventArg()), true);
-	delete event_;
+	ASSERT_EQ(manager.GetCurrentState(), MatchState::Initialization);
+	//more tests will be here when more content is done
 }
 
 TEST(EventSystemTests, EventTrySubscribe_Unsubscribe)
 {
-	IEvent* event_ = new CDefaultEvent;
-	event_->Subscribe(SampleFuncTrue);
-	event_->Subscribe(SampleFuncFalse);
-	EXPECT_EQ(event_->TryHappen(EventArg()), false);
+	bool happened = false;
 
-	EXPECT_EQ(event_->Unsubscribe(SampleFuncFalse), true);
-	
-	EXPECT_EQ(event_->TryHappen(EventArg()), true);
+	auto sampleHandler = 
+		[&happened](EventArgs& args) 
+		{
+			happened = true;
+		};
 
-	event_->Subscribe(SampleFuncFalse);
-	event_->Subscribe(SampleFuncFalse);
-	EXPECT_EQ(event_->Unsubscribe(SampleFuncFalse), true);
+	std::shared_ptr<IEvent> event(new Event);
 
-	EXPECT_EQ(event_->TryHappen(EventArg()), false);
-	EXPECT_EQ(event_->Unsubscribe(SampleFuncFalse), true);
-	EXPECT_EQ(event_->Unsubscribe(SampleFuncFalse), false);
+	event->Subscribe("sample", sampleHandler);
+	event->Trigger(EventArgs());
+	EXPECT_TRUE(happened);
+	happened = false;
 
-	delete event_;
+	EXPECT_EQ(event->Unsubscribe("sample"), true);
+	EXPECT_EQ(event->Unsubscribe("sample"), false);
+
+	event->Trigger(EventArgs());
+	EXPECT_FALSE(happened);
 }
 
 TEST(EventSystemTests, ManagerChangeState)
 {
 	MatchManager manager;
-	ASSERT_EQ(manager.GetMode(), Common::EMatchMode::init);
+	ASSERT_EQ(manager.GetCurrentState(), MatchState::Initialization);
 	manager.Start();
-	ASSERT_EQ(manager.GetMode(), Common::EMatchMode::normal);
+	ASSERT_EQ(manager.GetCurrentState(), MatchState::InProgress);
 	manager.Start();
-	ASSERT_EQ(manager.GetMode(), Common::EMatchMode::normal);
+	ASSERT_EQ(manager.GetCurrentState(), MatchState::InProgress);
 	manager.Pause();
-	ASSERT_EQ(manager.GetMode(), Common::EMatchMode::pause);
+	ASSERT_EQ(manager.GetCurrentState(), MatchState::Paused);
 	manager.Start();
-	ASSERT_EQ(manager.GetMode(), Common::EMatchMode::normal);
+	ASSERT_EQ(manager.GetCurrentState(), MatchState::InProgress);
 	manager.Stop();
-	ASSERT_EQ(manager.GetMode(), Common::EMatchMode::end);
+	ASSERT_EQ(manager.GetCurrentState(), MatchState::Ended);
 	manager.Start();
-	ASSERT_EQ(manager.GetMode(), Common::EMatchMode::end);
+	ASSERT_EQ(manager.GetCurrentState(), MatchState::Ended);
 }
 
 class TestMatchManager : public MatchManager
@@ -110,7 +87,7 @@ TEST(EventSystemTests, EventsAndChrono)
 	manager.Start();
 	manager.SetTickRate(TimeIntervalType(100));
 	TimePointType finish = std::chrono::system_clock::now() + TimeIntervalType(720);
-	while (manager.GetMode() != end)
+	while (manager.GetCurrentState() != MatchState::Ended)
 	{
 		if (std::chrono::system_clock::now() > finish)
 		{

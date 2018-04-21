@@ -93,7 +93,7 @@ namespace Common { namespace Serialization
 		if (auto positionType = PositionComponent::Access(type))
 		{
 			Entities::Components::PositionComponent* position = instance.mutable_position();
-			Position pos = positionType->Get(object);
+			MapPosition pos = positionType->Get(object);
 			position->set_x(pos.x);
 			position->set_y(pos.y);
 		}

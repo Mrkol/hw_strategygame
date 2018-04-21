@@ -20,10 +20,11 @@ namespace Common
 	using TimeUnitType = int;
 	using TimeIntervalType = std::chrono::milliseconds;
 	using TimePointType = std::chrono::system_clock::time_point;
-	using MovementType = double;
-	enum MovementStyleType
+	using MoveSpeedType = float;
+
+	enum class MovementType
 	{
-		none = 0, ground, air
+		None = 0, Ground, Air
 	};
 
 	using TeamIdType = unsigned int;

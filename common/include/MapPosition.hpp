@@ -9,19 +9,19 @@ namespace Common
 {
 	using CoordinateType = float;
 
-	struct Position
+	struct MapPosition
 	{
 		CoordinateType x;
 		CoordinateType y;
 	};
 
-	inline bool operator==(const Position& first, const Position& second)
+	inline bool operator==(const MapPosition& first, const MapPosition& second)
 	{
 		return first.x == second.x && first.y == second.y;
 	}
 
-	Position FindWay(Position from, Position to, MovementType movePoints, MovementStyleType moveStyle);
-	bool IsClose(Position from, Position to);
+	MapPosition FindWay(MapPosition from, MapPosition to, MoveSpeedType speed, MovementType type);
+	bool IsClose(MapPosition first, MapPosition second);
 }
 
 #endif // COMMON_MAP_POSITION_HPP_

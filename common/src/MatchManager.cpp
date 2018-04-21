@@ -1,43 +1,46 @@
 #include "MatchManager.hpp"
+#include "Events/event.hpp"
+#include "Events/EventAccessProxy.hpp"
 #include <iostream>
 #include <chrono>
 
 namespace Common
 {
 	MatchManager::MatchManager()
+		: gameTick_(),
+		GameTickEvent(gameTick_),
+		currentMatchState_(MatchState::Initialization),
+		tickRate_(TimeIntervalType(5))
 	{
-		tick_.reset(new CDefaultEvent);
-		matchMode_ = init;
-		tickRate_ = TimeIntervalType(5);
-		lastTick_ = std::chrono::system_clock::now();
+		
 	}
 
 	void MatchManager::Start()
 	{
-		if (matchMode_ == end)
+		if (currentMatchState_ == MatchState::Ended)
 		{
 			return;
 		}
-		matchMode_ = normal;
+		currentMatchState_ = MatchState::InProgress;
 	}
 
 	void MatchManager::Pause()
 	{
-		if (matchMode_ == end)
+		if (currentMatchState_ == MatchState::Ended)
 		{
 			return;
 		}
-		matchMode_ = pause;
+		currentMatchState_ = MatchState::Paused;
 	}
 
 	void MatchManager::Stop()
 	{
-		matchMode_ = end;
+		currentMatchState_ = MatchState::Ended;
 	}
 
 	bool MatchManager::GenerateTick()
 	{
-		if (matchMode_ != normal)
+		if (currentMatchState_ != MatchState::InProgress)
 		{
 			return false;
 		}
@@ -45,20 +48,15 @@ namespace Common
 		if (lastTick_ + tickRate_ < std::chrono::system_clock::now())
 		{
 			lastTick_ = std::chrono::system_clock::now();
-			tick_->Happen(EventArg());
+			gameTick_.Trigger(EventArgs());
 			return true;
 		}
 
 		return false;
 	}
 
-	EMatchMode MatchManager::GetMode()
+	MatchState MatchManager::GetCurrentState()
 	{
-		return matchMode_;
-	}
-
-	void MatchManager::SubscribeTick(bool(*func)(EventArg&))
-	{
-		tick_->Subscribe(func);
+		return currentMatchState_;
 	}
 }

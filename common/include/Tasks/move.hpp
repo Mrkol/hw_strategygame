@@ -9,22 +9,20 @@
 #include "Components/movement.hpp"
 #include "Tasks/ITask.hpp"
 
-namespace Common {
-	namespace Components
+namespace Common { namespace Tasks 
+{
+	class MoveTask : public ITask
 	{
-		namespace Tasks {
-			class move:public ITask
-			{
-			public:
-				move(std::weak_ptr<EntityInstance>);
-				void SetDestination(Position);
-				bool Attempt() override;
-			private:
-				Position destination_;
-				std::weak_ptr<EntityInstance> selfEntityInstanse_;
-			};
-		}
-	}
-}
+	public:
+		MoveTask(std::weak_ptr<EntityInstance> entity);
+
+		void SetDestination(MapPosition destination);
+
+		bool Attempt() override;
+	private:
+		MapPosition destination_;
+		std::weak_ptr<EntityInstance> entity_;
+	};
+} }
 
 #endif //COMMON_COMPONENTS_TASKS_MOVE_HPP_

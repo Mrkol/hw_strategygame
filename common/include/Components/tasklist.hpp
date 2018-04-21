@@ -18,9 +18,8 @@ namespace Common {
 		{
 			friend class TaskListComponentInstance;
 		public:
-
 			std::shared_ptr<IComponentInstance> Instantiate() override;
-			std::string GetId() const override;
+			const std::string& GetId() const override;
 
 			void AttemptCurrentTask(
 				std::shared_ptr<EntityInstance> instance) const;
@@ -36,6 +35,8 @@ namespace Common {
 
 			static std::shared_ptr<TaskListComponent> Access(
 				std::shared_ptr<EntityType> entityType);
+			
+			virtual ~TaskListComponent() = default;
 
 		private:
 			std::shared_ptr<TaskListComponentInstance> access_(
@@ -49,7 +50,9 @@ namespace Common {
 			friend class TaskListComponent;
 
 		public:
-			virtual std::string GetTypeId() const;
+			virtual const std::string& GetTypeId() const;
+
+			virtual ~TaskListComponentInstance() = default;
 			
 		private:
 			TaskListComponentInstance();

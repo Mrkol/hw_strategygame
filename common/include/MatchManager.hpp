@@ -4,33 +4,53 @@
 #define COMMON_MATCH_MANAGER_HPP_
 
 #include "CommonHelper.hpp"
-#include "Events\IEvent.hpp"
-#include "Events\CDefaultEvent.hpp"
+#include "Events/event.hpp"
+#include "Events/EventAccessProxy.hpp"
 #include <memory>
 #include <chrono>
 
 namespace Common
 {
-	enum EMatchMode
+	enum class MatchState
 	{
-		pause, normal, end, init
+		Initialization, InProgress, Paused, Ended
 	};
+
+	using namespace Events;
 
 	class MatchManager
 	{
+		Event gameTick_;
+
 	public:
 		MatchManager();
-		virtual void Start(); // Begin generating gametick events
-		virtual void Pause(); // Stop generating gametick events
-		virtual void Stop(); // End match
+
+		/**
+		 * \brief Begin generating gametick events
+		 */
+		virtual void Start();
+
+		/**
+		 * \brief Stop generating gametick events
+		 */
+		virtual void Pause();
+
+		/**
+		 * \brief End match
+		 */
+		virtual void Stop();
+
 		virtual bool GenerateTick();
-		virtual EMatchMode GetMode();
-		virtual void SubscribeTick(bool(*)(EventArg&));
+
+		virtual MatchState GetCurrentState();
+
+		EventAccessProxy GameTickEvent;
+
 	protected:
-		EMatchMode matchMode_;
+		MatchState currentMatchState_;
 		TimeIntervalType tickRate_;
 		TimePointType lastTick_;
-		std::shared_ptr<IEvent> tick_;
+
 	};
 }
 

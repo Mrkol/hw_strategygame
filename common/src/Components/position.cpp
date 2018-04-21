@@ -7,14 +7,14 @@ namespace Common { namespace Components
 		return PositionComponent::ID;
 	}
 
-	Position PositionComponent::Get(
+	MapPosition PositionComponent::Get(
 		std::shared_ptr<EntityInstance> instance) const
 	{
 		return access_(instance)->position_;
 	}
 
 	void PositionComponent::Set(
-		std::shared_ptr<EntityInstance> instance, Position position)
+		std::shared_ptr<EntityInstance> instance, MapPosition position)
 	{
 		access_(instance)->position_ = position;
 	}
