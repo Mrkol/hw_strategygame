@@ -11,7 +11,8 @@ namespace Common { namespace Events
 {
 	class EventArgs
 	{
-
+	public:
+		virtual ~EventArgs() = default;
 	};
 
 	using Callback = std::function<void(EventArgs&)>;
@@ -33,11 +34,11 @@ namespace Common { namespace Events
 		virtual void Subscribe(const std::string& id, Callback callback) override;
 		virtual bool Unsubscribe(const std::string& id) override;
 
-		virtual void Trigger(EventArgs&) override;
+		virtual void Trigger(EventArgs& args) override;
 
 		virtual ~Event() = default;
 
-	private:
+	protected:
 		std::map<std::string, Callback> subscribers_;
 	};
 } }
