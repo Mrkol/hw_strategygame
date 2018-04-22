@@ -29,7 +29,7 @@ namespace Common { namespace Events
 	public:
 		virtual void Trigger(EventArgs&) override;
 
-		virtual ~Event() = default;
+		virtual ~CancellableEvent() = default;
 	};
 } }
 

@@ -23,12 +23,12 @@ namespace Common { namespace Events
 		status_ = EventStatus::Terminated;
 	}
 
-	bool CancellableEventArgs::GetEventStatus()
+	EventStatus CancellableEventArgs::GetEventStatus()
 	{
 		return status_;
 	}
 
-	virtual void CancellableEvent::Trigger(EventArgs& args)
+	void CancellableEvent::Trigger(EventArgs& args)
 	{
 		CancellableEventArgs& casted = static_cast<CancellableEventArgs&>(args);
 
