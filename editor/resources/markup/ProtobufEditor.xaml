@@ -3,49 +3,49 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	Width="*" Height="*"
 	x:Class="Editor.ProtobufEditor"
-    Style="{StaticResource DefaultFont}">
+  Style="{StaticResource DefaultFont}">
 
-    <Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="80"/>
-		</Grid.RowDefinitions>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="80"/>
+    </Grid.RowDefinitions>
 
-		<TreeView
+    <TreeView
 			Grid.Row="0"
 			Name="trvMenu">
 
-			<TreeView.ItemTemplate>
-				<HierarchicalDataTemplate
-					DataType="TreeMessage"
+      <TreeView.ItemTemplate>
+        <HierarchicalDataTemplate
+					DataType="Editor.ProtobufEditor.TreeMessage"
 					ItemsSource="{Binding Path=Items}">
-					
-					<TextBlock Text="{Binding Path=Content}" />
-				</HierarchicalDataTemplate>
 
-				<DataTemplate 
-					DataType="TreeValue">
+          <TextBlock Text="{Binding Path=Content}" />
+        </HierarchicalDataTemplate>
 
-					<TextBox Text="{Binding Path=Content}"/>
-				</DataTemplate>
-			</TreeView.ItemTemplate>
-		</TreeView>
+        <DataTemplate
+					DataType="Editor.ProtobufEditor.TreeValue">
 
-		<Grid Grid.Row="1">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
+          <TextBox Text="{Binding Path=Content}"/>
+        </DataTemplate>
+      </TreeView.ItemTemplate>
+    </TreeView>
 
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Height="*"/>
-				<ColumnDefinition Height="*"/>
-			</Grid.ColumnDefinitions>
+    <Grid Grid.Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
 
-			<Button Grid.Row="0" Grid.Column="0" Content="New"/>
-			<Button Grid.Row="0" Grid.Column="2" Content="Remove"/>
-			<Button Grid.Row="2" Grid.Column="0" Content="Export"/>
-			<Button Grid.Row="2" Grid.Column="2" Content="Import"/>
-		</Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Height="*"/>
+        <ColumnDefinition Height="*"/>
+      </Grid.ColumnDefinitions>
+
+      <Button Grid.Row="0" Grid.Column="0" Content="New"/>
+      <Button Grid.Row="0" Grid.Column="2" Content="Remove"/>
+      <Button Grid.Row="2" Grid.Column="0" Content="Export"/>
+      <Button Grid.Row="2" Grid.Column="2" Content="Import"/>
     </Grid>
+  </Grid>
 </UserControl>

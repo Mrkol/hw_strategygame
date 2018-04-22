@@ -15,6 +15,6 @@
 	</Window.Resources>
 	
 
-	<local:EntityTypeEditor
+	<EntityTypeEditor
 		Width="*" Height="*"/>
 </Window>
