@@ -15,6 +15,9 @@ namespace Common
 	class IComponentInstance
 	{
 	public:
+		/**
+		* \brief Get id of component type of specific component instance
+		*/
 		virtual const std::string& GetTypeId() const = 0;
 		virtual ~IComponentInstance() = default;
 	};

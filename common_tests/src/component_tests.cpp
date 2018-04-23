@@ -29,8 +29,10 @@ TEST(ComponentTests, HealthTest)
 
 	health->SetCurrent(instance, 50);
 	health->SetCurrentRegenDelay(instance, Common::TimeIntervalType(5));
+	
 
 	ASSERT_EQ(50, health->GetCurrent(instance));
+	ASSERT_EQ(100, health->GetMaximum(instance));
 	ASSERT_EQ(5, health->GetCurrentRegenDelay(instance).count());
 }
 
@@ -109,8 +111,8 @@ TEST(ComponentTests, IncorrectComponentTypeAccessTest)
 	builder.StartBuilding("empty");
 	auto emptyType = builder.FinishBuilding();
 
-	ASSERT_FALSE(!!HealthComponent::Access(emptyType));
-	ASSERT_FALSE(!!ManaComponent::Access(emptyType));
-	ASSERT_FALSE(!!PositionComponent::Access(emptyType));
-	ASSERT_FALSE(!!TeamComponent::Access(emptyType));
+	ASSERT_FALSE((bool)HealthComponent::Access(emptyType));
+	ASSERT_FALSE((bool)ManaComponent::Access(emptyType));
+	ASSERT_FALSE((bool)PositionComponent::Access(emptyType));
+	ASSERT_FALSE((bool)TeamComponent::Access(emptyType));
 }

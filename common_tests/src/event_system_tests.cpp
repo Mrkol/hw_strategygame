@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "Events/event.hpp"
 #include "MatchManager.hpp"
+#include "UniversalException.hpp"
 
 using namespace Common;
 
@@ -21,17 +22,46 @@ TEST(EventSystemTests, EventTrySubscribe_Unsubscribe)
 			happened = true;
 		};
 
-	std::shared_ptr<IEvent> event(new Event);
+	std::shared_ptr<IEvent> testEvent(new Event);
 
-	event->Subscribe("sample", sampleHandler);
-	event->Trigger(EventArgs());
+	testEvent->Subscribe("sample", sampleHandler);
+	testEvent->Trigger(EventArgs());
 	EXPECT_TRUE(happened);
 	happened = false;
 
-	EXPECT_EQ(event->Unsubscribe("sample"), true);
-	EXPECT_EQ(event->Unsubscribe("sample"), false);
+	EXPECT_EQ(testEvent->Unsubscribe("sample"), true);
+	EXPECT_EQ(testEvent->Unsubscribe("sample"), false);
 
-	event->Trigger(EventArgs());
+	testEvent->Trigger(EventArgs());
+	EXPECT_FALSE(happened);
+}
+
+TEST(EventSystemTests, EventAccessProxyTrySubscribe_Unsubscribe)
+{
+	bool happened = false;
+
+	auto sampleHandler =
+		[&happened](EventArgs& args)
+	{
+		happened = true;
+	};
+
+	std::shared_ptr<IEvent> testEvent(new Event);
+	EventAccessProxy testProxy(*testEvent);
+	testProxy.Subscribe("sample", sampleHandler);
+
+	EXPECT_EQ(testProxy.Unsubscribe("sample"), true);
+	EXPECT_EQ(testProxy.Unsubscribe("sample"), false);
+	bool catched = false;
+	try
+	{
+		testProxy.Trigger(EventArgs());
+	}
+	catch (const std::exception& exc)
+	{
+		catched = true;
+	}
+	EXPECT_TRUE(catched);
 	EXPECT_FALSE(happened);
 }
 
@@ -86,7 +116,7 @@ TEST(EventSystemTests, EventsAndChrono)
 	TestMatchManager manager;
 	manager.Start();
 	manager.SetTickRate(TimeIntervalType(100));
-	TimePointType finish = std::chrono::system_clock::now() + TimeIntervalType(720);
+	TimePointType finish = std::chrono::system_clock::now() + TimeIntervalType(690);
 	while (manager.GetCurrentState() != MatchState::Ended)
 	{
 		if (std::chrono::system_clock::now() > finish)
@@ -96,4 +126,35 @@ TEST(EventSystemTests, EventsAndChrono)
 		manager.GenerateTickTest();
 	}
 	ASSERT_EQ(manager.GetTickCounter(), 7);
+}
+
+TEST(EventSystemTests, ManagerWithProxy)
+{
+	TestMatchManager manager;
+	manager.Start();
+	manager.SetTickRate(TimeIntervalType(100));
+
+	short int happened = 0;
+	short int anotherHappened = 0;
+	manager.GameTickEvent.Subscribe("sample", [&happened](EventArgs& args)
+	{
+		++happened;
+	});
+	manager.GameTickEvent.Subscribe("second_sample", [&anotherHappened](EventArgs& args)
+	{
+		++anotherHappened;
+	});
+
+	TimePointType finish = std::chrono::system_clock::now() + TimeIntervalType(690);
+	while (manager.GetCurrentState() != MatchState::Ended)
+	{
+		if (std::chrono::system_clock::now() > finish)
+		{
+			manager.Stop();
+		}
+		manager.GenerateTickTest();
+	}
+	ASSERT_EQ(manager.GetTickCounter(), 7);
+	ASSERT_EQ(manager.GetTickCounter(), happened);
+	ASSERT_EQ(happened, anotherHappened);
 }
