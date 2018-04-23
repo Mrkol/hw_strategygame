@@ -15,28 +15,28 @@ message HealthComponent
 {
 	uint32 maximum = 1;
 	uint32 current = 2;
-	uint32 regen_delay = 3;
-	uint32 current_regen_delay = 4;
+	uint64 regen_delay = 3;
+	uint64 current_regen_delay = 4;
 }
 
 message HealthComponentType
 {
 	uint32 maximum = 1;
-	uint32 regen_delay = 2;
+	uint64 regen_delay = 2;
 }
 
 message ManaComponent
 {
 	uint32 maximum = 1;
 	uint32 current = 2;
-	uint32 regen_delay = 3;
-	uint32 current_regen_delay = 4;
+	uint64 regen_delay = 3;
+	uint64 current_regen_delay = 4;
 }
 
 message ManaComponentType
 {
 	uint32 maximum = 1;
-	uint32 regen_delay = 2;
+	uint64 regen_delay = 2;
 }
 
 message TeamComponent

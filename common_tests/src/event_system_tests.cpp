@@ -59,6 +59,7 @@ TEST(EventSystemTests, EventAccessProxyTrySubscribe_Unsubscribe)
 	}
 	catch (const std::exception& exc)
 	{
+		exc.what();
 		catched = true;
 	}
 	EXPECT_TRUE(catched);

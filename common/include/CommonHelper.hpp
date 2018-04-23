@@ -17,7 +17,7 @@ namespace Common
 
 	using HealthType = unsigned int;
 	using ManaType = unsigned int;
-	using TimeUnitType = int;
+	using TimeUnitType = long long int;
 	using TimeIntervalType = std::chrono::milliseconds;
 	using TimePointType = std::chrono::system_clock::time_point;
 	using MoveSpeedType = float;
