@@ -3,7 +3,7 @@
 #ifndef EDITOR_ENTITY_TYPE_EDITOR_WINDOW_HPP_
 #define EDITOR_ENTITY_TYPE_EDITOR_WINDOW_HPP_
 
-#include "NsCore/ReflectionImplement.h"
+#include "NsCore/ReflectionDeclare.h"
 #include "NsGui/UserControl.h"
 
 namespace Editor

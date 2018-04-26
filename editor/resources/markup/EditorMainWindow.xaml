@@ -2,19 +2,8 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	Title="Editor" Width="1080" Height="720" ResizeMode="CanResize"
-	x:Class="Editor.MainWindow">
+  	xmlns:local="clr-namespace:Editor"
+	x:Class="Editor.EditorMainWindow">
 
-	<Window.Resources>
-		<DataModel1 x:Name="dataModel">
-			<DataModel1.Property>
-				<Property Property="Health" Value="100500" />
-				<Property Property="Mana" Value="9000" />
-				<Property Property="Anger" Value="69lol" />
-			</DataModel1.Property>
-		</DataModel1>
-	</Window.Resources>
-	
-
-	<EntityTypeEditor
-		Width="*" Height="*"/>
+	<local:ProtobufEditor x:Name="Proto"/>
 </Window>

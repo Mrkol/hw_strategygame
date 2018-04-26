@@ -1,11 +1,9 @@
 <UserControl
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	Width="*" Height="*"
-	x:Class="Editor.EntityTypeEditor"
-    Style="{StaticResource DefaultFont}">
+	x:Class="EntityTypeEditor">
 
-	<Grid Width="*" Height="*">
+	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="300"/>
 			<ColumnDefinition Width="300"/>
@@ -24,18 +22,11 @@
 					Style="{StaticResource DefaultFont}">
 
 					<TreeView >
-						<TreeView.Resources>
-							<Style 
-								TargetType="{x:Type TextBlock}" 
-								BasedOn="{StaticResource DefaultFont}" />
-						</TreeView.Resources>
-						
 						<TreeViewItem>
 							<TreeViewItem.Header>
 								<StackPanel Orientation="Horizontal">
 									<TextBlock 
-										Text="Folder"
-										VerticalAlignment="Left"/>
+										Text="Folder"/>
 								</StackPanel>
 							</TreeViewItem.Header>
 
@@ -43,8 +34,7 @@
 								<TreeViewItem.Header>
 									<StackPanel Orientation="Horizontal">
 										<TextBlock 
-											Text="Entity1"
-											VerticalAlignment="Left"/>
+											Text="Entity1"/>
 									</StackPanel>
 								</TreeViewItem.Header>
 							</TreeViewItem>
@@ -53,8 +43,7 @@
 								<TreeViewItem.Header>
 									<StackPanel Orientation="Horizontal">
 										<TextBlock 
-											Text="Entity2"
-											VerticalAlignment="Left"/>
+											Text="Entity2"/>
 									</StackPanel>
 								</TreeViewItem.Header>
 							</TreeViewItem>
@@ -111,12 +100,6 @@
 					Style="{StaticResource DefaultFont}">
 
 					<ListBox>
-						<ListBox.Resources>
-							<Style 
-								TargetType="{x:Type TextBlock}" 
-								BasedOn="{StaticResource DefaultFont}" />
-						</ListBox.Resources>
-
 						<TextBlock Text="Blood meal" />
 						<TextBlock Text="Greensand mix" />
 					</ListBox>
@@ -151,35 +134,8 @@
 
 		<!-- COMPONENT -->
 		<Border Grid.Column="2" Padding="5,5,5,5">
-			<ListView DataContext="{StaticResource dataModel}">
-				<ListView.Resources>
-					<DataTemplate x:Key="Property">
-						<Border>
-							<TextBlock 
-								Text="{Binding Property}"/>
-						</Border>
-					</DataTemplate>
+			<ListView>
 
-					<DataTemplate x:Key="Value">
-						<Border>
-							<TextBlock 
-								Text="{Binding Value}"/>
-						</Border>
-					</DataTemplate>
-				</ListView.Resources>
-
-				<ListView.View>
-					<GridView>
-						<GridViewColumn
-							Header="Property" Width="200"
-							HeaderContainerStyle="{StaticResource DefaultFont}"
-            				CellTemplate="{StaticResource Property}"/>
-						<GridViewColumn
-							Header="Value" Width="200"
-							HeaderContainerStyle="{StaticResource DefaultFont}"
-            				CellTemplate="{StaticResource Value}"/>
-					</GridView>
-				</ListView.View>
 			</ListView>
 		</Border>
 	</Grid>

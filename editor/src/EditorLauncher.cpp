@@ -20,6 +20,8 @@ namespace Editor
         NsRegisterComponent<EditorMainWindow>();
         NsRegisterComponent<EntityTypeEditor>();
 		NsRegisterComponent<ProtobufEditor>();
+		NsRegisterComponent<TreeMessage>();
+		NsRegisterComponent<TreeValue>();
     }
 
 	Ptr<Noesis::XamlProvider> EditorLauncher::GetXamlProvider() const
@@ -30,7 +32,7 @@ namespace Editor
 				EditorApplication_xaml, EditorApplication_xaml_size },
 			{ "EditorMainWindow.xaml",
 				EditorMainWindow_xaml, EditorMainWindow_xaml_size },
-			{ "EntityTypeEditorWindow.xaml",
+			{ "EntityTypeEditor.xaml",
 				EntityTypeEditor_xaml, EntityTypeEditor_xaml_size },
 			{ "ProtobufEditor.xaml",
 				ProtobufEditor_xaml, ProtobufEditor_xaml_size }

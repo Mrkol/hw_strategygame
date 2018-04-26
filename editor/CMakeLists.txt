@@ -45,9 +45,15 @@ endif(WIN32)
 
 target_link_libraries(
 	editor
+	common
 	${NOESISAPP_LIBRARIES}
 	${NOESIS_LIBRARIES}
 	)
+
+if(DEBUG)
+	target_compile_definitions(editor 
+		PUBLIC NS_MINIMUM_LOG_LEVEL=0)
+endif(DEBUG)
 
 target_include_directories(editor PUBLIC "./include")
 target_include_directories(editor PRIVATE ${CMAKE_CURRENT_BINARY_DIR})

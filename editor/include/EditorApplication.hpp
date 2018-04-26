@@ -3,7 +3,7 @@
 #ifndef EDITOR_EDITOR_APPLICATION_HPP_
 #define EDITOR_EDITOR_APPLICATION_HPP_
 
-#include "NsCore/ReflectionImplement.h"
+#include "NsCore/ReflectionDeclare.h"
 #include "NsApp/Application.h"
 
 namespace Editor

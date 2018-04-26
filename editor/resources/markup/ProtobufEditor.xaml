@@ -1,9 +1,10 @@
 <UserControl
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	Width="*" Height="*"
-	x:Class="Editor.ProtobufEditor"
-  Style="{StaticResource DefaultFont}">
+  xmlns:local="clr-namespace:Editor"
+  x:Class="Editor.ProtobufEditor"
+  Style="{StaticResource DefaultFont}"
+  DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
   <Grid>
     <Grid.RowDefinitions>
@@ -13,22 +14,23 @@
 
     <TreeView
 			Grid.Row="0"
-			Name="trvMenu">
+      ItemsSource="{Binding Messages}">
 
-      <TreeView.ItemTemplate>
+      <TreeView.Resources>
         <HierarchicalDataTemplate
-					DataType="Editor.ProtobufEditor.TreeMessage"
-					ItemsSource="{Binding Path=Items}">
+          DataType="{x:Type local:ProtobufEditorTreeMessage}"
+          ItemsSource="{Binding Path=Items}">
 
-          <TextBlock Text="{Binding Path=Content}" />
+          <TextBlock Text="{Binding Name}"/>
         </HierarchicalDataTemplate>
 
         <DataTemplate
-					DataType="Editor.ProtobufEditor.TreeValue">
+          DataType="{x:Type local:ProtobufEditorTreeValue}">
 
           <TextBox Text="{Binding Path=Content}"/>
         </DataTemplate>
-      </TreeView.ItemTemplate>
+      </TreeView.Resources>
+
     </TreeView>
 
     <Grid Grid.Row="1">
@@ -38,8 +40,8 @@
       </Grid.RowDefinitions>
 
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Height="*"/>
-        <ColumnDefinition Height="*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
 
       <Button Grid.Row="0" Grid.Column="0" Content="New"/>
