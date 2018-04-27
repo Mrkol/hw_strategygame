@@ -33,13 +33,12 @@ target_embed_resources(
 	)
 
 if(WIN32)
-	get_filename_component(Protobuf_DIR ${Protobuf_INCLUDE_DIRS} DIRECTORY)
-	
 	target_add_dll(
 		TARGET editor
 		DLLS
-		${WIN_NOESIS_DLLS} ${WIN_NOESISAPP_DLLS}
-		${Protobuf_DIR}/bin/libprotobuf.dll
+		${WIN_NOESIS_DLLS}
+		${WIN_NOESISAPP_DLLS}
+		${PROTOBUF_DLL}
 		)
 endif(WIN32)
 
@@ -50,12 +49,7 @@ target_link_libraries(
 	${NOESIS_LIBRARIES}
 	)
 
-if(DEBUG)
-	target_compile_definitions(editor 
-		PUBLIC NS_MINIMUM_LOG_LEVEL=0)
-endif(DEBUG)
-
-target_include_directories(editor PUBLIC "./include")
+target_include_directories(editor PRIVATE "./include")
 target_include_directories(editor PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 target_include_directories(editor PRIVATE ${NOESIS_INCLUDE_DIRS})
 target_include_directories(editor PRIVATE ${NOESISAPP_INCLUDE_DIRS})
