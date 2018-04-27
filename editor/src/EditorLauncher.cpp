@@ -21,6 +21,7 @@ namespace Editor
         NsRegisterComponent<EntityTypeEditor>();
 		NsRegisterComponent<ProtobufEditor>();
 		NsRegisterComponent<TreeMessage>();
+		NsRegisterComponent<TreeOptional>();
 		NsRegisterComponent<TreeValue>();
     }
 

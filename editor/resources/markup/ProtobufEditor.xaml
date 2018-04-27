@@ -21,7 +21,21 @@
           DataType="{x:Type local:ProtobufEditorTreeMessage}"
           ItemsSource="{Binding Path=Items}">
 
-          <TextBlock Text="{Binding Name}"/>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Margin="0,0,5,0" Text="message"/>
+            <TextBlock Text="{Binding Name}"/>
+          </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate
+          DataType="{x:Type local:ProtobufEditorTreeOptional}"
+          ItemsSource="{Binding Path=Items}">
+
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Margin="0,0,5,0" Text="optional"/>
+            <TextBlock Margin="0,0,5,0" Text="{Binding Type}"/>
+            <TextBlock Text="{Binding Name}"/>
+          </StackPanel>
         </HierarchicalDataTemplate>
 
         <DataTemplate
@@ -30,6 +44,14 @@
           <TextBox Text="{Binding Path=Content}"/>
         </DataTemplate>
       </TreeView.Resources>
+
+      <TreeView.ItemContainerStyle>
+        <Style>
+          <Setter Property="TreeViewItem.IsExpanded" Value="True"/>
+        </Style>
+      </TreeView.ItemContainerStyle>
+
+
 
     </TreeView>
 

@@ -19,7 +19,7 @@ namespace Editor
 	public:
 		ProtobufEditor();
 
-		void AddMessage(::google::protobuf::Message* message);
+		void AddMessage(google::protobuf::Message* message);
 
 		NS_DECLARE_REFLECTION(ProtobufEditor, Noesis::UserControl);
 
@@ -31,13 +31,34 @@ namespace Editor
 	{
 	public:
 		TreeMessage();
+		TreeMessage(google::protobuf::Message* message);
 
-		TreeMessage(::google::protobuf::Message* message);
 
 		NS_DECLARE_REFLECTION(TreeMessage, Noesis::BaseComponent)
 
 	private:
+		google::protobuf::Message* message_;
 		NsString name_;
+
+		Ptr<Noesis::ObservableCollection<Noesis::BaseComponent>> items_;
+	};
+
+	class TreeOptional final : public Noesis::BaseComponent
+	{
+	public:
+		TreeOptional();
+
+		TreeOptional(google::protobuf::Message* message, 
+			const google::protobuf::FieldDescriptor* field);
+
+
+		NS_DECLARE_REFLECTION(TreeOptional, Noesis::BaseComponent)
+	private:
+		google::protobuf::Message* message_;
+		const google::protobuf::FieldDescriptor* field_;
+		NsString name_;
+		NsString type_;
+
 		Ptr<Noesis::ObservableCollection<Noesis::BaseComponent>> items_;
 	};
 
