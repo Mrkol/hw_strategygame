@@ -46,20 +46,20 @@ project(strategygame CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_MODULE_PATH 
+set(CMAKE_MODULE_PATH
 	${CMAKE_MODULE_PATH}
-	${CMAKE_SOURCE_DIR}/cmake_modules)
+	${CMAKE_SOURCE_DIR}/cmake_modules
+	)
 
 find_package(PythonInterp)
 find_package(Noesis)
 find_package(NoesisApp)
-find_package(RakNet)
 
+find_package(RakNet REQUIRED)
 find_package(Protobuf REQUIRED)
 
 if (NOT PROTOBUF_FOUND)
-	message(FATAL_ERROR
-		"Could not load protobuf!")
+	message(FATAL_ERROR "Could not load protobuf!")
 endif (NOT PROTOBUF_FOUND)
 
 option(DEBUG "Build with debug flags" OFF)
@@ -72,6 +72,61 @@ if(DEBUG)
 else(DEBUG)
 	set(CMAKE_BUILD_TYPE Release)
 endif(DEBUG)
+
+if(WITH_TESTS)
+	enable_testing()
+	find_package(GTest REQUIRED)
+
+	if (NOT GTEST_FOUND)
+		message(FATAL_ERROR "Could not load gtest!")
+	endif (NOT GTEST_FOUND)
+endif(WITH_TESTS)
+
+if(WIN32)
+	get_filename_component(Protobuf_DIR ${Protobuf_INCLUDE_DIRS} DIRECTORY)
+
+	if(DEBUG)
+		find_file(
+			PROTOBUF_DLL
+			libprotobufd.dll
+			PATHS
+			${Protobuf_DIR}/bin
+			${Protobuf_DIR}
+			${Protobuf_DIR}/debug/bin
+			)
+	else(DEBUG)
+		find_file(
+			PROTOBUF_DLL
+			libprotobuf.dll
+			PATHS
+			${Protobuf_DIR}/bin
+			${Protobuf_DIR}
+			)
+	endif(DEBUG)
+
+	if(WITH_TESTS)
+		get_filename_component(Gtest_DIR ${GTEST_INCLUDE_DIRS} DIRECTORY)
+
+		if(DEBUG)
+			find_file(
+				GTEST_DLL
+				gtestd.dll
+				PATHS
+				${Gtest_DIR}/bin
+				${Gtest_DIR}
+				${Gtest_DIR}/debug/bin
+				)
+		else(DEBUG)
+			find_file(
+				GTEST_DLL
+				gtest.dll
+				PATHS
+				${Gtest_DIR}/bin
+				${Gtest_DIR}
+				)
+		endif(DEBUG)
+	endif(WITH_TESTS)
+endif(WIN32)
 
 add_subdirectory(./common)
 # add_subdirectory(./client)

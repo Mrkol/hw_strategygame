@@ -33,13 +33,12 @@ target_embed_resources(
 	)
 
 if(WIN32)
-	get_filename_component(Protobuf_DIR ${Protobuf_INCLUDE_DIRS} DIRECTORY)
-	
 	target_add_dll(
 		TARGET editor
 		DLLS
-		${WIN_NOESIS_DLLS} ${WIN_NOESISAPP_DLLS}
-		${Protobuf_DIR}/bin/libprotobuf.dll
+		${WIN_NOESIS_DLLS}
+		${WIN_NOESISAPP_DLLS}
+		${PROTOBUF_DLL}
 		)
 endif(WIN32)
 
