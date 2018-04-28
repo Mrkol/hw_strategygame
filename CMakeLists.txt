@@ -90,6 +90,7 @@ if(WIN32)
 			libprotobufd.dll
 			${Protobuf_DIR}/bin
 			${Protobuf_DIR}
+			${Protobuf_DIR}/debug/bin
 			)
 	else(DEBUG)
 		find_file(
@@ -97,6 +98,7 @@ if(WIN32)
 			libprotobuf.dll
 			${Protobuf_DIR}/bin
 			${Protobuf_DIR}
+			${Protobuf_DIR}/debug/bin
 			)
 	endif(DEBUG)
 
