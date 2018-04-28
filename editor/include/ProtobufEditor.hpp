@@ -54,6 +54,10 @@ namespace Editor
 
 		NS_DECLARE_REFLECTION(TreeOptional, Noesis::BaseComponent)
 	private:
+	    void onRemoveClick(BaseComponent* sender, const Noesis::GUI::RoutedEventArgs& args);
+
+
+
 		google::protobuf::Message* message_;
 		const google::protobuf::FieldDescriptor* field_;
 		NsString name_;

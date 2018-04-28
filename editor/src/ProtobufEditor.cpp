@@ -75,7 +75,13 @@ namespace Editor
 		name_(field_->name().c_str()), type_(field_->type_name()),
 		items_(*new ObservableCollection<BaseComponent>)
 	{
-
+		const google::protobuf::Reflection* refl = message->GetReflection();
+		
+		if (field->type() == FieldDescriptor::Type::TYPE_MESSAGE)
+		{
+			Ptr<TreeMessage> msg = *new TreeMessage(refl->MutableMessage(message, field));
+			items_->Add(msg);
+		}
 	}
 
 	NS_IMPLEMENT_REFLECTION(TreeOptional)
