@@ -29,7 +29,7 @@ target_embed_resources(
 	TARGET_SOURCE editor_resources.cpp
 	RESOURCES
 	${RESOURCES_XAML}
-	${CMAKE_CURRENT_LIST_DIR}/resources/DejaVuSans-ExtraLight.ttf
+	${CMAKE_CURRENT_LIST_DIR}/resources/OpenSans-Regular.ttf
 	)
 
 if(WIN32)

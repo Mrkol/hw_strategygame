@@ -5,8 +5,8 @@
 
 	<Application.Resources>
 		<Style TargetType="{x:Type Control}" x:Key="DefaultFont">
-			<Setter Property="FontSize" Value="18" />
-			<Setter Property="FontFamily" Value="./#DejaVu Sans" />
+			<Setter Property="FontSize" Value="22" />
+			<Setter Property="FontFamily" Value="./#Open Sans" />
 			<Setter Property="Foreground" Value="White" />
         </Style>
 	</Application.Resources>

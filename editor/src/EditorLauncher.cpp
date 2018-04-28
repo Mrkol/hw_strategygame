@@ -10,7 +10,7 @@
 #include "EditorMainWindow_xaml.hpp"
 #include "EntityTypeEditor_xaml.hpp"
 #include "ProtobufEditor_xaml.hpp"
-#include "DejaVuSans_ExtraLight_ttf.hpp"
+#include "OpenSans_Regular_ttf.hpp"
 
 namespace Editor
 {
@@ -46,7 +46,7 @@ namespace Editor
 	{
 		NoesisApp::EmbeddedFont fonts[] =
 		{
-			{ "", DejaVuSans_ExtraLight_ttf, DejaVuSans_ExtraLight_ttf_size }
+			{ "", OpenSans_Regular_ttf, OpenSans_Regular_ttf_size }
 		};
 
 		return *new NoesisApp::EmbeddedFontProvider(fonts, NS_COUNTOF(fonts));
