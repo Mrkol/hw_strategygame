@@ -1,25 +1,11 @@
-#include "ProtobufEditor.hpp"
+#include "ProtobufEditor/tree_data.hpp"
 #include "NsCore/ReflectionImplement.h"
 #include "NsGui/IntegrationAPI.h"
 
-
-namespace Editor
+namespace Editor { namespace ProtobufEditor
 {
-	using namespace google::protobuf;
 	using namespace Noesis;
-
-	ProtobufEditor::ProtobufEditor()
-	{
-        GUI::LoadComponent(this, "ProtobufEditor.xaml");
-        messages_ = *new ObservableCollection<BaseComponent>;
-        
-	}
-
-	void ProtobufEditor::AddMessage(Message* message)
-	{
-		Ptr<TreeMessage> mess = *new TreeMessage(message);
-		messages_->Add(mess);
-	}
+	using namespace google::protobuf;
 
 	TreeMessage::TreeMessage()
 	{
@@ -28,7 +14,6 @@ namespace Editor
 
 	TreeMessage::TreeMessage(Message* message)
 		: message_(message),
-		name_(message_->GetTypeName().c_str()),
 		items_(*new ObservableCollection<BaseComponent>)
 	{
 		const Descriptor* desc = message->GetDescriptor();
@@ -58,10 +43,15 @@ namespace Editor
 		}
 	}
 
+	const char* TreeMessage::GetName() const
+	{
+		return message_->GetDescriptor()->full_name().c_str();
+	}
+
 	NS_IMPLEMENT_REFLECTION(TreeMessage)
 	{
-		NsMeta<TypeId>("Editor.ProtobufEditorTreeMessage");
-		NsProp("Name", &TreeMessage::name_);
+		NsMeta<TypeId>("Editor.ProtobufEditor.TreeMessage");
+		NsProp("Name", &TreeMessage::GetName);
 		NsProp("Items", &TreeMessage::items_);
 	}
 
@@ -72,11 +62,12 @@ namespace Editor
 
 	TreeOptional::TreeOptional(Message* message, const FieldDescriptor* field)
 		: message_(message), field_(field),
-		name_(field_->name().c_str()), type_(field_->type_name()),
 		items_(*new ObservableCollection<BaseComponent>)
 	{
 		const google::protobuf::Reflection* refl = message->GetReflection();
 		
+		if (!refl->HasField(*message, field)) return;
+
 		if (field->type() == FieldDescriptor::Type::TYPE_MESSAGE)
 		{
 			Ptr<TreeMessage> msg = *new TreeMessage(refl->MutableMessage(message, field));
@@ -84,11 +75,32 @@ namespace Editor
 		}
 	}
 
+	const char* TreeOptional::GetType() const
+	{
+		return field_->type_name();
+	}
+
+	const char* TreeOptional::GetName() const
+	{
+		return field_->name().c_str();
+	}
+
+	const char* TreeOptional::GetButtonLabel() const
+	{
+		if (message_->GetReflection()->HasField(*message_, field_))
+		{
+			return "-";
+		}
+		return "+";
+	}
+
+
 	NS_IMPLEMENT_REFLECTION(TreeOptional)
 	{
-		NsMeta<TypeId>("Editor.ProtobufEditorTreeOptional");
-		NsProp("Name", &TreeOptional::name_);
-		NsProp("Type", &TreeOptional::type_);
+		NsMeta<TypeId>("Editor.ProtobufEditor.TreeOptional");
+		NsProp("Name", &TreeOptional::GetName);
+		NsProp("Type", &TreeOptional::GetType);
+		NsProp("ButtonLabel", &TreeOptional::GetButtonLabel);
 		NsProp("Items", &TreeOptional::items_);
 	}
 
@@ -100,13 +112,7 @@ namespace Editor
 
 	NS_IMPLEMENT_REFLECTION(TreeValue)
 	{
-		NsMeta<TypeId>("Editor.ProtobufEditorTreeValue");
+		NsMeta<TypeId>("Editor.ProtobufEditor.TreeValue");
 		NsProp("Content", &TreeValue::content_);
 	}
-
-	NS_IMPLEMENT_REFLECTION(ProtobufEditor)
-	{
-		NsMeta<TypeId>("Editor.ProtobufEditor");
-		NsProp("Messages", &ProtobufEditor::messages_);
-	}
-}
+} }

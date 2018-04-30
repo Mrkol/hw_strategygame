@@ -1,7 +1,7 @@
 #include "EditorMainWindow.hpp"
 #include "NsCore/ReflectionImplement.h"
 #include "NsGui/IntegrationAPI.h"
-#include "ProtobufEditor.hpp"
+#include "ProtobufEditor/ProtobufEditor.hpp"
 
 namespace Editor
 {
@@ -19,7 +19,8 @@ namespace Editor
 
 	void EditorMainWindow::OnInitialized(Noesis::BaseComponent*, const Noesis::EventArgs&)
 	{
-		ProtobufEditor* editor = FindName<ProtobufEditor>("Proto");
+		ProtobufEditor::ProtobufEditor* editor = 
+			FindName<ProtobufEditor::ProtobufEditor>("Proto");
 		editor->AddMessage(&message);
 	}
 

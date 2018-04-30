@@ -4,7 +4,8 @@
 #include "EditorApplication.hpp"
 #include "EditorMainWindow.hpp"
 #include "EntityTypeEditor.hpp"
-#include "ProtobufEditor.hpp"
+#include "ProtobufEditor/ProtobufEditor.hpp"
+#include "ProtobufEditor/tree_data.hpp"
 
 #include "EditorApplication_xaml.hpp"
 #include "EditorMainWindow_xaml.hpp"
@@ -19,10 +20,10 @@ namespace Editor
         NsRegisterComponent<EditorApplication>();
         NsRegisterComponent<EditorMainWindow>();
         NsRegisterComponent<EntityTypeEditor>();
-		NsRegisterComponent<ProtobufEditor>();
-		NsRegisterComponent<TreeMessage>();
-		NsRegisterComponent<TreeOptional>();
-		NsRegisterComponent<TreeValue>();
+		NsRegisterComponent<ProtobufEditor::ProtobufEditor>();
+		NsRegisterComponent<ProtobufEditor::TreeMessage>();
+		NsRegisterComponent<ProtobufEditor::TreeOptional>();
+		NsRegisterComponent<ProtobufEditor::TreeValue>();
     }
 
 	Ptr<Noesis::XamlProvider> EditorLauncher::GetXamlProvider() const

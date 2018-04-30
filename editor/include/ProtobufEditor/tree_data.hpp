@@ -1,31 +1,17 @@
 #pragma once
 
-#ifndef EDITOR_PROTOBUF_EDITOR_HPP_
-#define EDITOR_PROTOBUF_EDITOR_HPP_
+#ifndef EDITOR_PROTOBUF_EDITOR_TREE_DATA_HPP_
+#define EDITOR_PROTOBUF_EDITOR_TREE_DATA_HPP_
 
-#include "NsCore/ReflectionDeclare.h"
-#include "NsGui/UserControl.h"
-#include "NsCore/Ptr.h"
+#include "NsCore/ReflectionImplement.h"
 #include "NsGui/ObservableCollection.h"
-#include "NsCore/BaseRefCounted.h"
 #include "google/protobuf/message.h"
+#include "NsGui/IntegrationAPI.h"
+#include "NsGui/RoutedEvent.h"
 
-using Noesis::Ptr;
-
-namespace Editor
+namespace Editor { namespace ProtobufEditor
 {
-	class ProtobufEditor final : public Noesis::UserControl
-	{
-	public:
-		ProtobufEditor();
-
-		void AddMessage(google::protobuf::Message* message);
-
-		NS_DECLARE_REFLECTION(ProtobufEditor, Noesis::UserControl);
-
-	private:
-		Ptr<Noesis::ObservableCollection<Noesis::BaseComponent>> messages_;
-	};
+	using Noesis::Ptr;
 
 	class TreeMessage final : public Noesis::BaseComponent
 	{
@@ -33,12 +19,12 @@ namespace Editor
 		TreeMessage();
 		TreeMessage(google::protobuf::Message* message);
 
+		const char* GetName() const;
 
 		NS_DECLARE_REFLECTION(TreeMessage, Noesis::BaseComponent)
 
 	private:
 		google::protobuf::Message* message_;
-		NsString name_;
 
 		Ptr<Noesis::ObservableCollection<Noesis::BaseComponent>> items_;
 	};
@@ -51,6 +37,9 @@ namespace Editor
 		TreeOptional(google::protobuf::Message* message, 
 			const google::protobuf::FieldDescriptor* field);
 
+		const char* GetType() const;
+		const char* GetName() const;
+		const char* GetButtonLabel() const;
 
 		NS_DECLARE_REFLECTION(TreeOptional, Noesis::BaseComponent)
 	private:
@@ -60,8 +49,6 @@ namespace Editor
 
 		google::protobuf::Message* message_;
 		const google::protobuf::FieldDescriptor* field_;
-		NsString name_;
-		NsString type_;
 
 		Ptr<Noesis::ObservableCollection<Noesis::BaseComponent>> items_;
 	};
@@ -76,6 +63,6 @@ namespace Editor
 	private:
 		NsString content_;
 	};
-}
+} }
 
-#endif // EDITOR_PROTOBUF_EDITOR_HPP_
+#endif // EDITOR_PROTOBUF_EDITOR_TREE_DATA_HPP_

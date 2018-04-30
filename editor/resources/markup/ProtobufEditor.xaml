@@ -1,7 +1,7 @@
 <UserControl
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:local="clr-namespace:Editor"
+  xmlns:local="clr-namespace:Editor.ProtobufEditor"
   x:Class="Editor.ProtobufEditor"
   Style="{StaticResource DefaultFont}"
   DataContext="{Binding RelativeSource={RelativeSource Self}}">
@@ -17,29 +17,37 @@
       ItemsSource="{Binding Messages}">
 
       <TreeView.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+
         <HierarchicalDataTemplate
-          DataType="{x:Type local:ProtobufEditorTreeMessage}"
+          DataType="{x:Type local:TreeMessage}"
           ItemsSource="{Binding Path=Items}">
 
           <StackPanel Orientation="Horizontal">
             <TextBlock Foreground="OrangeRed" Margin="0,0,5,0" Text="message"/>
-            <TextBlock Text="{Binding Name}"/>
+            <TextBlock Text="{Binding Path=Name}"/>
           </StackPanel>
         </HierarchicalDataTemplate>
 
         <HierarchicalDataTemplate
-          DataType="{x:Type local:ProtobufEditorTreeOptional}"
+          DataType="{x:Type local:TreeOptional}"
           ItemsSource="{Binding Path=Items}">
 
           <StackPanel Orientation="Horizontal">
             <TextBlock Foreground="OrangeRed" Margin="0,0,5,0" Text="optional"/>
-            <TextBlock Foreground="Crimson" Margin="0,0,5,0" Text="{Binding Type}"/>
-            <TextBlock Text="{Binding Name}"/>
+            <TextBlock Foreground="Crimson" Margin="0,0,5,0" Text="{Binding Path=Type}"/>
+            <TextBlock Text="{Binding Path=Name}"/>
+            <Grid>
+              <Button 
+                Content="{Binding Path=ButtonLabel}"
+                FontSize="15"
+                Width="24" Height="24" Margin="2" Padding="0"/>
+            </Grid> 
           </StackPanel>
         </HierarchicalDataTemplate>
 
         <DataTemplate
-          DataType="{x:Type local:ProtobufEditorTreeValue}">
+          DataType="{x:Type local:TreeValue}">
 
           <TextBox Text="{Binding Path=Content}"/>
         </DataTemplate>
