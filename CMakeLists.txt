@@ -98,7 +98,6 @@ if(WIN32)
 			libprotobuf.dll
 			${Protobuf_DIR}/bin
 			${Protobuf_DIR}
-			${Protobuf_DIR}/debug/bin
 			)
 	endif(DEBUG)
 
@@ -111,6 +110,7 @@ if(WIN32)
 				gtestd.dll
 				${Gtest_DIR}/bin
 				${Gtest_DIR}
+				${Gtest_DIR}/debug/bin
 				)
 		else(DEBUG)
 			find_file(
