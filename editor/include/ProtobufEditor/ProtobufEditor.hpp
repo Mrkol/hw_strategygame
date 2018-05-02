@@ -24,6 +24,7 @@ namespace Editor { namespace ProtobufEditor
 		NS_DECLARE_REFLECTION(ProtobufEditor, Noesis::UserControl);
 
 	private:
+
 		Ptr<Noesis::ObservableCollection<Noesis::BaseComponent>> messages_;
 	};
 } }

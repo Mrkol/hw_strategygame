@@ -85,22 +85,42 @@ namespace Editor { namespace ProtobufEditor
 		return field_->name().c_str();
 	}
 
-	const char* TreeOptional::GetButtonLabel() const
+	bool TreeOptional::GetPresent() const
 	{
-		if (message_->GetReflection()->HasField(*message_, field_))
-		{
-			return "-";
-		}
-		return "+";
+		return message_->GetReflection()->HasField(*message_, field_);
 	}
 
+	void TreeOptional::SetPresent(bool value)
+	{
+		const google::protobuf::Reflection* refl = message_->GetReflection();
+
+		if (field_->type() == FieldDescriptor::TYPE_MESSAGE)
+		{
+			if (value)
+			{
+				Message* submessage =
+					MessageFactory::generated_factory()
+					->GetPrototype(field_->message_type())->New();
+
+				refl->SetAllocatedMessage(message_, submessage, field_);
+
+				Ptr<TreeMessage> msg = *new TreeMessage(submessage);
+				items_->Add(msg);
+			}
+			else
+			{
+				message_->GetReflection()->SetAllocatedMessage(message_, nullptr, field_);
+				items_->Clear();
+			}
+		}
+	}
 
 	NS_IMPLEMENT_REFLECTION(TreeOptional)
 	{
 		NsMeta<TypeId>("Editor.ProtobufEditor.TreeOptional");
 		NsProp("Name", &TreeOptional::GetName);
 		NsProp("Type", &TreeOptional::GetType);
-		NsProp("ButtonLabel", &TreeOptional::GetButtonLabel);
+		NsProp("Present", &TreeOptional::GetPresent, &TreeOptional::SetPresent);
 		NsProp("Items", &TreeOptional::items_);
 	}
 

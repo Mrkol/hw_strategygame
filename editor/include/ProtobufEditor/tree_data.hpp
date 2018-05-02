@@ -39,7 +39,8 @@ namespace Editor { namespace ProtobufEditor
 
 		const char* GetType() const;
 		const char* GetName() const;
-		const char* GetButtonLabel() const;
+		bool GetPresent() const;
+		void SetPresent(bool value);
 
 		NS_DECLARE_REFLECTION(TreeOptional, Noesis::BaseComponent)
 	private:
