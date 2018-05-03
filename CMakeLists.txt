@@ -53,6 +53,7 @@ set(CMAKE_MODULE_PATH
 find_package(PythonInterp)
 find_package(Noesis)
 find_package(NoesisApp)
+find_package(RakNet)
 
 find_package(Protobuf REQUIRED)
 
