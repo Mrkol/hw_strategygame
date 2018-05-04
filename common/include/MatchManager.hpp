@@ -6,6 +6,7 @@
 #include "CommonHelper.hpp"
 #include "Events/event.hpp"
 #include "Events/EventAccessProxy.hpp"
+#include "RakNet/RakPeer.h"
 #include <memory>
 #include <chrono>
 

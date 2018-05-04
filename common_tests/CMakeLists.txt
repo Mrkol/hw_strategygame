@@ -24,6 +24,7 @@ if(WIN32)
 		DLLS
 		${PROTOBUF_DLL}
 		${GTEST_DLL}
+		${RAKNET_DLL}
 		)
 endif(WIN32)
 

@@ -13,8 +13,11 @@ add_library(common STATIC ${SOURCES} ${PROTO_SRCS})
 
 target_include_directories(common PUBLIC "./include")
 target_include_directories(common PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(common PUBLIC ${RAKNET_INCLUDE_DIRS})
 
 target_link_libraries(common PUBLIC protobuf::libprotobuf protobuf::libprotoc)
+target_link_libraries(common PUBLIC ${RAKNET_LIBRARIES})
+#message(FATAL_ERROR ${RAKNET_LIBRARIES})
 
 # You won't beleive how much f*cking time I've spent trying to
 # solve a linker issue due to this define missing.

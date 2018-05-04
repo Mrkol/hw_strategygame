@@ -14,7 +14,7 @@ file(TO_CMAKE_PATH $ENV{RAKNET_DIR} RAKNET_DIRECTORY_HINT)
 
 find_path(RAKNET_INCLUDE_DIR
     NAMES
-    RakPeer.h
+    RakNet/RakPeer.h
     PATHS
 	include
     ${RAKNET_DIR}/include
@@ -29,7 +29,7 @@ find_path(RAKNET_INCLUDE_DIR
 
 # Find the debug library
 find_library(RAKNET_LIBRARY_DEBUG
-    NAMES RakNetDLLd RakNetd RakNetd.so RakNetDLLd.lib RakNetd.lib
+    NAMES RakNetd RakNetd.so RakNetd.lib
     PATHS
     ${RAKNET_DIR}/lib
     ${RAKNET_DIR}
@@ -48,7 +48,7 @@ find_library(RAKNET_LIBRARY_DEBUG
 
 # Find the optimized library
 find_library(RAKNET_LIBRARY_RELEASE
-    NAMES RakNet RakNetDLL RakNet.so RakNet.lib RakNetDLL.lib
+    NAMES RakNet RakNet.so RakNet.lib
     PATHS
     ${RAKNET_DIR}/lib
     ${RAKNET_DIR}
@@ -71,29 +71,37 @@ set(RAKNET_LIBRARIES
 	)
 
 if (WIN32)
-	find_file(
-		WIN_RAKNET_DLL NAMES RakNet.dll RakNetDLL.dll
-		PATHS
-		${RAKNET_DIRECTORY_HINT}/bin
-		${RAKNET_DIRECTORY_HINT}
-		)
+	if(DEBUG)
+		find_file(
+			WIN_RAKNET_DLL NAMES RakNetd.dll
+			PATHS
+			${RAKNET_DIRECTORY_HINT}/bin
+			${RAKNET_DIRECTORY_HINT}
+			)
+	else(DEBUG)
+		find_file(
+			WIN_RAKNET_DLL NAMES RakNet.dll
+			PATHS
+			${RAKNET_DIRECTORY_HINT}/bin
+			${RAKNET_DIRECTORY_HINT}
+			)
+	endif(DEBUG)
 	mark_as_advanced(WIN_RAKNET_DLL)
 
     set(RAKNET_LIBRARIES ${RAKNET_LIBRARIES} ws2_32.lib) # Raknet depends on Winsock 2
-	
 	find_package_handle_standard_args(
 		RakNet DEFAULT_MSG
 		RAKNET_LIBRARIES RAKNET_INCLUDE_DIR WIN_RAKNET_DLL
 		)
 
 	set(WIN_RAKNET_DLLS ${WIN_RAKNET_DLL})
-else()
+else(WIN32)
 	find_package_handle_standard_args(
 		RakNet DEFAULT_MSG
 		RAKNET_LIBRARIES RAKNET_INCLUDE_DIR
 		)
-endif()
+endif(WIN32)
 
 mark_as_advanced(RAKNET_LIBRARY_RELEASE RAKNET_LIBRARY_DEBUG RAKNET_INCLUDE_DIR)
 
-set(NOESIS_INCLUDE_DIRS ${NOESIS_INCLUDE_DIR})
+set(RAKNET_INCLUDE_DIRS ${RAKNET_INCLUDE_DIR})
