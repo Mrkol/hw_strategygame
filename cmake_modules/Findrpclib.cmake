@@ -49,7 +49,6 @@ find_library(RPCLIB_LIBS
     PATHS ${FIND_RPCLIB_PATHS})
 
 if(RPCLIB_INCLUDE_DIR)
-    message(FATA_ERROR ${RPCLIB_INCLUDE_DIR})
     file(READ
         "${RPCLIB_INCLUDE_DIR}/rpc/version.h"
         RPCLIB_VERSION_CONTENTS)
