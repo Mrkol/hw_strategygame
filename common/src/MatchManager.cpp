@@ -10,9 +10,25 @@ namespace Common
 		: gameTick_(),
 		GameTickEvent(gameTick_),
 		currentMatchState_(MatchState::Initialization),
-		tickRate_(TimeIntervalType(5))
+		tickRate_(TimeIntervalType(5)),
+		clientType_(ClientType::Server)
 	{
 		
+	}
+
+	ClientType MatchManager::GetClientType()
+	{
+		return clientType_;
+	}
+
+	bool MatchManager::SetClientType(ClientType type)
+	{
+		if (currentMatchState_ == MatchState::Initialization)
+		{
+			clientType_ = type;
+			return true;
+		}
+		return false;
 	}
 
 	void MatchManager::Start()

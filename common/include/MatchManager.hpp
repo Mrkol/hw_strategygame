@@ -3,10 +3,10 @@
 #ifndef COMMON_MATCH_MANAGER_HPP_
 #define COMMON_MATCH_MANAGER_HPP_
 
+#include "network.hpp"
 #include "CommonHelper.hpp"
 #include "Events/event.hpp"
 #include "Events/EventAccessProxy.hpp"
-#include "RakNet/RakPeer.h"
 #include <memory>
 #include <chrono>
 
@@ -15,6 +15,11 @@ namespace Common
 	enum class MatchState
 	{
 		Initialization, InProgress, Paused, Ended
+	};
+
+	enum class ClientType
+	{
+		Server, Client
 	};
 
 	using namespace Events;
@@ -45,12 +50,17 @@ namespace Common
 
 		virtual MatchState GetCurrentState();
 
+		virtual ClientType GetClientType();
+
+		virtual bool SetClientType(ClientType type);
+
 		EventAccessProxy GameTickEvent;
 
 	protected:
 		MatchState currentMatchState_;
 		TimeIntervalType tickRate_;
 		TimePointType lastTick_;
+		ClientType clientType_;
 
 	};
 }

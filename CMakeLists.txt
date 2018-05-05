@@ -55,7 +55,8 @@ find_package(PythonInterp)
 find_package(Noesis)
 find_package(NoesisApp)
 
-find_package(RakNet REQUIRED)
+
+find_package(rpclib REQUIRED)
 find_package(Protobuf REQUIRED)
 
 if (NOT PROTOBUF_FOUND)
