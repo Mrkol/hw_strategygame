@@ -54,6 +54,9 @@ set(CMAKE_MODULE_PATH
 find_package(PythonInterp)
 find_package(Noesis)
 find_package(NoesisApp)
+find_package(OpenSceneGraph 
+	COMPONENTS osgViewer osgDB osgUtil
+	)
 
 find_package(Protobuf REQUIRED)
 
@@ -82,47 +85,68 @@ if(WITH_TESTS)
 endif(WITH_TESTS)
 
 if(WIN32)
-	get_filename_component(Protobuf_DIR ${Protobuf_INCLUDE_DIRS} DIRECTORY)
+	get_filename_component(Protobuf_DIR
+		${Protobuf_INCLUDE_DIRS} DIRECTORY
+		)
+	get_filename_component(OPENSCENEGRAPH_DIR 
+		${OPENSCENEGRAPH_INCLUDE_DIRS} DIRECTORY
+		)
 
+	set(DLL_POSTFIX )
 	if(DEBUG)
-		find_file(
-			PROTOBUF_DLL
-			libprotobufd.dll
-			${Protobuf_DIR}/bin
-			${Protobuf_DIR}
-			${Protobuf_DIR}/debug/bin
-			)
-	else(DEBUG)
-		find_file(
-			PROTOBUF_DLL
-			libprotobuf.dll
-			${Protobuf_DIR}/bin
-			${Protobuf_DIR}
-			)
+		set(DLL_POSTFIX d)
 	endif(DEBUG)
+
+	set(TMP_OSG_DLLS
+		osg156-osg osg156-osgViewer osg156-osgDB osg156-osgGA
+		osg156-osgText osg156-osgUtil ot21-OpenThreads zlib
+		)
+	set(OSG_DLLS )
+	foreach(dll ${TMP_OSG_DLLS})
+		string(CONCAT tmp ${dll} ${DLL_POSTFIX} .dll)
+		find_file(TMP_DLL ${tmp}
+			PATHS
+			${OPENSCENEGRAPH_DIR}/bin
+			${OPENSCENEGRAPH_DIR}/bin/osgPlugins-3.6.0
+			)
+		set(OSG_DLLS ${OSG_DLLS} ${TMP_DLL})
+		unset(tmp CACHE)
+		unset(tmp2 CACHE)
+		unset(TMP_DLL CACHE)
+	endforeach(dll)
+	unset(TMP_OSG_DLLS CACHE)
+
+	set(TMP_OSG_PLUGINS osgdb_serializers_osgtext)
+	foreach(dll ${TMP_OSG_PLUGINS})
+		string(CONCAT tmp ${dll} .dll)
+		find_file(TMP_DLL ${tmp}
+			PATHS
+			${OPENSCENEGRAPH_DIR}/bin/osgPlugins-3.6.0
+			)
+	endforeach(dll)
+	unset(TMP_OSG_PLUGINS CACHE)
+
+	find_file(
+		PROTOBUF_DLL
+		libprotobuf${DLL_POSTFIX}.dll
+		PATHS
+		${Protobuf_DIR}/bin
+		${Protobuf_DIR}/debug/bin
+		${Protobuf_DIR}
+		)
 
 	if(WITH_TESTS)
 		get_filename_component(Gtest_DIR ${GTEST_INCLUDE_DIRS} DIRECTORY)
 
-		if(DEBUG)
-			find_file(
-				GTEST_DLL
-				gtestd.dll
-				${Gtest_DIR}/bin
-				${Gtest_DIR}
-				${Gtest_DIR}/debug/bin
-				)
-		else(DEBUG)
-			find_file(
-				GTEST_DLL
-				gtest.dll
-				${Gtest_DIR}/bin
-				${Gtest_DIR}
-				)
-		endif(DEBUG)
+		find_file(
+			GTEST_DLL
+			gtest${DLL_POSTFIX}.dll
+			PATHS
+			${Gtest_DIR}/bin
+			${Gtest_DIR}/debug/bin
+			${Gtest_DIR}
+			)
 	endif(WITH_TESTS)
-
-
 endif(WIN32)
 
 add_subdirectory(./common)
