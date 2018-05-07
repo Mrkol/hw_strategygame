@@ -16,13 +16,6 @@ if(NOT NOESISAPP_FOUND)
 		)
 endif(NOT NOESISAPP_FOUND)
 
-if(NOT OPENSCENEGRAPH_FOUND)
-	message(
-		FATAL_ERROR
-		"Could not load the open scene graph!"
-		)
-endif(NOT OPENSCENEGRAPH_FOUND)
-
 file(GLOB_RECURSE SOURCES . src/*.cpp)
 
 file(GLOB_RECURSE RESOURCES_XAML . resources/*.xaml)
@@ -46,7 +39,6 @@ if(WIN32)
 		${WIN_NOESIS_DLLS}
 		${WIN_NOESISAPP_DLLS}
 		${PROTOBUF_DLL}
-		${OSG_DLLS}
 		)
 endif(WIN32)
 
@@ -55,13 +47,9 @@ target_link_libraries(
 	common
 	${NOESISAPP_LIBRARIES}
 	${NOESIS_LIBRARIES}
-	${OPENSCENEGRAPH_LIBRARIES}
 	)
 
 target_include_directories(editor PRIVATE "./include")
 target_include_directories(editor PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 target_include_directories(editor PRIVATE ${NOESIS_INCLUDE_DIRS})
 target_include_directories(editor PRIVATE ${NOESISAPP_INCLUDE_DIRS})
-target_include_directories(editor PRIVATE ${OPENSCENEGRAPH_INCLUDE_DIRS})
-
-target_compile_definitions(editor PRIVATE OSG_NOTIFY_LEVEL=INFO)
