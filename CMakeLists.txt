@@ -107,24 +107,30 @@ if(WIN32)
 		find_file(TMP_DLL ${tmp}
 			PATHS
 			${OPENSCENEGRAPH_DIR}/bin
-			${OPENSCENEGRAPH_DIR}/bin/osgPlugins-3.6.0
+			${OPENSCENEGRAPH_DIR}/debug/bin
 			)
+		message(${tmp})
 		set(OSG_DLLS ${OSG_DLLS} ${TMP_DLL})
 		unset(tmp CACHE)
-		unset(tmp2 CACHE)
 		unset(TMP_DLL CACHE)
 	endforeach(dll)
 	unset(TMP_OSG_DLLS CACHE)
 
-	set(TMP_OSG_PLUGINS osgdb_serializers_osgtext)
+	set(TMP_OSG_PLUGINS osgdb_osg)
 	foreach(dll ${TMP_OSG_PLUGINS})
-		string(CONCAT tmp ${dll} .dll)
+		string(CONCAT tmp ${dll} ${DLL_POSTFIX} .dll)
 		find_file(TMP_DLL ${tmp}
 			PATHS
 			${OPENSCENEGRAPH_DIR}/bin/osgPlugins-3.6.0
+			${OPENSCENEGRAPH_DIR}/debug/bin/osgPlugins-3.6.0
 			)
+		set(OSG_DLLS ${OSG_DLLS} ${TMP_DLL})
+		unset(tmp CACHE)
+		unset(TMP_DLL CACHE)
 	endforeach(dll)
 	unset(TMP_OSG_PLUGINS CACHE)
+
+	message(FATAL_ERROR ${OPENSCENEGRAPH_DIR})
 
 	find_file(
 		PROTOBUF_DLL

@@ -8,7 +8,6 @@
 #include "ProtobufEditor/tree_data.hpp"
 
 #include "osgViewer/Viewer"
-#include "osgViewer/StatsHandler"
 #include "osg/Notify"
 #include "osgDB/ReadFile"
 
@@ -38,8 +37,6 @@ namespace Editor
 		this->GetDisplay()->Render() += 
 			Noesis::MakeDelegate(this, &EditorLauncher::RenderOSG);
 		*/
-
-	    viewer_->addEventHandler(new osgViewer::StatsHandler);
 
 		// left window + left slave camera
 		{
