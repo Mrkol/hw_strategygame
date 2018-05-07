@@ -6,9 +6,11 @@
 
 namespace Network
 {
-	int test();
+	namespace Test
+	{
+		int server();
 
-	int server();
-
-	int client();
+		int client();
+	}
+	
 }

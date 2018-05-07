@@ -16,19 +16,26 @@ namespace Common
 		
 	}
 
+	MatchManager::MatchManager(ClientType type, const std::vector<std::string>& adresses)
+		: gameTick_(),
+		GameTickEvent(gameTick_),
+		currentMatchState_(MatchState::Initialization),
+		tickRate_(TimeIntervalType(5)),
+		clientType_(type)
+	{
+		if (clientType_ == ClientType::Client)
+		{
+			//subscribe client functions to tick
+		}
+		else
+		{
+			//subscribe server functions to tick
+		}
+	}
+
 	ClientType MatchManager::GetClientType()
 	{
 		return clientType_;
-	}
-
-	bool MatchManager::SetClientType(ClientType type)
-	{
-		if (currentMatchState_ == MatchState::Initialization)
-		{
-			clientType_ = type;
-			return true;
-		}
-		return false;
 	}
 
 	void MatchManager::Start()

@@ -3,12 +3,13 @@
 #ifndef COMMON_MATCH_MANAGER_HPP_
 #define COMMON_MATCH_MANAGER_HPP_
 
-#include "network.hpp"
+#include "Network/network.hpp"
 #include "CommonHelper.hpp"
 #include "Events/event.hpp"
 #include "Events/EventAccessProxy.hpp"
 #include <memory>
 #include <chrono>
+#include <vector>
 
 namespace Common
 {
@@ -31,6 +32,7 @@ namespace Common
 	public:
 		MatchManager();
 
+		MatchManager(ClientType type, const std::vector<std::string>& adresses);
 		/**
 		 * \brief Begin generating gametick events
 		 */
@@ -51,8 +53,6 @@ namespace Common
 		virtual MatchState GetCurrentState();
 
 		virtual ClientType GetClientType();
-
-		virtual bool SetClientType(ClientType type);
 
 		EventAccessProxy GameTickEvent;
 
