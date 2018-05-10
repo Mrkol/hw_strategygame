@@ -3,8 +3,9 @@
 #ifndef EDITOR_EDITOR_MAIN_WINDOW_HPP_
 #define EDITOR_EDITOR_MAIN_WINDOW_HPP_
 
-#include "NsCore/ReflectionImplement.h"
+#include "NsCore/ReflectionDeclare.h"
 #include "NsApp/Window.h"
+#include "entity.pb.h"
 
 namespace Editor
 {
@@ -12,6 +13,10 @@ namespace Editor
 	{
 	public:
 		EditorMainWindow();
+
+		void OnInitialized(Noesis::BaseComponent*, const Noesis::EventArgs&);
+
+		Entities::EntityType message;
 
 		NS_DECLARE_REFLECTION(EditorMainWindow, NoesisApp::Window)
 	};

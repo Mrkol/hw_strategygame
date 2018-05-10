@@ -9,16 +9,17 @@
 
 namespace Editor
 {
-	using Noesis::Ptr;
-
 	class EditorLauncher final : public NoesisApp::ApplicationLauncher
 	{
+	public:
+		EditorLauncher();
+
 	private:
 	    void RegisterComponents() const override;
 
-		Ptr<Noesis::XamlProvider> GetXamlProvider() const override;
+		Noesis::Ptr<Noesis::XamlProvider> GetXamlProvider() const override;
 
-		Ptr<Noesis::FontProvider> GetFontProvider() const override;
+		Noesis::Ptr<Noesis::FontProvider> GetFontProvider() const override;
 	};
 }
 

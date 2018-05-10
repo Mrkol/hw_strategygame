@@ -2,8 +2,8 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	Title="Editor" Width="1080" Height="720" ResizeMode="CanResize"
-	x:Class="Editor.MainWindow">
+  	xmlns:local="clr-namespace:Editor"
+	x:Class="Editor.EditorMainWindow">
 
-    <local:EntityTypeEditor 
-    	Width="*" Height="*"/>
+	<local:ProtobufEditor x:Name="Proto"/>
 </Window>

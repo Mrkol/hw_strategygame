@@ -29,7 +29,7 @@ target_embed_resources(
 	TARGET_SOURCE editor_resources.cpp
 	RESOURCES
 	${RESOURCES_XAML}
-	${CMAKE_CURRENT_LIST_DIR}/resources/DejaVuSans-ExtraLight.ttf
+	${CMAKE_CURRENT_LIST_DIR}/resources/OpenSans-Regular.ttf
 	)
 
 if(WIN32)
@@ -44,11 +44,12 @@ endif(WIN32)
 
 target_link_libraries(
 	editor
+	common
 	${NOESISAPP_LIBRARIES}
 	${NOESIS_LIBRARIES}
 	)
 
-target_include_directories(editor PUBLIC "./include")
+target_include_directories(editor PRIVATE "./include")
 target_include_directories(editor PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 target_include_directories(editor PRIVATE ${NOESIS_INCLUDE_DIRS})
 target_include_directories(editor PRIVATE ${NOESISAPP_INCLUDE_DIRS})

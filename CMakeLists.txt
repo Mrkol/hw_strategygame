@@ -82,45 +82,36 @@ if(WITH_TESTS)
 endif(WITH_TESTS)
 
 if(WIN32)
-	get_filename_component(Protobuf_DIR ${Protobuf_INCLUDE_DIRS} DIRECTORY)
+	get_filename_component(Protobuf_DIR
+		${Protobuf_INCLUDE_DIRS} DIRECTORY
+		)
 
+	set(DLL_POSTFIX )
 	if(DEBUG)
-		find_file(
-			PROTOBUF_DLL
-			libprotobufd.dll
-			${Protobuf_DIR}/bin
-			${Protobuf_DIR}
-			)
-	else(DEBUG)
-		find_file(
-			PROTOBUF_DLL
-			libprotobuf.dll
-			${Protobuf_DIR}/bin
-			${Protobuf_DIR}
-			)
+		set(DLL_POSTFIX d)
 	endif(DEBUG)
+
+	find_file(
+		PROTOBUF_DLL
+		libprotobuf${DLL_POSTFIX}.dll
+		PATHS
+		${Protobuf_DIR}/bin
+		${Protobuf_DIR}/debug/bin
+		${Protobuf_DIR}
+		)
 
 	if(WITH_TESTS)
 		get_filename_component(Gtest_DIR ${GTEST_INCLUDE_DIRS} DIRECTORY)
 
-		if(DEBUG)
-			find_file(
-				GTEST_DLL
-				gtestd.dll
-				${Gtest_DIR}/bin
-				${Gtest_DIR}
-				)
-		else(DEBUG)
-			find_file(
-				GTEST_DLL
-				gtest.dll
-				${Gtest_DIR}/bin
-				${Gtest_DIR}
-				)
-		endif(DEBUG)
+		find_file(
+			GTEST_DLL
+			gtest${DLL_POSTFIX}.dll
+			PATHS
+			${Gtest_DIR}/bin
+			${Gtest_DIR}/debug/bin
+			${Gtest_DIR}
+			)
 	endif(WITH_TESTS)
-
-
 endif(WIN32)
 
 add_subdirectory(./common)

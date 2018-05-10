@@ -13,9 +13,7 @@ target_include_directories(common_tests
 
 target_link_libraries(common_tests common)
 
-target_link_libraries(common_tests
-	${GTEST_LIBRARIES}
-	)
+target_link_libraries(common_tests ${GTEST_LIBRARIES})
 
 if(WIN32)
 	target_add_dll(

@@ -1,4 +1,5 @@
 #include "EntityTypeEditor.hpp"
+#include "NsCore/ReflectionImplement.h"
 #include "NsGui/IntegrationAPI.h"
 
 namespace Editor
@@ -11,6 +12,6 @@ namespace Editor
 
 	NS_IMPLEMENT_REFLECTION(EntityTypeEditor)
 	{
-		NsMeta<Noesis::TypeId>("Editor.EntityTypeEditor");
+		NsMeta<Noesis::TypeId>("EntityTypeEditor");
 	}
 }
