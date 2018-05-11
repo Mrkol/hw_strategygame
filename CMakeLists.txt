@@ -23,23 +23,23 @@ if(WIN32)
 endif(WIN32)
 
 
-# target_embed_resources(TARGET_SOURCE source RESOURCES [res1 [res2 ...]])
-function(target_embed_resources)
+# generate_embeded_resources(OUTPUT output RESOURCES [res1 [res2 ...]])
+function(generate_embeded_resources)
 	cmake_parse_arguments(
 		PA
 		""
-		"TARGET_SOURCE"
+		"OUTPUT"
 		"RESOURCES"
 		${ARGN}
 		)
 
 	add_custom_command(
-		OUTPUT ${PA_TARGET_SOURCE}
+		OUTPUT ${PA_OUTPUT}
 		DEPENDS ${PA_RESOURCES}
 		COMMAND
 		${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/embedder.py ${PA_RESOURCES} -o ${CMAKE_CURRENT_BINARY_DIR} -f ${PA_TARGET_SOURCE}
 		)
-endfunction(target_embed_resources)
+endfunction(generate_embeded_resources)
 
 project(strategygame CXX)
 
@@ -54,6 +54,8 @@ set(CMAKE_MODULE_PATH
 find_package(PythonInterp)
 find_package(Noesis)
 find_package(NoesisApp)
+set(SDL2_BUILDING_LIBRARY ON)
+find_package(SDL2)
 
 <<<<<<< HEAD
 =======
@@ -90,6 +92,9 @@ if(WIN32)
 	get_filename_component(Protobuf_DIR
 		${Protobuf_INCLUDE_DIRS} DIRECTORY
 		)
+	get_filename_component(SDL2_DIR
+		${SDL2_INCLUDE_DIR} DIRECTORY
+		)
 
 	set(DLL_POSTFIX )
 	if(DEBUG)
@@ -103,6 +108,14 @@ if(WIN32)
 		${Protobuf_DIR}/bin
 		${Protobuf_DIR}/debug/bin
 		${Protobuf_DIR}
+		)
+
+	#no sdl debug version yet
+	find_file(
+		SDL2_DLL
+		SDL2.dll
+		PATHS
+		${SDL2_DIR}/lib/x64
 		)
 
 	if(WITH_TESTS)

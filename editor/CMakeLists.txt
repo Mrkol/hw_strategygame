@@ -25,8 +25,8 @@ add_executable(editor
 	${CMAKE_CURRENT_BINARY_DIR}/editor_resources.cpp
 	)
 
-target_embed_resources(
-	TARGET_SOURCE editor_resources.cpp
+generate_embeded_resources(
+	OUTPUT editor_resources.cpp
 	RESOURCES
 	${RESOURCES_XAML}
 	${CMAKE_CURRENT_LIST_DIR}/resources/OpenSans-Regular.ttf

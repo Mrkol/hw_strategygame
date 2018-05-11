@@ -1,8 +1,9 @@
 #include "client_main.hpp"
-#include <iostream>
+#include "ClientApplication.hpp"
 
 int main(int argc, char* argv[])
 {
-	std::cout << "Hello, world! - client main" << std::endl;
-	return 0;
+	ClientApplication app;
+	app.Init(argc, argv);
+	return app.Run();
 }
