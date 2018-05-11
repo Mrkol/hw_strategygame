@@ -37,7 +37,7 @@ function(generate_embeded_resources)
 		OUTPUT ${PA_OUTPUT}
 		DEPENDS ${PA_RESOURCES}
 		COMMAND
-		${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/embedder.py ${PA_RESOURCES} -o ${CMAKE_CURRENT_BINARY_DIR} -f ${PA_TARGET_SOURCE}
+		${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/embedder.py ${PA_RESOURCES} -o ${CMAKE_CURRENT_BINARY_DIR} -f ${PA_OUTPUT}
 		)
 endfunction(generate_embeded_resources)
 
@@ -57,10 +57,6 @@ find_package(NoesisApp)
 set(SDL2_BUILDING_LIBRARY ON)
 find_package(SDL2)
 
-<<<<<<< HEAD
-=======
-find_package(RakNet REQUIRED)
->>>>>>> event-system
 find_package(Protobuf REQUIRED)
 
 if (NOT PROTOBUF_FOUND)
@@ -88,7 +84,6 @@ if(WITH_TESTS)
 endif(WITH_TESTS)
 
 if(WIN32)
-<<<<<<< HEAD
 	get_filename_component(Protobuf_DIR
 		${Protobuf_INCLUDE_DIRS} DIRECTORY
 		)
@@ -129,50 +124,6 @@ if(WIN32)
 			${Gtest_DIR}/debug/bin
 			${Gtest_DIR}
 			)
-=======
-	get_filename_component(Protobuf_DIR ${Protobuf_INCLUDE_DIRS} DIRECTORY)
-
-	if(DEBUG)
-		find_file(
-			PROTOBUF_DLL
-			libprotobufd.dll
-			PATHS
-			${Protobuf_DIR}/bin
-			${Protobuf_DIR}
-			${Protobuf_DIR}/debug/bin
-			)
-	else(DEBUG)
-		find_file(
-			PROTOBUF_DLL
-			libprotobuf.dll
-			PATHS
-			${Protobuf_DIR}/bin
-			${Protobuf_DIR}
-			)
-	endif(DEBUG)
-
-	if(WITH_TESTS)
-		get_filename_component(Gtest_DIR ${GTEST_INCLUDE_DIRS} DIRECTORY)
-
-		if(DEBUG)
-			find_file(
-				GTEST_DLL
-				gtestd.dll
-				PATHS
-				${Gtest_DIR}/bin
-				${Gtest_DIR}
-				${Gtest_DIR}/debug/bin
-				)
-		else(DEBUG)
-			find_file(
-				GTEST_DLL
-				gtest.dll
-				PATHS
-				${Gtest_DIR}/bin
-				${Gtest_DIR}
-				)
-		endif(DEBUG)
->>>>>>> event-system
 	endif(WITH_TESTS)
 endif(WIN32)
 

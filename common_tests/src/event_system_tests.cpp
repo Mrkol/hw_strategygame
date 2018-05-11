@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include "Events/event.hpp"
 #include "MatchManager.hpp"
-#include "UniversalException.hpp"
 
 using namespace Common;
 
@@ -25,14 +24,16 @@ TEST(EventSystemTests, EventTrySubscribe_Unsubscribe)
 	std::shared_ptr<IEvent> testEvent(new Event);
 
 	testEvent->Subscribe("sample", sampleHandler);
-	testEvent->Trigger(EventArgs());
+	EventArgs a1;
+	testEvent->Trigger(a1);
 	EXPECT_TRUE(happened);
 	happened = false;
 
 	EXPECT_EQ(testEvent->Unsubscribe("sample"), true);
 	EXPECT_EQ(testEvent->Unsubscribe("sample"), false);
 
-	testEvent->Trigger(EventArgs());
+	EventArgs a2;
+	testEvent->Trigger(a2);
 	EXPECT_FALSE(happened);
 }
 
@@ -55,11 +56,11 @@ TEST(EventSystemTests, EventAccessProxyTrySubscribe_Unsubscribe)
 	bool catched = false;
 	try
 	{
-		testProxy.Trigger(EventArgs());
+		EventArgs a;
+		testProxy.Trigger(a);
 	}
 	catch (const std::exception& exc)
 	{
-		exc.what();
 		catched = true;
 	}
 	EXPECT_TRUE(catched);

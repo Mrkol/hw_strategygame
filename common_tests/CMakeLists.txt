@@ -11,9 +11,8 @@ target_include_directories(common_tests
 	${GTEST_INCLUDE_DIRS}
 	)
 
-target_link_libraries(common_tests common)
-
 target_link_libraries(common_tests
+	common
 	debug ${GTEST_LIBRARY_DEBUG}
 	optimized ${GTEST_LIBRARY}
 	)
