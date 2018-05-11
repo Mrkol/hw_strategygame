@@ -13,7 +13,13 @@ namespace Common
 	class IComponentType
 	{
 	public:
+		/**
+		* \brief Create instance of component
+		*/
 		virtual std::shared_ptr<IComponentInstance> Instantiate() = 0;
+		/**
+		* \brief Get component ID
+		*/
 		virtual const std::string& GetId() const = 0;
 		virtual ~IComponentType() = default;
 	};

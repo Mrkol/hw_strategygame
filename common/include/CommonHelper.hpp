@@ -6,6 +6,7 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
+#include <chrono>
 
 namespace Common
 {
@@ -16,7 +17,15 @@ namespace Common
 
 	using HealthType = unsigned int;
 	using ManaType = unsigned int;
-	using TimeIntervalType = unsigned int;
+	using TimeUnitType = long long int;
+	using TimeIntervalType = std::chrono::milliseconds;
+	using TimePointType = std::chrono::system_clock::time_point;
+	using MoveSpeedType = float;
+
+	enum class MovementType
+	{
+		None = 0, Ground, Air
+	};
 
 	using TeamIdType = unsigned int;
 }

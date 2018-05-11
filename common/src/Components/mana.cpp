@@ -7,6 +7,11 @@ namespace Common { namespace Components
 	{
 
 	}
+	ManaComponent::ManaComponent(HealthType maximum, TimeUnitType regenDelay)
+		: maximum_(maximum), regenDelay_(regenDelay)
+	{
+
+	}
 
 	const std::string& ManaComponent::GetId() const
 	{
@@ -66,7 +71,7 @@ namespace Common { namespace Components
 		return maximum_;
 	}
 
-	ManaType ManaComponent::GetDefaultRegenDelay() const
+	TimeIntervalType ManaComponent::GetDefaultRegenDelay() const
 	{
 		return regenDelay_;
 	}

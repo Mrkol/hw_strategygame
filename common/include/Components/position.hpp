@@ -23,13 +23,15 @@ namespace Common { namespace Components
 		virtual std::shared_ptr<IComponentInstance> Instantiate() override;
 		virtual const std::string& GetId() const override;
 
-		Position Get(
+		MapPosition Get(
 			std::shared_ptr<EntityInstance> instance) const;
 		
 		void Set(
-			std::shared_ptr<EntityInstance> instance, Position position);
+			std::shared_ptr<EntityInstance> instance, MapPosition position);
 
-		static std::shared_ptr<PositionComponent> Access(std::shared_ptr<EntityType> entityType);
+		static std::shared_ptr<PositionComponent> Access(
+			
+			std::shared_ptr<EntityType> entityType);
 
 		virtual ~PositionComponent() = default;
 		
@@ -43,7 +45,9 @@ namespace Common { namespace Components
 	class PositionComponentInstance : public IComponentInstance
 	{
 		friend class PositionComponent;
+		friend class move;
 	public:
+
 		virtual const std::string& GetTypeId() const override;
 
 		virtual ~PositionComponentInstance() = default;
@@ -51,7 +55,7 @@ namespace Common { namespace Components
 	private:
 		PositionComponentInstance();
 
-		Position position_;
+		MapPosition position_;
 	};
 } }
 

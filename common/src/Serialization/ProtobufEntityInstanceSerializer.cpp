@@ -5,6 +5,7 @@
 #include "Components/mana.hpp"
 #include "Components/position.hpp"
 #include "Components/team.hpp"
+#include "CommonHelper.hpp"
 
 namespace Common { namespace Serialization
 {
@@ -51,8 +52,8 @@ namespace Common { namespace Serialization
 			auto healthType = HealthComponent::Access(type);
 			healthType->SetCurrent(result, instance.health().current());
 			healthType->SetMaximum(result, instance.health().maximum());
-			healthType->SetRegenDelay(result, instance.health().regen_delay());
-			healthType->SetCurrentRegenDelay(result, instance.health().current_regen_delay());
+			healthType->SetRegenDelay(result, TimeIntervalType(instance.health().regen_delay()));
+			healthType->SetCurrentRegenDelay(result, TimeIntervalType(instance.health().current_regen_delay()));
 		}
 
 		if (instance.has_mana())
@@ -60,8 +61,8 @@ namespace Common { namespace Serialization
 			auto manaType = ManaComponent::Access(type);
 			manaType->SetCurrent(result, instance.mana().current());
 			manaType->SetMaximum(result, instance.mana().maximum());
-			manaType->SetRegenDelay(result, instance.mana().regen_delay());
-			manaType->SetCurrentRegenDelay(result, instance.mana().current_regen_delay());
+			manaType->SetRegenDelay(result, TimeIntervalType(instance.mana().regen_delay()));
+			manaType->SetCurrentRegenDelay(result, TimeIntervalType(instance.mana().current_regen_delay()));
 		}
 
 		if (instance.has_team())
@@ -92,7 +93,7 @@ namespace Common { namespace Serialization
 		if (auto positionType = PositionComponent::Access(type))
 		{
 			Entities::Components::PositionComponent* position = instance.mutable_position();
-			Position pos = positionType->Get(object);
+			MapPosition pos = positionType->Get(object);
 			position->set_x(pos.x);
 			position->set_y(pos.y);
 		}
@@ -102,8 +103,8 @@ namespace Common { namespace Serialization
 			Entities::Components::HealthComponent* health = instance.mutable_health();
 			health->set_maximum(healthType->GetMaximum(object));
 			health->set_current(healthType->GetCurrent(object));
-			health->set_regen_delay(healthType->GetRegenDelay(object));
-			health->set_current_regen_delay(healthType->GetCurrentRegenDelay(object));
+			health->set_regen_delay(healthType->GetRegenDelay(object).count());
+			health->set_current_regen_delay(healthType->GetCurrentRegenDelay(object).count());
 		}
 
 		if (auto manaType = ManaComponent::Access(type))
@@ -111,8 +112,8 @@ namespace Common { namespace Serialization
 			Entities::Components::ManaComponent* mana = instance.mutable_mana();
 			mana->set_maximum(manaType->GetMaximum(object));
 			mana->set_current(manaType->GetCurrent(object));
-			mana->set_regen_delay(manaType->GetRegenDelay(object));
-			mana->set_current_regen_delay(manaType->GetCurrentRegenDelay(object));
+			mana->set_regen_delay(manaType->GetRegenDelay(object).count());
+			mana->set_current_regen_delay(manaType->GetCurrentRegenDelay(object).count());
 		}
 
 		if (auto teamType = TeamComponent::Access(type))
