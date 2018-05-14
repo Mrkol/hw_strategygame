@@ -1,6 +1,7 @@
 #include "EditorLauncher.hpp"
 #include "NsCore/RegisterComponent.h"
 #include "NsCore/Noesis.h"
+
 #include "EditorApplication.hpp"
 #include "EditorMainWindow.hpp"
 #include "EntityTypeEditor.hpp"

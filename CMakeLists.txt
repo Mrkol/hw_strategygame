@@ -55,6 +55,8 @@ find_package(PythonInterp)
 find_package(Noesis)
 find_package(NoesisApp)
 set(SDL2_BUILDING_LIBRARY ON)
+find_package(OpenGL COMPONENTS OpenGL)
+find_package(GLEW)
 find_package(SDL2)
 
 find_package(Protobuf REQUIRED)
@@ -67,8 +69,6 @@ option(DEBUG "Build with debug flags" OFF)
 option(WITH_TESTS "Build with tests and run them" OFF)
 
 if(DEBUG)
-	# The option will propogate to dependent targets due
-	# to the public flag.
 	set(CMAKE_BUILD_TYPE Debug)
 else(DEBUG)
 	set(CMAKE_BUILD_TYPE Release)
@@ -128,7 +128,8 @@ if(WIN32)
 endif(WIN32)
 
 add_subdirectory(./common)
-# add_subdirectory(./client)
+add_subdirectory(./common_graphics)
+add_subdirectory(./client)
 add_subdirectory(./editor)
 
 

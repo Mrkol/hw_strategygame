@@ -16,12 +16,12 @@ if(NOT NOESISAPP_FOUND)
 		)
 endif(NOT NOESISAPP_FOUND)
 
-file(GLOB_RECURSE SOURCES . src/*.cpp)
+file(GLOB_RECURSE EDITOR_SOURCES . src/*.cpp)
 
 file(GLOB_RECURSE RESOURCES_XAML . resources/*.xaml)
 
 add_executable(editor
-	${SOURCES}
+	${EDITOR_SOURCES}
 	${CMAKE_CURRENT_BINARY_DIR}/editor_resources.cpp
 	)
 

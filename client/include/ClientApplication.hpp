@@ -5,8 +5,7 @@
 
 #include <memory>
 #include "GlobalRenderer.hpp"
-#include "SDL.h"
-
+#include "SDL.hpp"
 
 namespace Client
 {
@@ -19,13 +18,17 @@ namespace Client
 
 		int Run();
 
+		~ClientApplication();
+
 	private:
 		static void ExitHandler();
 
 		static ClientApplication* instancePointer_;
 
+
+		bool done_;
 		std::unique_ptr<Graphics::GlobalRenderer> renderer_;
-		std::shared_ptr<SDL_Window> window_;
+		SDL_Window* window_;
 	};
 }
 

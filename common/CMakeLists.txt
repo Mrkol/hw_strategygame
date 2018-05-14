@@ -7,9 +7,9 @@ file(GLOB_RECURSE PROTO_FILES . proto/*.proto)
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_FILES})
 
 
-file(GLOB_RECURSE SOURCES . src/*.cpp)
+file(GLOB_RECURSE COMMON_SOURCES . src/*.cpp)
 
-add_library(common STATIC ${SOURCES} ${PROTO_SRCS})
+add_library(common STATIC ${COMMON_SOURCES} ${PROTO_SRCS})
 
 target_include_directories(common PUBLIC "./include")
 target_include_directories(common PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
