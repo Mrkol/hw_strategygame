@@ -19,6 +19,7 @@ int main(int argc, char* argv[])
 		{
 			if (t)
 			{
+				std::cout << "server: going to synch" << std::endl;
 				server.SynchronizeClients(manager);
 			}
 			else
@@ -32,7 +33,7 @@ int main(int argc, char* argv[])
 	{
 		std::cout << "I am client\n";
 		Common::Network::CGameClient client(8080);
-
+		std::cout << "Starting...\n";
 		//client.SetAmountOfThreads(2);
 		client.Start();
 

@@ -2,6 +2,20 @@
 
 namespace Common { namespace Components 
 {
+	void HealthComponent::Synch(
+		std::shared_ptr<EntityInstance> to_synch,
+		const std::shared_ptr<EntityInstance> other)
+	{
+		SetMaximum(to_synch, HealthComponent::GetMaximum(other));
+
+		SetCurrent(to_synch, HealthComponent::GetCurrent(other));
+
+		HealthComponent::SetRegenDelay(to_synch, HealthComponent::GetRegenDelay(other));
+
+		HealthComponent::SetCurrentRegenDelay(to_synch,
+			HealthComponent::GetCurrentRegenDelay(other));
+	}
+
 	HealthComponent::HealthComponent(HealthType maximum, TimeIntervalType regenDelay)
 		: maximum_(maximum), regenDelay_(regenDelay)
 	{

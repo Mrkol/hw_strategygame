@@ -13,11 +13,11 @@
 
 namespace Common { namespace Components
 {
-	class TeamComponentInstance;
+	class SynchronizableComponentInstance;
 
-	class TeamComponent : public IComponentType
+	class SynchronizableComponent : public IComponentType
 	{
-		friend class TeamComponentInstance;
+		friend class SynchronizableComponentInstance;
 	public:
 
 		virtual std::shared_ptr<IComponentInstance> Instantiate() override;
@@ -30,35 +30,27 @@ namespace Common { namespace Components
 			std::shared_ptr<EntityInstance> to_synch,
 			const std::shared_ptr<EntityInstance> other);
 
-		TeamIdType GetTeamId(
-			std::shared_ptr<EntityInstance> instance) const;
+		static std::shared_ptr<SynchronizableComponent> Access(std::shared_ptr<EntityType> entityType);
 
-		void  SetTeamId(
-			std::shared_ptr<EntityInstance> instance, TeamIdType value);
-
-		static std::shared_ptr<TeamComponent> Access(std::shared_ptr<EntityType> entityType);
-
-		virtual ~TeamComponent() = default;
+		virtual ~SynchronizableComponent() = default;
 
 	private:
-		std::shared_ptr<TeamComponentInstance> access_(
+		std::shared_ptr<SynchronizableComponentInstance> access_(
 			std::shared_ptr<EntityInstance> instance) const;
 
 		static const std::string ID;
 	};
 
-	class TeamComponentInstance : public IComponentInstance
+	class SynchronizableComponentInstance : public IComponentInstance
 	{
-		friend class TeamComponent;
+		friend class SynchronizableComponent;
 	public:
 		virtual const std::string& GetTypeId() const override;
 
-		virtual ~TeamComponentInstance() = default;
+		virtual ~SynchronizableComponentInstance() = default;
 		
 	private:
-		TeamComponentInstance();
-
-		TeamIdType teamId_;
+		SynchronizableComponentInstance();
 	};
 } }
 

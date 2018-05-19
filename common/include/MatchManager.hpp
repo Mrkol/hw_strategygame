@@ -10,6 +10,9 @@
 #include <memory>
 #include <chrono>
 #include <vector>
+#include <unordered_map>
+#include "EntityInstance.hpp"
+#include "Serialization\IEntityInstanceSerializer.hpp"
 
 namespace Common
 {
@@ -27,8 +30,6 @@ namespace Common
 
 	class MatchManager
 	{
-		Event gameTick_;
-
 	public:
 		MatchManager();
 
@@ -56,11 +57,19 @@ namespace Common
 
 		EventAccessProxy GameTickEvent;
 
+		EventAccessProxy SynchroEvent;
+
+		bool UpdateInstance(EntityInstanceIdType id, const std::string& data,
+			Serialization::IEntityInstanceSerializer& serializer);
 	protected:
 		MatchState currentMatchState_;
+		Event gameTick_;
 		TimeIntervalType tickRate_;
 		TimePointType lastTick_;
 		ClientType clientType_;
+		std::unordered_map<int, std::shared_ptr<EntityInstance>> instanceList;
+		EntityTypeRegistry entityTypeRegistry_;
+		EntityInstanceIdType nextInstanceId;
 
 	};
 }

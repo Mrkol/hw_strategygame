@@ -27,6 +27,13 @@ namespace Common { namespace Components
 		virtual const std::string& GetId() const override;
 
 		/**
+		* \brief Synchromize given instance with given
+		*/
+		void Synch(
+			std::shared_ptr<EntityInstance> to_synch, 
+			const std::shared_ptr<EntityInstance> other);
+
+		/**
 		* \brief Get maximum health of health instance of specific Entity instance
 		*/
 		HealthType GetMaximum(

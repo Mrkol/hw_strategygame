@@ -2,12 +2,26 @@
 
 namespace Common { namespace Components
 {
-	ManaComponent::ManaComponent(HealthType maximum, TimeIntervalType regenDelay)
+	void ManaComponent::Synch(
+		std::shared_ptr<EntityInstance> to_synch,
+		const std::shared_ptr<EntityInstance> other)
+	{
+		SetMaximum(to_synch, ManaComponent::GetMaximum(other));
+
+		SetCurrent(to_synch, ManaComponent::GetCurrent(other));
+
+		ManaComponent::SetRegenDelay(to_synch, ManaComponent::GetRegenDelay(other));
+
+		ManaComponent::SetCurrentRegenDelay(to_synch,
+			ManaComponent::GetCurrentRegenDelay(other));
+	}
+
+	ManaComponent::ManaComponent(ManaType maximum, TimeIntervalType regenDelay)
 		: maximum_(maximum), regenDelay_(regenDelay)
 	{
 
 	}
-	ManaComponent::ManaComponent(HealthType maximum, TimeUnitType regenDelay)
+	ManaComponent::ManaComponent(ManaType maximum, TimeUnitType regenDelay)
 		: maximum_(maximum), regenDelay_(regenDelay)
 	{
 

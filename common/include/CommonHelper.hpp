@@ -15,6 +15,7 @@ namespace Common
 	using EntityTypeRegistry = 
 		std::unordered_map<std::string, std::shared_ptr<EntityType>>;
 
+	using EntityInstanceIdType = unsigned int;
 	using HealthType = unsigned int;
 	using ManaType = unsigned int;
 	using TimeUnitType = long long int;

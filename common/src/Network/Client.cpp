@@ -29,7 +29,8 @@ namespace Common
 		{
 			if (clientServerStatus_ != EServerStatus::alive)
 			{
-				clientServer_.async_run(amountOfThreads_);
+				clientServer_.run();
+				//clientServer_.async_run(amountOfThreads_);
 				clientServerStatus_ = EServerStatus::alive;
 			}
 

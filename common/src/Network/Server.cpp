@@ -17,7 +17,8 @@ namespace Common
 
 		CGameServer::CGameServer(
 			const std::vector<std::string>& IpList, uint16_t Port)
-			: clients_(IpList.size()), short_timeout(50), timeout(5000)
+			: clients_(IpList.size()), short_timeout(50), timeout(5000),
+			synchro_(), ServerSynchEvent(synchro_)
 		{
 			for (int i = 0; i < clients_.size(); ++i)
 			{
@@ -28,18 +29,22 @@ namespace Common
 		bool CGameServer::SynchronizeClients(
 			Common::MatchManager* manager)
 		{
+			std::cout << "srv: Synchronizing...\n";
 			// Collect information to Synchronize
 			std::vector<std::future<clmdep_msgpack::v1::object_handle>> 
 				answers(clients_.size());
 
 			for (int i = 0; i < clients_.size(); ++i)
 			{
-				answers[i] = clients_[i]->async_call(
-					"Synchronize"/*, stuff to sinchronize*/);
+				std::cout << "srv: client num " << i << std::endl;
+				clients_[i]->call("Synchronize");
+				//answers[i] = clients_[i]->async_call(
+					//"Synchronize"/*, stuff to sinchronize*/);
 				
 			}
 			for (int i = 0; i < clients_.size(); ++i)
 			{
+				std::cout << "srv: Waiting for client " << i << std::endl;
 				clients_[i]->set_timeout(short_timeout);
 				try
 				{

@@ -3,6 +3,9 @@
 #include "Events/EventAccessProxy.hpp"
 #include <iostream>
 #include <chrono>
+#include "entity.pb.h"
+#include "Serialization\ProtobufEntityInstanceSerializer.hpp"
+#include <sstream>
 
 namespace Common
 {
@@ -11,7 +14,8 @@ namespace Common
 		GameTickEvent(gameTick_),
 		currentMatchState_(MatchState::Initialization),
 		tickRate_(TimeIntervalType(5)),
-		clientType_(ClientType::Server)
+		clientType_(ClientType::Server), 
+		nextInstanceId(0)
 	{
 		
 	}
@@ -81,5 +85,32 @@ namespace Common
 	MatchState MatchManager::GetCurrentState()
 	{
 		return currentMatchState_;
+	}
+
+	void Serializer()
+	{
+
+	}
+
+	bool MatchManager::UpdateInstance(EntityInstanceIdType id,
+		const std::string& data, Serialization::IEntityInstanceSerializer& serializer)
+	{
+		if (instanceList.find(id) == instanceList.end())
+		{
+			//Create one
+			Entities::EntityInstance proto_instance;
+			std::stringstream stream;
+			if (!proto_instance.ParseFromString(data))
+			{
+				std::cerr << "Invalid entity string." << std::endl;
+				return false;
+			}
+			instanceList[id++] = serializer.Deserialize(entityTypeRegistry_, stream);
+		}
+		else
+		{
+
+			//Update one
+		}
 	}
 }
