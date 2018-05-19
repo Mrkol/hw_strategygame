@@ -57,8 +57,6 @@ namespace Common
 
 		EventAccessProxy GameTickEvent;
 
-		EventAccessProxy SynchroEvent;
-
 		bool UpdateInstance(EntityInstanceIdType id, const std::string& data,
 			Serialization::IEntityInstanceSerializer& serializer);
 	protected:

@@ -43,6 +43,8 @@ namespace Common { namespace Components
 
 		MoveSpeedType GetDefaultSpeed() const;
 		MovementType GetDefaultMovementType() const;
+		void SetDefaultSpeed(MoveSpeedType value);
+		void SetDefaultMovementType(MovementType value);
 
 		static std::shared_ptr<MovementComponent> Access(std::shared_ptr<EntityType> entityType);
 
@@ -50,7 +52,7 @@ namespace Common { namespace Components
 
 	private:
 		std::shared_ptr<MovementComponentInstance> access_(
-			std::shared_ptr<EntityInstance> instance) const;
+			std::shared_ptr<Common::EntityInstance> instance) const;
 
 		MoveSpeedType baseMovementSpeed_;
 		MovementType movementType_;
@@ -71,7 +73,7 @@ namespace Common { namespace Components
 		MovementComponentInstance(MoveSpeedType current, MovementType type);
 
 		MoveSpeedType current_;
-		MovementType moveStyle_;
+		MovementType moveType_;
 	};
 } }
 
