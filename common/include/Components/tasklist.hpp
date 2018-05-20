@@ -9,63 +9,63 @@
 #include <queue>
 #include <memory>
 
-namespace Common {
-	namespace Components
+namespace Common { namespace Components
+
+{
+	class TaskListComponentInstance;
+
+	class TaskListComponent : public IComponentType
 	{
-		class TaskListComponentInstance;
+		friend class TaskListComponentInstance;
+	public:
+		std::shared_ptr<IComponentInstance> Instantiate() override;
+		const std::string& GetId() const override;
 
-		class TaskListComponent : public IComponentType
-		{
-			friend class TaskListComponentInstance;
-		public:
-			std::shared_ptr<IComponentInstance> Instantiate() override;
-			const std::string& GetId() const override;
+		/**
+		* \brief Synchromize given instance with given
+		*/
+		void Synch(
+			std::shared_ptr<EntityInstance> to_synch,
+			const std::shared_ptr<EntityInstance> other);
 
-			/**
-			* \brief Synchromize given instance with given
-			*/
-			void Synch(
-				std::shared_ptr<EntityInstance> to_synch,
-				const std::shared_ptr<EntityInstance> other);
+		void AttemptCurrentTask(
+			std::shared_ptr<EntityInstance> instance) const;
 
-			void AttemptCurrentTask(
-				std::shared_ptr<EntityInstance> instance) const;
+		void AddTask(
+			std::shared_ptr<EntityInstance> instance, 
+			std::shared_ptr<Tasks::ITask> newTask);
+			// Meditation in progress...
 
-			void AddTask(
-				std::shared_ptr<EntityInstance> instance, 
-				std::shared_ptr<Tasks::ITask> newTask);
-				// Meditation in progress...
+		void RemoveTask(
+			std::shared_ptr<EntityInstance> instance); 
+			// We have to choose, if we want to remove only top task, or any
 
-			void RemoveTask(
-				std::shared_ptr<EntityInstance> instance); 
-				// We have to choose, if we want to remove only top task, or any
-
-			static std::shared_ptr<TaskListComponent> Access(
-				std::shared_ptr<EntityType> entityType);
+		static std::shared_ptr<TaskListComponent> Access(
+			std::shared_ptr<EntityType> entityType);
 			
-			virtual ~TaskListComponent() = default;
+		virtual ~TaskListComponent() = default;
 
-		private:
-			std::shared_ptr<TaskListComponentInstance> access_(
-				std::shared_ptr<EntityInstance> instance) const;
+	private:
+		std::shared_ptr<TaskListComponentInstance> access_(
+			std::shared_ptr<EntityInstance> instance) const;
 
-			static const std::string ID;
-		};
+		static const std::string ID;
+	};
 
-		class TaskListComponentInstance : public IComponentInstance
-		{
-			friend class TaskListComponent;
+	class TaskListComponentInstance : public IComponentInstance
+	{
+		friend class TaskListComponent;
 
-		public:
-			virtual const std::string& GetTypeId() const;
+	public:
+		virtual const std::string& GetTypeId() const;
 
-			virtual ~TaskListComponentInstance() = default;
+		virtual ~TaskListComponentInstance() = default;
 			
-		private:
-			TaskListComponentInstance();
-			std::queue<std::shared_ptr<Tasks::ITask>> tasks_;
-		};
-	}
+	private:
+		TaskListComponentInstance();
+		std::queue<std::shared_ptr<Tasks::ITask>> tasks_;
+	};
+}
 }
 
 #endif // COMMON_COMPONENTS_TASK_LIST_HPP_

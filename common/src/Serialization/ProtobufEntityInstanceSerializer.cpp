@@ -6,6 +6,7 @@
 #include "Components/position.hpp"
 #include "Components/team.hpp"
 #include "CommonHelper.hpp"
+#include <memory>
 
 namespace Common { namespace Serialization
 {
@@ -38,6 +39,7 @@ namespace Common { namespace Serialization
 		std::shared_ptr<EntityType> type = typeIter->second;
 
 		std::shared_ptr<EntityInstance> result(type->Instantiate());
+
 
 		using namespace Common::Components;
 
@@ -72,6 +74,72 @@ namespace Common { namespace Serialization
 		}
 
 		return result;
+	}
+
+	bool ProtobufEntityInstanceSerializer::EmplaceDeserialize(
+			const EntityTypeRegistry& registry, std::istream& in,
+		std::shared_ptr<Common::EntityInstance> instance)
+	{
+		Entities::EntityInstance proto_instance;
+		if (!in)
+		{
+			//TODO: proper error handling
+			std::cerr << "Invalid stream." << std::endl;
+			return false;
+		}
+
+		if (!proto_instance.ParseFromIstream(&in))
+		{
+			std::cerr << "Invalid entity file." << std::endl;
+			return false;
+		}
+
+		auto typeIter = registry.find(proto_instance.type_id());
+		if (typeIter == registry.end())
+		{
+			std::cerr << "Entity type with id \"";
+			std::cerr << proto_instance.type_id() << "\" not found.";
+			return false;
+		}
+
+		std::shared_ptr<EntityType> type = typeIter->second;
+
+		using namespace Common::Components;
+
+		if (proto_instance.has_position())
+		{
+			auto positionType = PositionComponent::Access(type);
+			auto res = positionType->Instantiate();
+			
+
+			positionType->Set(instance, { proto_instance.position().x(), proto_instance.position().y() });
+		}
+
+		if (proto_instance.has_health())
+		{
+			auto healthType = HealthComponent::Access(type);
+			healthType->SetCurrent(instance, proto_instance.health().current());
+			healthType->SetMaximum(instance, proto_instance.health().maximum());
+			healthType->SetRegenDelay(instance, TimeIntervalType(proto_instance.health().regen_delay()));
+			healthType->SetCurrentRegenDelay(instance, TimeIntervalType(proto_instance.health().current_regen_delay()));
+		}
+
+		if (proto_instance.has_mana())
+		{
+			auto manaType = ManaComponent::Access(type);
+			manaType->SetCurrent(instance, proto_instance.mana().current());
+			manaType->SetMaximum(instance, proto_instance.mana().maximum());
+			manaType->SetRegenDelay(instance, TimeIntervalType(proto_instance.mana().regen_delay()));
+			manaType->SetCurrentRegenDelay(instance, TimeIntervalType(proto_instance.mana().current_regen_delay()));
+		}
+
+		if (proto_instance.has_team())
+		{
+			auto teamType = TeamComponent::Access(type);
+			teamType->SetTeamId(instance, proto_instance.team().team_id());
+		}
+
+		return true;
 	}
 
 	void ProtobufEntityInstanceSerializer::Serialize(

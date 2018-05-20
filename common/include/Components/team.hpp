@@ -33,7 +33,7 @@ namespace Common { namespace Components
 		TeamIdType GetTeamId(
 			std::shared_ptr<EntityInstance> instance) const;
 
-		void  SetTeamId(
+		void SetTeamId(
 			std::shared_ptr<EntityInstance> instance, TeamIdType value);
 
 		static std::shared_ptr<TeamComponent> Access(std::shared_ptr<EntityType> entityType);

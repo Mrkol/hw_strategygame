@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Serialization/IEntityInstanceSerializer.hpp"
 #include "EntityType.hpp"
+#include "EntityInstance.hpp"
 
 namespace Common { namespace Serialization
 {
@@ -15,6 +16,9 @@ namespace Common { namespace Serialization
 	public:
 		virtual std::shared_ptr<EntityInstance> Deserialize(
 			const EntityTypeRegistry& registry, std::istream& in) override;
+		virtual bool EmplaceDeserialize(
+			const EntityTypeRegistry& registry, std::istream& in,
+			std::shared_ptr<Common::EntityInstance> instance) override;
 		
 		virtual void Serialize(
 			std::shared_ptr<EntityInstance> object, std::ostream& out) override;

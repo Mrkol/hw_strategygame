@@ -87,30 +87,30 @@ namespace Common
 		return currentMatchState_;
 	}
 
-	void Serializer()
-	{
-
-	}
-
 	bool MatchManager::UpdateInstance(EntityInstanceIdType id,
 		const std::string& data, Serialization::IEntityInstanceSerializer& serializer)
 	{
+		std::stringstream stream;
+		stream << data;
 		if (instanceList.find(id) == instanceList.end())
 		{
 			//Create one
-			Entities::EntityInstance proto_instance;
-			std::stringstream stream;
-			if (!proto_instance.ParseFromString(data))
+			instanceList[id] = serializer.Deserialize(entityTypeRegistry_,
+				stream);
+			if (instanceList[id] == nullptr)
 			{
-				std::cerr << "Invalid entity string." << std::endl;
 				return false;
 			}
-			instanceList[id++] = serializer.Deserialize(entityTypeRegistry_, stream);
 		}
 		else
 		{
-
 			//Update one
+			if (!serializer.EmplaceDeserialize(entityTypeRegistry_,
+				stream, instanceList[id]))
+			{
+				return false;
+			}
 		}
+		return true;
 	}
 }
