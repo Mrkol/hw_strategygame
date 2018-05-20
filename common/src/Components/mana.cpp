@@ -2,12 +2,26 @@
 
 namespace Common { namespace Components
 {
-	ManaComponent::ManaComponent(HealthType maximum, TimeIntervalType regenDelay)
+	void ManaComponent::Synch(
+		std::shared_ptr<EntityInstance> to_synch,
+		const std::shared_ptr<EntityInstance> other)
+	{
+		SetMaximum(to_synch, ManaComponent::GetMaximum(other));
+
+		SetCurrent(to_synch, ManaComponent::GetCurrent(other));
+
+		ManaComponent::SetRegenDelay(to_synch, ManaComponent::GetRegenDelay(other));
+
+		ManaComponent::SetCurrentRegenDelay(to_synch,
+			ManaComponent::GetCurrentRegenDelay(other));
+	}
+
+	ManaComponent::ManaComponent(ManaType maximum, TimeIntervalType regenDelay)
 		: maximum_(maximum), regenDelay_(regenDelay)
 	{
 
 	}
-	ManaComponent::ManaComponent(HealthType maximum, TimeUnitType regenDelay)
+	ManaComponent::ManaComponent(ManaType maximum, TimeUnitType regenDelay)
 		: maximum_(maximum), regenDelay_(regenDelay)
 	{
 
@@ -45,24 +59,28 @@ namespace Common { namespace Components
 	void  ManaComponent::SetMaximum(
 		std::shared_ptr<EntityInstance> instance, ManaType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->maximum_ = value;
 	}
 
 	void  ManaComponent::SetCurrent(
 		std::shared_ptr<EntityInstance> instance, ManaType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->current_ = value;
 	}
 
 	void  ManaComponent::SetRegenDelay(
 		std::shared_ptr<EntityInstance> instance, TimeIntervalType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->regenDelay_ = value;
 	}
 
 	void  ManaComponent::SetCurrentRegenDelay(
 		std::shared_ptr<EntityInstance> instance, TimeIntervalType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->currentRegenDelay_ = value;
 	}
 

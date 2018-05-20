@@ -7,6 +7,16 @@ namespace Common { namespace Components
 		return TeamComponent::ID;
 	}
 
+	/**
+	* \brief Synchromize given instance with given
+	*/
+	void TeamComponent::Synch(
+		std::shared_ptr<EntityInstance> to_synch,
+		const std::shared_ptr<EntityInstance> other)
+	{
+		TeamComponent::SetTeamId(to_synch, GetTeamId(other));
+	}
+
 	TeamIdType TeamComponent::GetTeamId(
 		std::shared_ptr<EntityInstance> instance) const
 	{
@@ -16,6 +26,7 @@ namespace Common { namespace Components
 	void  TeamComponent::SetTeamId(
 		std::shared_ptr<EntityInstance> instance, TeamIdType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->teamId_ = value;
 	}
 

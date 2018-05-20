@@ -5,6 +5,9 @@
 
 #include "Camera.hpp"
 #include "UserInputManager.hpp"
+#include "MatchManager.hpp"
+#include "Network/Client.hpp"
+#include "Network/Server.hpp"
 
 namespace Client
 {
@@ -13,10 +16,15 @@ namespace Client
 	public:
 		GameLogic();
 
-		void Init(Graphics::UserInputManager& inputManager,
-			std::shared_ptr<Graphics::Camera> camera);
+		void Init(Graphics::UserInputManager& inputManager);
 
 		void Update();
+
+		std::shared_ptr<Common::MatchManager> GetMatchManager();
+
+		std::shared_ptr<Graphics::Camera> GetCamera();
+
+		void StartGame(std::string adress);
 
 		~GameLogic();
 
@@ -30,8 +38,12 @@ namespace Client
 
 		float targetScale_;
 
+		bool remote_;
 
-		std::shared_ptr<Graphics::Camera> camera_;	
+		std::shared_ptr<Graphics::Camera> camera_;
+		std::unique_ptr<Common::Network::Client> client_;
+		std::unique_ptr<Common::Network::Server> server_;
+		std::shared_ptr<Common::MatchManager> matchManager_;
 	};
 }
 

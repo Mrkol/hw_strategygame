@@ -59,7 +59,7 @@ find_package(OpenGL COMPONENTS OpenGL)
 find_package(GLEW)
 find_package(SDL2)
 find_package(SDL2_gpu)
-
+find_package(rpclib REQUIRED)
 find_package(Protobuf REQUIRED)
 
 if (NOT PROTOBUF_FOUND)

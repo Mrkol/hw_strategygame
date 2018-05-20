@@ -2,6 +2,20 @@
 
 namespace Common { namespace Components 
 {
+	void HealthComponent::Synch(
+		std::shared_ptr<EntityInstance> to_synch,
+		const std::shared_ptr<EntityInstance> other)
+	{
+		SetMaximum(to_synch, HealthComponent::GetMaximum(other));
+
+		SetCurrent(to_synch, HealthComponent::GetCurrent(other));
+
+		HealthComponent::SetRegenDelay(to_synch, HealthComponent::GetRegenDelay(other));
+
+		HealthComponent::SetCurrentRegenDelay(to_synch,
+			HealthComponent::GetCurrentRegenDelay(other));
+	}
+
 	HealthComponent::HealthComponent(HealthType maximum, TimeIntervalType regenDelay)
 		: maximum_(maximum), regenDelay_(regenDelay)
 	{
@@ -43,27 +57,31 @@ namespace Common { namespace Components
 		return access_(instance)->currentRegenDelay_;
 	}
 
-	void  HealthComponent::SetMaximum(
+	void HealthComponent::SetMaximum(
 		std::shared_ptr<EntityInstance> instance, HealthType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->maximum_ = value;
 	}
 
-	void  HealthComponent::SetCurrent(
+	void HealthComponent::SetCurrent(
 		std::shared_ptr<EntityInstance> instance, HealthType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->current_ = value;
 	}
 
-	void  HealthComponent::SetRegenDelay(
+	void HealthComponent::SetRegenDelay(
 		std::shared_ptr<EntityInstance> instance, TimeIntervalType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->regenDelay_ = value;
 	}
 
-	void  HealthComponent::SetCurrentRegenDelay(
+	void HealthComponent::SetCurrentRegenDelay(
 		std::shared_ptr<EntityInstance> instance, TimeIntervalType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->currentRegenDelay_ = value;
 	}
 

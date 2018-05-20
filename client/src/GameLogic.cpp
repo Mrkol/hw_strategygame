@@ -5,15 +5,19 @@ namespace Client
 {
 	GameLogic::GameLogic()
 		: keyUp_(false), keyDown_(false), keyLeft_(false), keyRight_(false),
-		cameraShiftSpeed_(10), targetScale_(1)
+		cameraShiftSpeed_(10), targetScale_(1), remote_(false),
+		client_(nullptr),
+		server_(nullptr),
+		camera_(nullptr),
+		matchManager_(nullptr)
 	{
 
 	}
 
-	void GameLogic::Init(Graphics::UserInputManager& inputManager,
-		std::shared_ptr<Graphics::Camera> camera)
+	void GameLogic::Init(Graphics::UserInputManager& inputManager)
 	{
-		camera_ = camera;
+		// ya sejchas sdohnu
+		camera_ = std::make_shared<Graphics::Camera>(800, 600);
 
 		inputManager.OnKeyDown.Subscribe("camera", 
 			[this](Common::Events::EventArgs& args)
@@ -51,6 +55,8 @@ namespace Client
 				if (casted.Key.scancode == SDL_SCANCODE_DOWN)
 					keyDown_ = false;
 			});
+
+		matchManager_ = std::make_shared<Common::MatchManager>();
 	}
 
 	void GameLogic::Update()
@@ -62,10 +68,40 @@ namespace Client
 
 		while (camera_->GetScale() < targetScale_) camera_->IncrementScale(0.01);
 		while (camera_->GetScale() > targetScale_) camera_->IncrementScale(-0.01);
+
+
+		matchManager_->GenerateTick();
 	}
+
+	std::shared_ptr<Graphics::Camera> GameLogic::GetCamera()
+	{
+		return camera_;
+	}
+
+	std::shared_ptr<Common::MatchManager> GameLogic::GetMatchManager()
+	{
+		return matchManager_;
+	}
+
+	void GameLogic::StartGame(std::string adress)
+	{
+		matchManager_->Start(adress.empty());
+
+		if (adress.empty())
+		{
+			// client_ = std::make_unique<Common::Network::Client>();
+			remote_ = true;
+		}
+		else
+		{
+			// server_ = std::make_unique<Common::Network::Server>();
+		}
+	}
+
 
 	GameLogic::~GameLogic()
 	{
-
+		camera_.reset();
+		matchManager_.reset();
 	}
 }

@@ -23,10 +23,17 @@ namespace Common { namespace Components
 		virtual std::shared_ptr<IComponentInstance> Instantiate() override;
 		virtual const std::string& GetId() const override;
 
+		/**
+		* \brief Synchromize given instance with given
+		*/
+		void Synch(
+			std::shared_ptr<EntityInstance> to_synch,
+			const std::shared_ptr<EntityInstance> other);
+
 		TeamIdType GetTeamId(
 			std::shared_ptr<EntityInstance> instance) const;
 
-		void  SetTeamId(
+		void SetTeamId(
 			std::shared_ptr<EntityInstance> instance, TeamIdType value);
 
 		static std::shared_ptr<TeamComponent> Access(std::shared_ptr<EntityType> entityType);

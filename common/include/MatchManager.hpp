@@ -8,6 +8,11 @@
 #include "Events/EventAccessProxy.hpp"
 #include <memory>
 #include <chrono>
+#include <vector>
+#include <unordered_map>
+#include "EntityInstance.hpp"
+#include "Serialization\IEntityInstanceSerializer.hpp"
+#include "EntityTypeBuilder.hpp"
 
 namespace Common
 {
@@ -28,7 +33,7 @@ namespace Common
 		/**
 		 * \brief Begin generating gametick events
 		 */
-		virtual void Start();
+		virtual void Start(bool remote);
 
 		/**
 		 * \brief Stop generating gametick events
@@ -44,12 +49,28 @@ namespace Common
 
 		virtual MatchState GetCurrentState();
 
+
+		std::shared_ptr<EntityTypeBuilder> GetBuilder();
+		std::shared_ptr<EntityTypeRegistry> GetRegistry();
+
+		std::shared_ptr<EntityInstanceStorageType> GetInstanceStorage();
+
 		EventAccessProxy GameTickEvent;
 
+		bool UpdateInstance(EntityInstanceIdType id, const std::string& data,
+			Serialization::IEntityInstanceSerializer& serializer);
 	protected:
 		MatchState currentMatchState_;
 		TimeIntervalType tickRate_;
 		TimePointType lastTick_;
+
+		EntityInstanceIdType nextInstanceId_;
+
+		bool isRemote_;
+
+		std::shared_ptr<EntityTypeRegistry> entityTypeRegistry_;
+		std::shared_ptr<EntityTypeBuilder> entityTypeBuilder_;
+		std::shared_ptr<EntityInstanceStorageType> instanceList_;
 
 	};
 }

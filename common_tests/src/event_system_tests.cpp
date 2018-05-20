@@ -24,16 +24,16 @@ TEST(EventSystemTests, EventTrySubscribe_Unsubscribe)
 	std::shared_ptr<IEvent> testEvent(new Event);
 
 	testEvent->Subscribe("sample", sampleHandler);
-	EventArgs a1;
-	testEvent->Trigger(a1);
+	EventArgs args1;
+	testEvent->Trigger(args1);
 	EXPECT_TRUE(happened);
 	happened = false;
 
 	EXPECT_EQ(testEvent->Unsubscribe("sample"), true);
 	EXPECT_EQ(testEvent->Unsubscribe("sample"), false);
 
-	EventArgs a2;
-	testEvent->Trigger(a2);
+	EventArgs args2;
+	testEvent->Trigger(args2);
 	EXPECT_FALSE(happened);
 }
 
@@ -56,8 +56,8 @@ TEST(EventSystemTests, EventAccessProxyTrySubscribe_Unsubscribe)
 	bool catched = false;
 	try
 	{
-		EventArgs a;
-		testProxy.Trigger(a);
+		EventArgs args;
+		testProxy.Trigger(args);
 	}
 	catch (const std::exception& exc)
 	{
@@ -71,17 +71,17 @@ TEST(EventSystemTests, ManagerChangeState)
 {
 	MatchManager manager;
 	ASSERT_EQ(manager.GetCurrentState(), MatchState::Initialization);
-	manager.Start();
+	manager.Start(false);
 	ASSERT_EQ(manager.GetCurrentState(), MatchState::InProgress);
-	manager.Start();
+	manager.Start(false);
 	ASSERT_EQ(manager.GetCurrentState(), MatchState::InProgress);
 	manager.Pause();
 	ASSERT_EQ(manager.GetCurrentState(), MatchState::Paused);
-	manager.Start();
+	manager.Start(false);
 	ASSERT_EQ(manager.GetCurrentState(), MatchState::InProgress);
 	manager.Stop();
 	ASSERT_EQ(manager.GetCurrentState(), MatchState::Ended);
-	manager.Start();
+	manager.Start(false);
 	ASSERT_EQ(manager.GetCurrentState(), MatchState::Ended);
 }
 
@@ -116,7 +116,7 @@ private:
 TEST(EventSystemTests, EventsAndChrono)
 {
 	TestMatchManager manager;
-	manager.Start();
+	manager.Start(false);
 	manager.SetTickRate(TimeIntervalType(100));
 	TimePointType finish = std::chrono::system_clock::now() + TimeIntervalType(690);
 	while (manager.GetCurrentState() != MatchState::Ended)
@@ -133,7 +133,7 @@ TEST(EventSystemTests, EventsAndChrono)
 TEST(EventSystemTests, ManagerWithProxy)
 {
 	TestMatchManager manager;
-	manager.Start();
+	manager.Start(false);
 	manager.SetTickRate(TimeIntervalType(100));
 
 	short int happened = 0;

@@ -1,6 +1,8 @@
 #include "ClientApplication.hpp"
 #include <cstdlib>
 #include "UniversalException.hpp"
+#include "Components/position.hpp"
+#include "Components/renderer.hpp"
 
 namespace Client
 {
@@ -38,11 +40,34 @@ namespace Client
 		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
 
-		renderer_ = std::make_unique<Graphics::GlobalRenderer>();
-		renderer_->Init(inputManager_);
-
 		gameLogic_ = std::make_unique<GameLogic>();
-		gameLogic_->Init(inputManager_, renderer_->GetCamera());
+		gameLogic_->Init(inputManager_);
+
+		renderer_ = std::make_unique<Graphics::GlobalRenderer>();
+		renderer_->Init(inputManager_, gameLogic_->GetMatchManager()->GetInstanceStorage(),
+			gameLogic_->GetCamera());
+
+
+
+		auto builder = gameLogic_->GetMatchManager()->GetBuilder();
+
+		builder->StartBuilding("mage");
+		builder->AddComponent(
+			std::make_shared<Common::Components::PositionComponent>());
+		builder->AddComponent(
+			std::make_shared<Graphics::Components::RendererComponent>(
+				renderer_->GetEntityAtlas(), 2, 0));
+		builder->FinishBuilding();
+
+		builder->StartBuilding("warrior");
+		builder->AddComponent(
+			std::make_shared<Common::Components::PositionComponent>());
+		builder->AddComponent(
+			std::make_shared<Graphics::Components::RendererComponent>(
+				renderer_->GetEntityAtlas(), 2, 1));
+		builder->FinishBuilding();
+
+		gameLogic_->StartGame("kek");
 	}
 
 	int ClientApplication::Run()

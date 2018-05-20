@@ -15,10 +15,13 @@ namespace Common
 	class EntityInstance
 	{
 		friend class EntityType;
+
 	public:
 		std::shared_ptr<EntityType> GetType() const;
 		bool IsEmitting();
 		std::shared_ptr<IComponentInstance> GetComponent(const std::string&);
+		bool toSynch;
+
 	private:
 		EntityInstance(std::shared_ptr<EntityType> type);
 
@@ -26,7 +29,8 @@ namespace Common
 			componentInstances_;
 		std::shared_ptr<EntityType> type_;
 
-		bool emitEvents_; 
+		bool emitEvents_;
+
 	};
 }
 

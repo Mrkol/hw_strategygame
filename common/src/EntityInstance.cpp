@@ -3,7 +3,7 @@
 namespace Common
 {
 	EntityInstance::EntityInstance(std::shared_ptr<EntityType> type)
-		: type_(type), emitEvents_(false)
+		: type_(type), emitEvents_(true)
 	{
 
 	}

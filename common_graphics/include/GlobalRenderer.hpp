@@ -20,11 +20,13 @@ namespace Graphics
 	public:
 		GlobalRenderer();
 
-		void Init(Graphics::UserInputManager& inputManager);
+		void Init(Graphics::UserInputManager& inputManager,
+			std::shared_ptr<Common::EntityInstanceStorageType> entities,
+			std::shared_ptr<Camera> camera);
 
 		void Render();
 
-		std::shared_ptr<Camera> GetCamera();
+		GPU_Image* GetEntityAtlas();
 
 		void OnResized(int32_t width, int32_t height);
 
@@ -34,9 +36,10 @@ namespace Graphics
 		GPU_Target* target_;
 		GPU_Image* entityAtlas_;
 
-		std::shared_ptr<Camera> camera_;
+		std::shared_ptr<Graphics::Camera> camera_;
 		std::unique_ptr<GuiRenderer> guiRenderer_;
 		std::unique_ptr<EntityRenderer> entityRenderer_;
+		std::shared_ptr<Common::EntityInstanceStorageType> entities_; 
 	};
 }
 

@@ -13,9 +13,12 @@ add_library(common STATIC ${COMMON_SOURCES} ${PROTO_SRCS})
 
 target_include_directories(common PUBLIC "./include")
 target_include_directories(common PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(common PUBLIC ${RPCLIB_INCLUDE_DIR})
 
 target_link_libraries(common PUBLIC protobuf::libprotobuf protobuf::libprotoc)
+target_link_libraries(common PUBLIC ${RPCLIB_LIBS})
 
 # You won't beleive how much f*cking time I've spent trying to
 # solve a linker issue due to this define missing.
 target_compile_definitions(common PUBLIC PROTOBUF_USE_DLLS)
+target_compile_definitions(common PUBLIC ${RPCLIB_COMPILE_DEFINITIONS})

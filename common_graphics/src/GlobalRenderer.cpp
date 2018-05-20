@@ -17,12 +17,15 @@ namespace Graphics
 		entityAtlas_(nullptr),
 		camera_(nullptr),
 		guiRenderer_(nullptr),
-		entityRenderer_(nullptr)
+		entityRenderer_(nullptr),
+		entities_(nullptr)
 	{
 
 	}
 
-	void GlobalRenderer::Init(Graphics::UserInputManager& inputManager)
+	void GlobalRenderer::Init(Graphics::UserInputManager& inputManager, 
+		std::shared_ptr<Common::EntityInstanceStorageType> entities,
+		std::shared_ptr<Graphics::Camera> camera)
 	{
 		GPU_SetDebugLevel(GPU_DEBUG_LEVEL_MAX);
 		target_ = GPU_InitRenderer(GPU_RENDERER_OPENGL_3, 800, 600, 0);
@@ -33,15 +36,21 @@ namespace Graphics
 				<< "SDL_gpu could not create a target!";
 		}
 
+
+		camera_ = camera;
 		entityAtlas_ = GPU_LoadImage_RW(SDL_RWFromConstMem(test_png, test_png_size), true);
 
-		camera_ = std::make_shared<Camera>(target_->base_w, target_->base_h);
-
+		entities_ = entities;
 		entityRenderer_ = std::make_unique<EntityRenderer>();
-		entityRenderer_->Init(target_, camera_);
+		entityRenderer_->Init(target_, camera);
 
 		guiRenderer_ = std::make_unique<GuiRenderer>();
 		guiRenderer_->Init(inputManager, target_->base_w, target_->base_h);
+	}
+
+	GPU_Image* GlobalRenderer::GetEntityAtlas()
+	{
+		return entityAtlas_;
 	}
 
 	void GlobalRenderer::Render()
@@ -53,25 +62,11 @@ namespace Graphics
 
 		
 		//draw stuff here
-		Common::EntityTypeRegistry registry;
-		Common::EntityTypeBuilder builder(registry);
 
-		builder.StartBuilding("mage");
-
-		builder.AddComponent(
-			std::make_shared<Common::Components::PositionComponent>());
-		builder.AddComponent(
-			std::make_shared<Graphics::Components::RendererComponent>(
-				entityAtlas_, 2, 0));
-
-		std::shared_ptr<Common::EntityType> mage = builder.FinishBuilding();
-
-		std::shared_ptr<Common::EntityInstance> instance = mage->Instantiate();
-
-		Common::Components::PositionComponent::Access(mage)->Set(instance, {0, 200});
-
-
-		entityRenderer_->Render(instance);
+		for (auto& pair : *entities_)
+		{
+			entityRenderer_->Render(pair.second);
+		}
 
 
 		GPU_FlushBlitBuffer();
@@ -82,11 +77,6 @@ namespace Graphics
 
 
 		GPU_Flip(target_);
-	}
-
-	std::shared_ptr<Camera> GlobalRenderer::GetCamera()
-	{
-		return camera_;
 	}
 
 	void GlobalRenderer::OnResized(int32_t width, int32_t height)
