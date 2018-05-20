@@ -16,6 +16,7 @@ namespace Common { namespace Components
 	void PositionComponent::Set(
 		std::shared_ptr<EntityInstance> instance, MapPosition position)
 	{
+		instance->toSynch = true;
 		access_(instance)->position_ = position;
 	}
 

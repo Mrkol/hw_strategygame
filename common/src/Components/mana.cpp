@@ -59,24 +59,28 @@ namespace Common { namespace Components
 	void  ManaComponent::SetMaximum(
 		std::shared_ptr<EntityInstance> instance, ManaType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->maximum_ = value;
 	}
 
 	void  ManaComponent::SetCurrent(
 		std::shared_ptr<EntityInstance> instance, ManaType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->current_ = value;
 	}
 
 	void  ManaComponent::SetRegenDelay(
 		std::shared_ptr<EntityInstance> instance, TimeIntervalType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->regenDelay_ = value;
 	}
 
 	void  ManaComponent::SetCurrentRegenDelay(
 		std::shared_ptr<EntityInstance> instance, TimeIntervalType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->currentRegenDelay_ = value;
 	}
 

@@ -45,11 +45,13 @@ namespace Common { namespace Components
 	void MovementComponent::SetCurrentSpeed(
 		std::shared_ptr<EntityInstance> instance, MoveSpeedType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->current_ = value;
 	}
 	void MovementComponent::SetMovementType(
 		std::shared_ptr<EntityInstance> instance, MovementType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->moveType_ = value;
 	}
 

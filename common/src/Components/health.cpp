@@ -60,24 +60,28 @@ namespace Common { namespace Components
 	void HealthComponent::SetMaximum(
 		std::shared_ptr<EntityInstance> instance, HealthType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->maximum_ = value;
 	}
 
 	void HealthComponent::SetCurrent(
 		std::shared_ptr<EntityInstance> instance, HealthType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->current_ = value;
 	}
 
 	void HealthComponent::SetRegenDelay(
 		std::shared_ptr<EntityInstance> instance, TimeIntervalType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->regenDelay_ = value;
 	}
 
 	void HealthComponent::SetCurrentRegenDelay(
 		std::shared_ptr<EntityInstance> instance, TimeIntervalType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->currentRegenDelay_ = value;
 	}
 

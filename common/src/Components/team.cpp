@@ -26,6 +26,7 @@ namespace Common { namespace Components
 	void  TeamComponent::SetTeamId(
 		std::shared_ptr<EntityInstance> instance, TeamIdType value)
 	{
+		instance->toSynch = true;
 		access_(instance)->teamId_ = value;
 	}
 

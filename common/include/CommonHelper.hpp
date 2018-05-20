@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <string>
 #include <chrono>
+#include "EntityInstance.hpp"
 
 namespace Common
 {
@@ -16,6 +17,8 @@ namespace Common
 		std::unordered_map<std::string, std::shared_ptr<EntityType>>;
 
 	using EntityInstanceIdType = unsigned int;
+	using NetworkMessageType = std::vector<std::pair<EntityInstanceIdType, std::string>>;
+	using EntityInstanceStorageType = std::unordered_map<EntityInstanceIdType, std::shared_ptr<EntityInstance>>;
 	using HealthType = unsigned int;
 	using ManaType = unsigned int;
 	using TimeUnitType = long long int;

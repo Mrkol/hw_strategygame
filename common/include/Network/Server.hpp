@@ -7,9 +7,11 @@
 #include <string>
 #include "rpc/client.h"
 #include <memory>
-#include "../MatchManager.hpp"
+#include "MatchManager.hpp"
+#include <map>
+#include "CommonHelper.hpp"
 
-namespace Common
+namespace Common{ namespace Network
 {
 	enum class EClientAnswer
 	{
@@ -21,26 +23,27 @@ namespace Common
 	public:
 
 	private:
-
+		Common::MatchManager manager;
 	};
 
-	namespace Network
+	
+	class CGameServer
 	{
-		class CGameServer
-		{
-			Event synchro_;// - Placement is important becouse of
-						   // order of initialization
-		public:
-			CGameServer(const std::vector<std::string>& IpList, uint16_t Port);
-			bool SynchronizeClients(Common::MatchManager* manager);
-			void StopClient(unsigned int Number);
-			EventAccessProxy ServerSynchEvent;
-		private:
-			std::vector<std::unique_ptr<rpc::client> > clients_;
-			uint64_t short_timeout;
-			uint64_t timeout;
-		};
-	}
+		Event synchro_;// - Placement is important becouse of
+					   // order of initialization
+	public:
+		CGameServer(const std::vector<std::string>& IpList, uint16_t Port,
+			std::weak_ptr<EntityInstanceStorageType> list);
+		bool SynchronizeClients(Serialization::IEntityInstanceSerializer& serializer);
+		void StopClient(unsigned int Number);
+		EventAccessProxy ServerSynchEvent;
+	private:
+		std::vector<std::unique_ptr<rpc::client> > clients_;
+		uint64_t short_timeout;
+		uint64_t timeout;
+		std::weak_ptr<EntityInstanceStorageType> entityInstanceList;
+	};
+}
 }
 
 

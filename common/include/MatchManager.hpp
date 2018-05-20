@@ -65,7 +65,7 @@ namespace Common
 		TimeIntervalType tickRate_;
 		TimePointType lastTick_;
 		ClientType clientType_;
-		std::unordered_map<int, std::shared_ptr<EntityInstance>> instanceList;
+		EntityInstanceStorageType instanceList;
 		EntityTypeRegistry entityTypeRegistry_;
 		EntityInstanceIdType nextInstanceId;
 

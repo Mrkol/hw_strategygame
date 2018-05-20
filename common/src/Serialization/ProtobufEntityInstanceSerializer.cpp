@@ -109,9 +109,6 @@ namespace Common { namespace Serialization
 		if (proto_instance.has_position())
 		{
 			auto positionType = PositionComponent::Access(type);
-			auto res = positionType->Instantiate();
-			
-
 			positionType->Set(instance, { proto_instance.position().x(), proto_instance.position().y() });
 		}
 

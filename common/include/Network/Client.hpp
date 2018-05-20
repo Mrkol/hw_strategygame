@@ -7,32 +7,31 @@
 #include "rpc/server.h"
 #include "../MatchManager.hpp"
 
-namespace Common
+namespace Common { namespace Network
 {
-	namespace Network
+	enum class EServerStatus
 	{
-		enum class EServerStatus
-		{
-			initializing, alive, stopped
-		};
+		initializing, alive, stopped
+	};
 
-		class CGameClient
-		{
-		public:
-			CGameClient(uint16_t Port);
-			//bool Synchronize();
-			//void Stop();
-			void Start();
-			bool SetAmountOfThreads(uint16_t);
-			EServerStatus GetStatus();
+	class CGameClient
+	{
+		friend bool Synchronize(NetworkMessageType server_message, CGameClient* server);
+	public:
+		CGameClient(uint16_t Port, std::weak_ptr<MatchManager> manager);
+		//void Stop();
+		void Start();
+		bool SetAmountOfThreads(uint16_t);
+		EServerStatus GetStatus();
 
-		private:
-			rpc::server clientServer_;
-			uint16_t amountOfThreads_;
-			EServerStatus clientServerStatus_;
-
-		};
-	}
+	private:
+		static bool Synchronize(NetworkMessageType server_message);
+		rpc::server clientServer_;
+		uint16_t amountOfThreads_;
+		EServerStatus clientServerStatus_;
+		static std::weak_ptr<MatchManager> manager_;
+	};
+}
 }
 
 #endif // COMMON_NETWORK_CLIENT_HPP_
