@@ -38,7 +38,7 @@ namespace Common{ namespace Network
 		NetworkMessageType client_message;
 		for (auto inst : *(entityinstanceList_.lock()))
 		{
-			if (inst.second->toSynch && inst.second->IsEmitting())
+			if (inst.second != nullptr && inst.second->toSynch && inst.second->IsEmitting())
 			{
 				std::stringstream stream;
 				serializer.Serialize(inst.second, stream);

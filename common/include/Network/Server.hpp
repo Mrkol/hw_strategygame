@@ -31,6 +31,18 @@ namespace Common { namespace Network
 		
 		std::weak_ptr<EntityInstanceStorageType> entityinstanceList_;
 	};
+
+	class EventSynchServerArgs : public EventArgs
+	{
+		
+	public:
+		std::weak_ptr<Common::Network::Server> server;
+		const std::vector<std::string>& IpList;
+		uint16_t Port;
+		std::weak_ptr<EntityInstanceStorageType> list;
+	};
+
+	void EventFriendlySynchronizeClients(const Common::EventArgs& args);
 } }
 
 

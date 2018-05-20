@@ -66,6 +66,6 @@ namespace Graphics
 
 	Common::MapPosition Camera::GetPosition()
 	{
-		return {x_, y_};
+		return {Common::CoordinateType(x_), Common::CoordinateType(y_)};
 	}
 }

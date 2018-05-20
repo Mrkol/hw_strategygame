@@ -3,9 +3,33 @@
 #include "UniversalException.hpp"
 #include "Components/position.hpp"
 #include "Components/renderer.hpp"
+#include <iostream>
+#include <thread>
+#include "Serialization\ProtobufEntityInstanceSerializer.hpp"
 
 namespace Client
 {
+	void NetPart(std::weak_ptr<Common::MatchManager> manager)
+	{
+		char t = 0;
+		std::cout << "If you want to start server, type 0\nAnd if you wont to run client, type anything else\n";
+		std::cin >> t;
+		if (t == '0')
+		{
+			Common::Network::Server server({ "127.0.0.1" }, 8080, manager.lock()->GetInstanceStorage());
+			manager.lock()->GameTickEvent.Subscribe("s", [&server](Common::EventArgs&)
+			{
+				server.SynchronizeClients(Common::Serialization::ProtobufEntityInstanceSerializer());
+			});
+			
+		}
+		else
+		{
+			Common::Network::Client client(8080, manager);
+			client.Start();
+		}
+	}
+
 	ClientApplication* ClientApplication::instancePointer_ = nullptr;
 
 	ClientApplication::ClientApplication()
@@ -67,9 +91,12 @@ namespace Client
 				renderer_->GetEntityAtlas(), 2, 1));
 		builder->FinishBuilding();
 
+		std::thread thr(NetPart, gameLogic_->GetMatchManager());
+		thr.detach();
+
 		gameLogic_->StartGame("kek");
 	}
-
+	
 	int ClientApplication::Run()
 	{
 		while (!done_)
