@@ -38,8 +38,10 @@ namespace Common{ namespace Network
 		NetworkMessageType client_message;
 		for (auto inst : *(entityinstanceList_.lock()))
 		{
+			std::cout << "1\n";
 			if (inst.second != nullptr && inst.second->toSynch && inst.second->IsEmitting())
 			{
+				std::cout << "2\n";
 				std::stringstream stream;
 				serializer.Serialize(inst.second, stream);
 				std::string tmp;
@@ -52,7 +54,6 @@ namespace Common{ namespace Network
 			std::cout << "Nothing to synch\n";
 			return true;
 		}
-		
 
 		for (int i = 0; i < clients_.size(); ++i)
 		{
