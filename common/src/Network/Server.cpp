@@ -19,7 +19,7 @@ namespace Common{ namespace Network
 		const std::vector<std::string>& IpList, uint16_t Port,
 		std::weak_ptr<EntityInstanceStorageType> list)
 		: clients_(IpList.size()), short_timeout(50), timeout(5000),
-		synchro_(), ServerSynchEvent(synchro_), entityInstanceList(list)
+		synchro_(), ServerSynchEvent(synchro_), entityinstanceList_(list)
 	{
 		for (int i = 0; i < clients_.size(); ++i)
 		{
@@ -35,7 +35,7 @@ namespace Common{ namespace Network
 
 		// Collect information to Synchronize
 		NetworkMessageType client_message;
-		for (auto inst : *(entityInstanceList.lock()))
+		for (auto inst : *(entityinstanceList_.lock()))
 		{
 			if (inst.second->toSynch && inst.second->IsEmitting())
 			{

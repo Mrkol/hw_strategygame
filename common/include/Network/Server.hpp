@@ -41,7 +41,7 @@ namespace Common{ namespace Network
 		std::vector<std::unique_ptr<rpc::client> > clients_;
 		uint64_t short_timeout;
 		uint64_t timeout;
-		std::weak_ptr<EntityInstanceStorageType> entityInstanceList;
+		std::weak_ptr<EntityInstanceStorageType> entityinstanceList_;
 	};
 }
 }

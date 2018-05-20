@@ -15,7 +15,7 @@ namespace Common
 		currentMatchState_(MatchState::Initialization),
 		tickRate_(TimeIntervalType(5)),
 		clientType_(ClientType::Server), 
-		nextInstanceId(0)
+		nextInstanceId_(0)
 	{
 		
 	}
@@ -93,12 +93,12 @@ namespace Common
 	{
 		std::stringstream stream;
 		stream << data;
-		if (instanceList.find(id) == instanceList.end())
+		if (instanceList_.find(id) == instanceList_.end())
 		{
 			//Create one
-			instanceList[id] = serializer.Deserialize(entityTypeRegistry_,
+			instanceList_[id] = serializer.Deserialize(entityTypeRegistry_,
 				stream);
-			if (instanceList[id] == nullptr)
+			if (instanceList_[id] == nullptr)
 			{
 				return false;
 			}
@@ -107,7 +107,7 @@ namespace Common
 		{
 			//Update one
 			if (!serializer.EmplaceDeserialize(entityTypeRegistry_,
-				stream, instanceList[id]))
+				stream, instanceList_[id]))
 			{
 				return false;
 			}

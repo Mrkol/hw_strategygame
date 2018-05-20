@@ -3,7 +3,6 @@
 #ifndef COMMON_MATCH_MANAGER_HPP_
 #define COMMON_MATCH_MANAGER_HPP_
 
-#include "Network/network.hpp"
 #include "CommonHelper.hpp"
 #include "Events/event.hpp"
 #include "Events/EventAccessProxy.hpp"
@@ -65,9 +64,9 @@ namespace Common
 		TimeIntervalType tickRate_;
 		TimePointType lastTick_;
 		ClientType clientType_;
-		EntityInstanceStorageType instanceList;
+		EntityInstanceStorageType instanceList_;
 		EntityTypeRegistry entityTypeRegistry_;
-		EntityInstanceIdType nextInstanceId;
+		EntityInstanceIdType nextInstanceId_;
 
 	};
 }

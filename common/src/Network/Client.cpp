@@ -20,16 +20,6 @@ namespace Common { namespace Network
 		return clientServerStatus_;
 	}
 
-	/*void CGameClient::Stop()
-	{
-		if (clientServerStatus_ == EServerStatus::alive)
-		{
-			std::cout << "I stopped!" << std::endl;
-			clientServer_.stop();
-			clientServerStatus_ = EServerStatus::stopped;
-		}
-	}*/
-
 	void CGameClient::Start()
 	{
 		if (clientServerStatus_ != EServerStatus::alive)
