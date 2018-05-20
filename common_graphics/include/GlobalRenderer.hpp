@@ -9,6 +9,9 @@
 #include "SDL_opengl.h"
 #include "GL/glu.h"
 #include "GuiRenderer.hpp"
+#include "EntityRenderer.hpp"
+#include "UserInputManager.hpp"
+#include "Camera.hpp"
 
 namespace Graphics
 {
@@ -17,25 +20,23 @@ namespace Graphics
 	public:
 		GlobalRenderer();
 
-		void Init(SDL_Window* window);
-
-		void InitializePipeline();
+		void Init(Graphics::UserInputManager& inputManager);
 
 		void Render();
+
+		std::shared_ptr<Camera> GetCamera();
 
 		void OnResized(int32_t width, int32_t height);
 
 		~GlobalRenderer();
 
 	private:
-		SDL_GLContext context_;
+		GPU_Target* target_;
+		GPU_Image* entityAtlas_;
 
-		GLuint mainShaderProgramHandle_;
-		GLint vertexPositionLocation_;
-		GLuint VBOHandle_;
-		GLuint IBOHandle_;
-
+		std::shared_ptr<Camera> camera_;
 		std::unique_ptr<GuiRenderer> guiRenderer_;
+		std::unique_ptr<EntityRenderer> entityRenderer_;
 	};
 }
 

@@ -7,7 +7,10 @@ namespace Client
 	ClientApplication* ClientApplication::instancePointer_ = nullptr;
 
 	ClientApplication::ClientApplication()
-		: done_(false), renderer_(nullptr), window_(nullptr)
+		: 
+		done_(false), renderer_(nullptr), gameLogic_(nullptr),
+		inputManager_(onMouseMove_, onMouseButtonDown_, onMouseButtonUp_,
+			onMouseWheel_, onMouseHWheel_, onKeyDown_, onKeyUp_)
 	{
 
 	}
@@ -35,23 +38,11 @@ namespace Client
 		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
 
-		window_ = SDL_CreateWindow(
-			"Strategygame",
-			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-			1080, 720,
-			SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL
-			);
-
-		if (window_ == nullptr)
-		{
-			throw Common::UniversalException()
-				<< "Window could not be created! SDL_Error:" << std::endl
-				<< SDL_GetError() << std::endl;
-		}
-
 		renderer_ = std::make_unique<Graphics::GlobalRenderer>();
+		renderer_->Init(inputManager_);
 
-		renderer_->Init(window_);
+		gameLogic_ = std::make_unique<GameLogic>();
+		gameLogic_->Init(inputManager_, renderer_->GetCamera());
 	}
 
 	int ClientApplication::Run()
@@ -66,17 +57,84 @@ namespace Client
 					done_ = true;
 				}
 
-				if (event.type == SDL_WINDOWEVENT)
+				switch (event.type)
 				{
-					if (event.window.event == SDL_WINDOWEVENT_RESIZED)
-					{
-						renderer_->OnResized(event.window.data1, event.window.data2);
-					}
+					case SDL_WINDOWEVENT:
+						if (event.window.event == SDL_WINDOWEVENT_RESIZED)
+						{
+							renderer_->OnResized(event.window.data1, event.window.data2);
+						}
+						break;
+
+					case SDL_MOUSEMOTION:
+						{
+							Graphics::MouseMoveEventArgs 
+								moveArgs(event.motion.x, event.motion.y);
+							onMouseMove_.Trigger(moveArgs);
+						}
+						break;
+
+					case SDL_MOUSEBUTTONDOWN:
+						{
+							Graphics::MouseButtonEventArgs 
+								buttonArgs(event.button.x, 
+									event.button.y, event.button.button);
+							onMouseButtonDown_.Trigger(buttonArgs);
+						}
+						break;
+
+					case SDL_MOUSEBUTTONUP:
+						{
+							Graphics::MouseButtonEventArgs 
+								buttonArgs(event.button.x, 
+									event.button.y, event.button.button);
+							onMouseButtonUp_.Trigger(buttonArgs);
+						}
+						break;
+
+					case SDL_MOUSEWHEEL:
+						if (event.wheel.x > 0)
+						{
+							Graphics::MouseWheelEventArgs
+								wheelArgs(0, 0, event.wheel.x);
+							SDL_GetMouseState(&wheelArgs.X, &wheelArgs.Y);
+							onMouseHWheel_.Trigger(wheelArgs);
+						}
+						
+						if (event.wheel.y > 0)
+						{
+							Graphics::MouseWheelEventArgs
+								wheelArgs(0, 0, event.wheel.y);
+							SDL_GetMouseState(&wheelArgs.X, &wheelArgs.Y);
+							onMouseHWheel_.Trigger(wheelArgs);
+						}
+						break;
+
+					case SDL_KEYDOWN:
+						{
+							Graphics::KeyboardEventArgs
+								keyboardArgs(event.key.keysym);
+							onKeyDown_.Trigger(keyboardArgs);
+						}
+						break;
+
+					case SDL_KEYUP:
+						{
+							Graphics::KeyboardEventArgs
+								keyboardArgs(event.key.keysym);
+							onKeyUp_.Trigger(keyboardArgs);
+						}
+						break;
+
+					default:
+						break;
 				}
 			}
 
+			gameLogic_->Update();
+
+
 			renderer_->Render();
-			SDL_GL_SwapWindow(window_);
 		}
 
 		return 0;
@@ -85,7 +143,6 @@ namespace Client
 	ClientApplication::~ClientApplication()
 	{
 		renderer_.reset();
-		SDL_DestroyWindow(window_);
 		SDL_Quit();
 	}
 	

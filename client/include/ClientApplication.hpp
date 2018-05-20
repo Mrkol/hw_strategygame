@@ -6,11 +6,24 @@
 #include <memory>
 #include "GlobalRenderer.hpp"
 #include "SDL.hpp"
+#include "UserInputManager.hpp"
+#include "GameLogic.hpp"
 
 namespace Client
 {
+	using namespace Common::Events;
+
 	class ClientApplication
 	{
+		Event onMouseMove_;
+		Event onMouseButtonDown_;
+		Event onMouseButtonUp_;
+		Event onMouseWheel_;
+		Event onMouseHWheel_;
+
+		Event onKeyDown_;
+		Event onKeyUp_;
+
 	public:
 		ClientApplication();
 
@@ -25,10 +38,10 @@ namespace Client
 
 		static ClientApplication* instancePointer_;
 
-
 		bool done_;
 		std::unique_ptr<Graphics::GlobalRenderer> renderer_;
-		SDL_Window* window_;
+		std::unique_ptr<GameLogic> gameLogic_;
+		Graphics::UserInputManager inputManager_;
 	};
 }
 

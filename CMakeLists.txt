@@ -58,6 +58,7 @@ set(SDL2_BUILDING_LIBRARY ON)
 find_package(OpenGL COMPONENTS OpenGL)
 find_package(GLEW)
 find_package(SDL2)
+find_package(SDL2_gpu)
 
 find_package(Protobuf REQUIRED)
 

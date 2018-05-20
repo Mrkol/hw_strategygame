@@ -27,8 +27,10 @@ if(WIN32)
 		${PROTOBUF_DLL}
 		${GLEW_DLL}
 		${SDL2_DLL}
+		${SDL2_GPU_DLLS}
 		)
 endif(WIN32)
+
 
 target_link_libraries(
 	client

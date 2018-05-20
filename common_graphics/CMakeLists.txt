@@ -40,6 +40,7 @@ endif(NOT GLEW_FOUND)
 file(GLOB_RECURSE GRAPHICS_SOURCES . src/*.cpp)
 
 file(GLOB_RECURSE GRAPHICS_RESOURCES_XAML . resources/*.xaml)
+file(GLOB_RECURSE GRAPHICS_RESOURCES_TEXTURES . resources/*.png)
 
 add_library(common_graphics
 	${GRAPHICS_SOURCES}
@@ -51,14 +52,13 @@ generate_embeded_resources(
 	OUTPUT common_light_resources.cpp
 	RESOURCES
 	${GRAPHICS_RESOURCES_XAML}
-	${CMAKE_CURRENT_LIST_DIR}/resources/main.fsh
-	${CMAKE_CURRENT_LIST_DIR}/resources/main.vsh
 	)
 
 generate_embeded_resources(
 	OUTPUT common_heavy_resources.cpp
 	RESOURCES
 	${CMAKE_CURRENT_LIST_DIR}/resources/OpenSans-Regular.ttf
+	${GRAPHICS_RESOURCES_TEXTURES}
 	)
 
 target_link_libraries(
@@ -70,6 +70,7 @@ target_link_libraries(
 	OpenGL::GLU
 	GLEW::GLEW
 	${SDL2_LIBRARY}
+	${SDL2_GPU_LIBRARIES}
 	)
 
 target_include_directories(common_graphics PUBLIC "./include")
@@ -77,3 +78,4 @@ target_include_directories(common_graphics PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 target_include_directories(common_graphics PUBLIC ${NOESIS_INCLUDE_DIRS})
 target_include_directories(common_graphics PUBLIC ${NOESISAPP_INCLUDE_DIRS})
 target_include_directories(common_graphics PUBLIC ${SDL2_INCLUDE_DIR})
+target_include_directories(common_graphics PUBLIC ${SDL2_GPU_INCLUDE_DIRS})

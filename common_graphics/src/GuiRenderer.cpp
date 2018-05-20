@@ -26,7 +26,8 @@ namespace Graphics
 
 	}
 
-	void GuiRenderer::Init(int32_t width, int32_t height)
+	void GuiRenderer::Init(Graphics::UserInputManager& inputManager, 
+		int32_t width, int32_t height)
 	{
 		Noesis::GUI::Init(nullptr, GuiRenderer::NoesisLogHandler, nullptr);
 
@@ -34,10 +35,41 @@ namespace Graphics
 		Noesis::GUI::SetTextureProvider(CreateTextureProvider());
 		Noesis::GUI::SetFontProvider(CreateFontProvider());
 
-		currentScreen_ = Noesis::GUI::LoadXaml<Noesis::FrameworkElement>("DiagnosticOverlay.xaml");
+		currentScreen_ = 
+			Noesis::GUI::LoadXaml<Noesis::FrameworkElement>("DiagnosticOverlay.xaml");
 		view_ = Noesis::GUI::CreateView(currentScreen_);
 		view_->SetSize(width, height);
 		view_->SetIsPPAAEnabled(true);
+
+		inputManager.OnMouseMove.Subscribe("NoesisIntegration", 
+			[this](EventArgs& args)
+			{
+				Graphics::MouseMoveEventArgs& casted = 
+					dynamic_cast<Graphics::MouseMoveEventArgs&>(args);
+
+				view_->MouseMove(casted.X, casted.Y);
+			});
+
+		inputManager.OnMouseButtonDown.Subscribe("NoesisIntegration", 
+			[this](EventArgs& args)
+			{
+				Graphics::MouseButtonEventArgs& casted = 
+					dynamic_cast<Graphics::MouseButtonEventArgs&>(args);
+
+				view_->MouseButtonDown(casted.X, casted.Y, MouseButtonSDLtoNoesis(casted.Button));
+			});
+
+		inputManager.OnMouseButtonUp.Subscribe("NoesisIntegration", 
+			[this](EventArgs& args)
+			{
+				Graphics::MouseButtonEventArgs& casted = 
+					dynamic_cast<Graphics::MouseButtonEventArgs&>(args);
+
+				view_->MouseButtonUp(casted.X, casted.Y, MouseButtonSDLtoNoesis(casted.Button));
+			});
+
+
+
 
 		device_ = NoesisApp::GLFactory::CreateDevice();
 		view_->GetRenderer()->Init(device_);
@@ -105,5 +137,22 @@ namespace Graphics
 		currentScreen_.Reset();
 		device_.Reset();
 		Noesis::GUI::Shutdown();
+	}
+
+
+
+
+	Noesis::MouseButton GuiRenderer::MouseButtonSDLtoNoesis(uint32_t button)
+	{
+		switch (button)
+		{
+			case SDL_BUTTON_LEFT: return Noesis::MouseButton::MouseButton_Left;
+			case SDL_BUTTON_RIGHT: return Noesis::MouseButton::MouseButton_Right;
+			case SDL_BUTTON_MIDDLE: return Noesis::MouseButton::MouseButton_Middle;
+			case SDL_BUTTON_X1: return Noesis::MouseButton::MouseButton_XButton1;
+			case SDL_BUTTON_X2: return Noesis::MouseButton::MouseButton_XButton2;
+		}
+
+		return Noesis::MouseButton::MouseButton_Left;
 	}
 }

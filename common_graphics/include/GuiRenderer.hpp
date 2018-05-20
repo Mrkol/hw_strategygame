@@ -5,7 +5,10 @@
 
 #include <cstdint>
 #include "NsGui/IntegrationAPI.h"
+#include "NsGui/InputEnums.h"
 #include "NsRender/RenderDevice.h"
+#include "UserInputManager.hpp"
+
 
 namespace Graphics
 {
@@ -14,7 +17,8 @@ namespace Graphics
 	public:
 		GuiRenderer();
 
-		void Init(int32_t width, int32_t height);
+		void Init(Graphics::UserInputManager& inputManager,
+			int32_t width, int32_t height);
 
 		void PreRender();
 		void Render();
@@ -29,6 +33,9 @@ namespace Graphics
 			uint32_t level, const char* channel, const char* message);
 
 		~GuiRenderer();
+
+
+		static Noesis::MouseButton MouseButtonSDLtoNoesis(uint32_t button);
 
 	private:
 		Noesis::Ptr<Noesis::FrameworkElement> currentScreen_;
