@@ -46,7 +46,8 @@ find_path(RPCLIB_INCLUDE_DIR
 
 find_library(RPCLIB_LIBS
     NAMES librpc rpclib rpc
-    PATHS ${FIND_RPCLIB_PATHS})
+    PATHS ${FIND_RPCLIB_PATHS}
+    PATH_SUFFIXES lib)
 
 if(RPCLIB_INCLUDE_DIR)
     file(READ

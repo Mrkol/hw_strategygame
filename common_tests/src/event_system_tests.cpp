@@ -25,14 +25,16 @@ TEST(EventSystemTests, EventTrySubscribe_Unsubscribe)
 	std::shared_ptr<IEvent> testEvent(new Event);
 
 	testEvent->Subscribe("sample", sampleHandler);
-	testEvent->Trigger(EventArgs());
+	EventArgs args1;
+	testEvent->Trigger(args1);
 	EXPECT_TRUE(happened);
 	happened = false;
 
 	EXPECT_EQ(testEvent->Unsubscribe("sample"), true);
 	EXPECT_EQ(testEvent->Unsubscribe("sample"), false);
 
-	testEvent->Trigger(EventArgs());
+	EventArgs args2;
+	testEvent->Trigger(args2);
 	EXPECT_FALSE(happened);
 }
 
@@ -55,7 +57,8 @@ TEST(EventSystemTests, EventAccessProxyTrySubscribe_Unsubscribe)
 	bool catched = false;
 	try
 	{
-		testProxy.Trigger(EventArgs());
+		EventArgs args;
+		testProxy.Trigger(args);
 	}
 	catch (const std::exception& exc)
 	{

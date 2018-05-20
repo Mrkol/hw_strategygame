@@ -75,7 +75,8 @@ namespace Common
 		if (lastTick_ + tickRate_ < std::chrono::system_clock::now())
 		{
 			lastTick_ = std::chrono::system_clock::now();
-			gameTick_.Trigger(EventArgs());
+			EventArgs args;
+			gameTick_.Trigger(args);
 			return true;
 		}
 
